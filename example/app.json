@@ -1,0 +1,22 @@
+{
+  "name": "jitera-rn-ui-example",
+  "displayName": "JiteraRnUi Example",
+  "expo": {
+    "name": "jitera-rn-ui-example",
+    "slug": "jitera-rn-ui-example",
+    "description": "Example app for jitera-rn-ui",
+    "privacy": "public",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
