@@ -1,19 +1,24 @@
 import * as React from 'react';
 
-import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'jitera-rn-ui';
+import { StyleSheet } from 'react-native';
+import { View, Text, Input, Button, ThemeProvider } from 'jitera-rn-ui';
 
+const theme = {
+  // TODO: default custom theme: colors, font family, button style, etc
+  brandingColors: {},
+  Button: {
+    raised: false,
+  },
+};
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
-
-  React.useEffect(() => {
-    multiply(3, 7).then(setResult);
-  }, []);
-
   return (
-    <View style={styles.container}>
-      <Text>Result: {result}</Text>
-    </View>
+    <ThemeProvider safeArea theme={theme}>
+      <View style={styles.container}>
+        <Input />
+        <Text h1>Result</Text>
+        <Button title={'Hello'} />
+      </View>
+    </ThemeProvider>
   );
 }
 
