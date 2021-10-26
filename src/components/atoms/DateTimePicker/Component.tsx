@@ -8,7 +8,6 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import { useTranslation } from 'react-i18next';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { Icon, Text } from '../../..';
 import type { Theme } from '../../../theme';
@@ -67,7 +66,6 @@ export const DateTimePicker: RneFunctionComponent<DateTimePickerProps> = ({
   renderErrorMessage,
   ...rest
 }: DateTimePickerProps) => {
-  const [t] = useTranslation();
   const styles = useStyles();
   const [show, setShow] = useState<boolean>(false);
   const [date, setDate] = useState<Date>(value ? value : new Date());
@@ -175,12 +173,12 @@ export const DateTimePicker: RneFunctionComponent<DateTimePickerProps> = ({
           <View style={styles.modalActionContainer}>
             <TouchableOpacity onPress={handleCancel}>
               <Text style={[styles.cancelButton, cancelButtonStyle]}>
-                {cancelText || t('cancel')}
+                {cancelText || ''}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleConfirm}>
               <Text style={[styles.confirmButton, confirmButtonStyle]}>
-                {confirmText || t('confirm')}
+                {confirmText || ''}
               </Text>
             </TouchableOpacity>
           </View>

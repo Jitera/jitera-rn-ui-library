@@ -70,18 +70,12 @@ export class Image extends React.Component<
       containerStyle,
       childrenContainerStyle = null,
       style = {},
-      fastImage = true,
       ImageComponent = ImageNative,
       children,
       ...attributes
     } = this.props;
 
     let ImageWrapper = ImageComponent;
-
-    if (fastImage) {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      // ImageWrapper = require('@shared/react-native-fast-image').default;
-    }
 
     const hasImage = Boolean(attributes.source);
     const { width, height, ...styleProps } = StyleSheet.flatten(style);

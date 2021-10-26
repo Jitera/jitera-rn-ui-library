@@ -1,6 +1,5 @@
 import React, { Fragment, useCallback } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
-import { useTranslation } from 'react-i18next';
 import type { RneFunctionComponent } from '../../../theme/helpers';
 import useStyles from './styles';
 
@@ -19,7 +18,6 @@ export const ActionsModal: RneFunctionComponent<ActionsModalProps> = (
   props
 ) => {
   const { cancelText, actions, onSelect, onBack } = props;
-  const [t] = useTranslation();
 
   const styles = useStyles();
 
@@ -63,9 +61,7 @@ export const ActionsModal: RneFunctionComponent<ActionsModalProps> = (
           onPress={onBack}
           style={[styles.actionItem, styles.cancel]}
         >
-          <Text style={styles.actionModalCancelText}>
-            {cancelText || t('cancel')}
-          </Text>
+          <Text style={styles.actionModalCancelText}>{cancelText || ''}</Text>
         </TouchableOpacity>
       </TouchableOpacity>
     </>

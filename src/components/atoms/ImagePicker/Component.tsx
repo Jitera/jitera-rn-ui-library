@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   TouchableOpacityProps,
 } from 'react-native';
-import { useTranslation } from 'react-i18next';
 import { scale } from 'react-native-size-matters';
 import { Text, Icon, Image } from '../../..';
 import { Modal } from '../../widgets';
@@ -36,6 +35,8 @@ export type ImagePickerProps = TouchableOpacityProps & {
   errorMessage?: string;
   renderErrorMessage?: boolean;
   allowsEditing?: boolean;
+  openSettingTitle?: string;
+  closeSettingTitle?: string;
 };
 
 export const ImagePicker: RneFunctionComponent<ImagePickerProps> = ({
@@ -55,13 +56,14 @@ export const ImagePicker: RneFunctionComponent<ImagePickerProps> = ({
   children = null,
   renderErrorMessage,
   previewMode = 'big',
+  openSettingTitle,
+  closeSettingTitle,
   photosPermissionTitle,
   photosPermissionDescription,
   cameraPermissionTitle,
   cameraPermissionDescription,
   ...rest
 }) => {
-  const [t] = useTranslation();
   const styles = useStyles();
   const initialValues =
     typeof value === 'string'
@@ -78,16 +80,15 @@ export const ImagePicker: RneFunctionComponent<ImagePickerProps> = ({
         await RNImagePicker.requestCameraPermissionsAsync();
       if (permissionResponse.status !== 'granted') {
         return Alert.alert(
-          cameraPermissionTitle || t('camera_permission_denied'),
-          cameraPermissionDescription ||
-            t('camera_permission_denied_description'),
+          cameraPermissionTitle || '',
+          cameraPermissionDescription || '',
           [
             {
-              text: t('open_settings'),
+              text: openSettingTitle || '',
               onPress: () => {},
             },
             {
-              text: t('close'),
+              text: closeSettingTitle || '',
               style: 'cancel',
             },
           ],
@@ -110,16 +111,15 @@ export const ImagePicker: RneFunctionComponent<ImagePickerProps> = ({
         await RNImagePicker.requestMediaLibraryPermissionsAsync();
       if (permissionResponse.status !== 'granted') {
         return Alert.alert(
-          photosPermissionTitle || t('photos_permission_denied'),
-          photosPermissionDescription ||
-            t('photos_permission_denied_description'),
+          photosPermissionTitle || '',
+          photosPermissionDescription || '',
           [
             {
-              text: t('open_settings'),
+              text: openSettingTitle || '',
               onPress: () => {},
             },
             {
-              text: t('close'),
+              text: closeSettingTitle || '',
               style: 'cancel',
             },
           ],

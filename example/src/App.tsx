@@ -7,7 +7,7 @@ const theme = {
   // TODO: default custom theme: colors, font family, button style, etc
   brandingColors: {},
   Button: {
-    raised: false,
+    raised: true,
   },
 };
 export default function App() {
@@ -15,7 +15,7 @@ export default function App() {
     <ThemeProvider safeArea theme={theme}>
       <View style={styles.container}>
         <Input />
-        <Text h1>Result</Text>
+        <Text h2>Result</Text>
         <Button title={'Hello'} />
       </View>
     </ThemeProvider>
