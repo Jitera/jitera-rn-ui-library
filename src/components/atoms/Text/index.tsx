@@ -1,4 +1,5 @@
-import { Text, TextProps } from './Component';
+import type { TextProps } from './Component';
+import Text from './ThemedComponent';
 import { withTheme } from '../../../theme';
 
 export { Text };

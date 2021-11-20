@@ -1,5 +1,6 @@
 import { withTheme } from '../../../theme';
-import { Button, ButtonProps } from './Component';
+import type { ButtonProps } from './Component';
+import Button from './ThemedComponent';
 
 export { Button };
 export type { ButtonProps };

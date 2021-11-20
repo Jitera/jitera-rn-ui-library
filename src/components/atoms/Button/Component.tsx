@@ -1,10 +1,8 @@
-import React, { useRef, useCallback, useEffect, useMemo } from 'react';
+import React, { forwardRef, FunctionComponent } from 'react';
 import {
   View,
   Text,
-  Animated,
-  TouchableWithoutFeedback,
-  ActivityIndicator,
+  TouchableOpacity,
   Platform,
   StyleSheet,
   TouchableOpacityProps,
@@ -14,21 +12,9 @@ import {
   ActivityIndicatorProps,
   TextStyle,
 } from 'react-native';
-import {
-  renderNode,
-  Color,
-  RneFunctionComponent,
-} from '../../../theme/helpers';
-import type { Theme } from '../../../theme';
+import Color from '../../../shared/color';
 import type { TextProps } from '../../../index';
-
-const defaultLoadingProps = (
-  type: 'solid' | 'clear' | 'outline',
-  theme: Theme<ButtonProps> | undefined
-): ActivityIndicatorProps => ({
-  color: type === 'solid' ? 'white' : theme?.colors?.primary,
-  size: 'small',
-});
+import { renderNode } from '../../../theme/helpers';
 
 export type ButtonProps = TouchableOpacityProps &
   TouchableNativeFeedbackProps & {
@@ -50,136 +36,75 @@ export type ButtonProps = TouchableOpacityProps &
     raised?: boolean;
     prefixComponent?: typeof React.Component;
     suffixComponent?: typeof React.Component;
+    borderColor?: string;
+    primaryColor?: string;
+    disableColor?: string;
   };
 
-export const Button: RneFunctionComponent<ButtonProps> = ({
-  style,
-  TouchableComponent,
-  containerStyle,
-  onPress = () => console.log('Please attach a method to this component'),
-  buttonStyle,
-  type = 'solid',
-  loading = false,
-  loadingStyle,
-  loadingProps: passedLoadingProps,
-  title = '',
-  titleProps,
-  titleStyle: passedTitleStyle,
-  disabled = false,
-  disabledStyle,
-  disabledTitleStyle,
-  raised = false,
-  linearGradientProps,
-  ViewComponent = View,
-  theme,
-  prefixComponent,
-  suffixComponent,
-  ...attributes
-}) => {
-  const scaleAnimation = useRef(new Animated.Value(0));
-
-  useEffect(() => {
-    if (linearGradientProps && !ViewComponent) {
-      console.error(
-        "You need to pass a ViewComponent to use linearGradientProps !\nExample: ViewComponent={require('react-native-linear-gradient')}"
-      );
-    }
-  });
-
-  const handleOnPress = useCallback(
-    (evt: any) => {
-      if (!loading) {
-        onPress(evt);
-      }
-    },
-    [loading, onPress]
-  );
-
-  const handlePressIn = useCallback(() => {
-    scaleAnimation.current.setValue(0);
-    Animated.timing(scaleAnimation.current, {
-      toValue: 1,
-      duration: 180,
-      useNativeDriver: true,
-    }).start();
-  }, []);
-
-  const handlePressOut = useCallback(() => {
-    scaleAnimation.current.setValue(1);
-    Animated.timing(scaleAnimation.current, {
-      toValue: 0,
-      duration: 60,
-      useNativeDriver: true,
-    }).start();
-  }, []);
-
-  // Refactor to Pressable
-  const TouchableComponentInternal =
-    TouchableComponent ||
-    Platform.select({
-      android: TouchableWithoutFeedback,
-      default: TouchableWithoutFeedback,
-    });
-
-  const titleStyle: StyleProp<TextStyle> = StyleSheet.flatten([
+const Button: FunctionComponent<ButtonProps> = forwardRef<any, ButtonProps>(
+  (
     {
-      color: type === 'solid' ? 'white' : theme?.colors?.primary,
+      style,
+      TouchableComponent,
+      onPress = () => console.log('Please attach a method to this component'),
+      buttonStyle,
+      type = 'solid',
+      title = '',
+      titleProps,
+      titleStyle: passedTitleStyle,
+      disabled = false,
+      disabledStyle,
+      disabledTitleStyle,
+      linearGradientProps,
+      ViewComponent = View,
+      prefixComponent,
+      suffixComponent,
+      disableColor,
+      primaryColor,
+      borderColor,
+      children,
+      ...attributes
     },
-    styles.title,
-    passedTitleStyle,
-    disabled && {
-      color: Color(theme?.colors?.disabled).darken(0.3).string(),
-    },
-    disabled && disabledTitleStyle,
-  ]);
+    ref
+  ) => {
+    // Refactor to Pressable
+    const TouchableComponentInternal =
+      TouchableComponent ||
+      Platform.select({
+        android: TouchableOpacity,
+        default: TouchableOpacity,
+      });
 
-  const loadingProps: ActivityIndicatorProps = {
-    ...defaultLoadingProps(type, theme),
-    ...passedLoadingProps,
-  };
+    const titleStyle: StyleProp<TextStyle> = StyleSheet.flatten([
+      {
+        color: type === 'solid' ? '#FFFFFF' : primaryColor,
+      },
+      styles.title,
+      passedTitleStyle,
+      disabled && {
+        color: Color(disableColor).darken(0.3).string(),
+      },
+      disabled && disabledTitleStyle,
+    ]);
 
-  const accessibilityState = {
-    disabled: !!disabled,
-    busy: !!loading,
-  };
-  const animatedStyle = useMemo(
-    () => ({
-      transform: [
-        {
-          scale: scaleAnimation.current.interpolate({
-            inputRange: [0, 0.8, 1],
-            outputRange: [1, 0.98, 0.95],
-          }),
-        },
-      ],
-    }),
-    []
-  );
+    const accessibilityState = {
+      disabled: !!disabled,
+    };
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const backgroundColor = style ? style.backgroundColor : undefined;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const backgroundColor = style ? style.backgroundColor : undefined;
+    // @ts-ignore
+    const containerHeight = style ? style.height : undefined;
 
-  return (
-    <Animated.View
-      style={[
-        styles.container,
-        {
-          borderRadius: 4 || styles.container.borderRadius,
-        },
-        style,
-        containerStyle,
-        raised && !disabled && type !== 'clear' && styles.raised,
-        animatedStyle,
-      ]}
-    >
+    return (
       <TouchableComponentInternal
-        onPressIn={handlePressIn}
-        onPressOut={handlePressOut}
-        onPress={handleOnPress}
+        ref={ref}
+        style={style}
+        onPress={onPress}
         accessibilityRole="button"
         accessibilityState={accessibilityState}
-        disabled={disabled || loading}
+        disabled={disabled}
         {...attributes}
       >
         <ViewComponent
@@ -188,69 +113,51 @@ export const Button: RneFunctionComponent<ButtonProps> = ({
             styles.button,
             styles.buttonOrientation,
             {
-              flexDirection: 'row',
-            },
-            {
+              height: containerHeight,
               backgroundColor:
-                type === 'solid'
-                  ? backgroundColor || theme?.colors?.primary
-                  : 'transparent',
-              borderColor: theme?.colors?.primary,
+                type === 'solid' ? backgroundColor : 'transparent',
+              borderColor: borderColor,
               borderWidth: type === 'outline' ? StyleSheet.hairlineWidth : 0,
             },
             buttonStyle,
             disabled &&
               type === 'solid' && {
-                backgroundColor: theme?.colors?.disabled,
+                backgroundColor: disableColor,
               },
             disabled &&
               type === 'outline' && {
-                borderColor: Color(theme?.colors?.disabled)
-                  .darken(0.3)
-                  .string(),
+                borderColor: Color(disableColor).darken(0.3).string(),
               },
             disabled && disabledStyle,
           ])}
         >
           {suffixComponent ? suffixComponent : null}
-          {loading && (
-            <ActivityIndicator
-              style={StyleSheet.flatten([styles.loading, loadingStyle])}
-              color={loadingProps.color}
-              size={loadingProps.size}
-              {...loadingProps}
-            />
-          )}
-
-          {!loading &&
-            !!title &&
-            renderNode(Text, title, {
-              style: titleStyle,
-              ...titleProps,
-            })}
+          {children || typeof title === 'string'
+            ? renderNode(Text, title, {
+                style: titleStyle,
+                ...titleProps,
+              })
+            : null}
           {prefixComponent ? prefixComponent : null}
         </ViewComponent>
       </TouchableComponentInternal>
-    </Animated.View>
-  );
-};
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   button: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 3,
   },
   buttonOrientation: {
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 3,
     padding: 8,
   },
   container: {
     overflow: 'hidden',
-    borderRadius: 3,
   },
   title: {
     textAlign: 'center',
@@ -288,3 +195,5 @@ const styles = StyleSheet.create({
 });
 
 Button.displayName = 'Button';
+
+export default Button;

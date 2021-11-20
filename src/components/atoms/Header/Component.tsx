@@ -1,13 +1,12 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import {
   View,
   TouchableOpacity,
   StyleSheet,
   ViewStyle,
   StyleProp,
+  TextStyle,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import type { RneFunctionComponent } from '../../../theme/helpers';
 import { defaultTheme } from '../../../theme';
 import { Text, Icon } from '../../../index';
 
@@ -32,9 +31,12 @@ export type HeaderProps = {
   rightIconSize?: number;
   rightIconColor?: string;
   onPressRightIcon?: () => void;
+  SafeAreaView?: any;
+  titleStyle: TextStyle;
+  safeAreaTop?: number;
 };
 
-export const Header: RneFunctionComponent<HeaderProps> = ({
+const Header: FunctionComponent<HeaderProps> = ({
   title,
   height,
   renderLeft,
@@ -44,7 +46,6 @@ export const Header: RneFunctionComponent<HeaderProps> = ({
   unsafe = true,
   onBackPress,
   useDefaultBackButton = false,
-  theme,
   style,
   leftIconName,
   leftIconType,
@@ -56,6 +57,9 @@ export const Header: RneFunctionComponent<HeaderProps> = ({
   rightIconSize,
   rightIconColor,
   onPressRightIcon,
+  SafeAreaView,
+  titleStyle,
+  safeAreaTop,
 }) => {
   const onPressBack = () => {
     if (onBackPress) {
@@ -66,11 +70,7 @@ export const Header: RneFunctionComponent<HeaderProps> = ({
     if (renderCenter) {
       return renderCenter();
     }
-    return (
-      <Text style={[styles.labelText, { color: theme?.colors?.text }]}>
-        {title}
-      </Text>
-    );
+    return <Text style={[styles.labelText, titleStyle]}>{title}</Text>;
   };
 
   // Render the default left button
@@ -79,8 +79,8 @@ export const Header: RneFunctionComponent<HeaderProps> = ({
       <Icon
         type="Feather"
         name="chevron-left"
-        size={theme?.fontSizes?.FONT_24}
-        color={theme?.colors?.black}
+        size={rightIconSize || defaultTheme?.fontSizes?.FONT_24}
+        color={rightIconColor}
       />
     </TouchableOpacity>
   );
@@ -99,7 +99,7 @@ export const Header: RneFunctionComponent<HeaderProps> = ({
           <Icon
             type={leftIconType}
             name={leftIconName}
-            size={leftIconSize || theme?.fontSizes?.FONT_24}
+            size={leftIconSize || defaultTheme?.fontSizes?.FONT_24}
             color={leftIconColor}
           />
         </TouchableOpacity>
@@ -120,7 +120,7 @@ export const Header: RneFunctionComponent<HeaderProps> = ({
           <Icon
             type={rightIconType}
             name={rightIconName}
-            size={rightIconSize || theme?.fontSizes?.FONT_24}
+            size={rightIconSize || defaultTheme?.fontSizes?.FONT_24}
             color={rightIconColor}
           />
         </TouchableOpacity>
@@ -131,16 +131,16 @@ export const Header: RneFunctionComponent<HeaderProps> = ({
 
   const renderInside = () => {
     const defaultHeight: number =
-      (theme?.spacing?.SPACING_45 || 0) +
-      ((unsafe ? theme?.safeArea?.top : 0) || 0);
+      (defaultTheme?.spacing?.SPACING_45 || 0) +
+      ((unsafe ? safeAreaTop : 0) || 0);
     return (
       <View
         style={[
           styles.wrapper,
           {
-            backgroundColor: backgroundColor || theme?.colors?.header,
+            backgroundColor,
             height: height || defaultHeight,
-            paddingTop: unsafe ? theme?.safeArea?.top : 0,
+            paddingTop: unsafe ? safeAreaTop : 0,
           },
           style,
         ]}
@@ -193,3 +193,5 @@ const styles = StyleSheet.create({
 });
 
 Header.displayName = 'Header';
+
+export default Header;

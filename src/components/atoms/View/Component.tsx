@@ -1,32 +1,19 @@
-import React from 'react';
-import {
-  View as NativeView,
-  StyleSheet,
-  ViewProps as NativeViewProps,
-  ViewStyle,
-  StyleProp,
-} from 'react-native';
-import { RneFunctionComponent, styleCache } from '../../../theme/helpers';
+import React, { forwardRef, FunctionComponent } from 'react';
+import { View as NativeView, ViewProps as NativeViewProps } from 'react-native';
 
-export type ViewProps = NativeViewProps & {
-  nodeId?: string;
-  nodeStyle?: StyleProp<ViewStyle>;
-};
+export type ViewProps = NativeViewProps & {};
 
-export const View: RneFunctionComponent<ViewProps> = ({
-  style,
-  nodeId,
-  nodeStyle,
-  children = null,
-  ...rest
-}) => {
-  const cachedStyle =
-    nodeId && nodeStyle ? styleCache(nodeId, nodeStyle) : null;
-  return (
-    <NativeView style={StyleSheet.flatten([cachedStyle, style])} {...rest}>
-      {children}
-    </NativeView>
-  );
-};
+const View: FunctionComponent<ViewProps> = forwardRef<any, ViewProps>(
+  (props, ref: any) => {
+    const { children = null, ...rest } = props;
+    return (
+      <NativeView ref={ref} {...rest}>
+        {children}
+      </NativeView>
+    );
+  }
+);
 
 View.displayName = 'View';
+
+export default View;

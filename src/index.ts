@@ -7,15 +7,8 @@ import View, { ViewProps } from './components/atoms/View';
 import Icon, { IconProps } from './components/atoms/Icon';
 import Header, { HeaderProps } from './components/atoms/Header';
 import OTPInput, { OTPInputProps } from './components/atoms/OTPInput';
-import Card, { CardProps } from './components/atoms/Card';
 import Divider, { DividerProps } from './components/atoms/Divider';
-import ActionsModal, {
-  ActionsModalProps,
-} from './components/atoms/ActionsModal';
-import ImagePicker, { ImagePickerProps } from './components/atoms/ImagePicker';
-import DateTimePicker, {
-  DateTimePickerProps,
-} from './components/atoms/DateTimePicker';
+
 import CommonLoading, {
   CommonLoadingProps,
 } from './components/widgets/CommonLoading';
@@ -39,6 +32,7 @@ import {
   ReplaceTheme,
   Colors,
 } from './theme';
+import components from './previewComponents';
 
 // For theme
 export {
@@ -66,11 +60,7 @@ export {
   Header,
   Icon,
   OTPInput,
-  Card,
   Divider,
-  ActionsModal,
-  ImagePicker,
-  DateTimePicker,
   CommonLoading,
   Toast,
   Modal,
@@ -87,12 +77,10 @@ export type {
   ViewProps,
   IconProps,
   OTPInputProps,
-  CardProps,
   DividerProps,
-  ActionsModalProps,
-  ImagePickerProps,
-  DateTimePickerProps,
   CommonLoadingProps,
   ToastProps,
   ModalProps,
 };
+
+export default components;

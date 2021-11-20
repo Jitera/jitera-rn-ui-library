@@ -1,5 +1,6 @@
 import { withTheme } from '../../../theme';
-import { Input, InputProps } from './Component';
+import type { InputProps } from './Component';
+import Input from './ThemedComponent';
 
 export { Input };
 export type { InputProps };

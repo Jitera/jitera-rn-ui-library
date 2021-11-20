@@ -7,7 +7,6 @@ import type {
   IconProps,
   PageProps,
   DividerProps,
-  DateTimePickerProps,
 } from '../';
 import type {
   ModalProps,
@@ -48,7 +47,6 @@ export interface FullTheme {
   fonts: Partial<FontTypes>;
   safeArea: Partial<SafeAreaSize>;
   Divider: Partial<DividerProps>;
-  DateTimePicker: Partial<DateTimePickerProps>;
 }
 
 export type Theme<T = any> = Partial<FullTheme> & T;

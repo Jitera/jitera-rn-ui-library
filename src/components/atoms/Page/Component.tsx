@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, FunctionComponent } from 'react';
 import {
   View,
   Platform,
@@ -12,8 +12,6 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import type { Edge } from 'react-native-safe-area-context';
-import type { RneFunctionComponent } from '../../../theme/helpers';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 export type PageProps = {
   /**
@@ -25,6 +23,8 @@ export type PageProps = {
    * Children of Screen
    */
   children?: React.ReactNode;
+
+  SafeAreaView: any;
 
   /**
    * Overwrite style of screen
@@ -134,7 +134,7 @@ export type PageProps = {
   keyboardShouldPersistTaps?: boolean | 'always' | 'never' | 'handled';
 };
 
-export const Page: RneFunctionComponent<PageProps> = ({
+const Page: FunctionComponent<PageProps> = ({
   scrollEnabled = false,
   showsHorizontalScrollIndicator = false,
   showsVerticalScrollIndicator = false,
@@ -149,7 +149,7 @@ export const Page: RneFunctionComponent<PageProps> = ({
   statusBar,
   backgroundTop,
   backgroundColor,
-  theme,
+  SafeAreaView = View,
   hideKeyboardHandled = false,
   keyboardShouldPersistTaps = 'handled',
 }) => {
@@ -160,10 +160,7 @@ export const Page: RneFunctionComponent<PageProps> = ({
           showsVerticalScrollIndicator={showsVerticalScrollIndicator}
           showsHorizontalScrollIndicator={showsHorizontalScrollIndicator}
           keyboardShouldPersistTaps={keyboardShouldPersistTaps}
-          style={[
-            styles.container,
-            { backgroundColor: backgroundColor || theme?.colors?.background },
-          ]}
+          style={[styles.container, { backgroundColor }]}
           contentContainerStyle={style}
         >
           {children}
@@ -175,24 +172,14 @@ export const Page: RneFunctionComponent<PageProps> = ({
           activeOpacity={1}
           accessible={false}
           onPress={Keyboard.dismiss}
-          style={[
-            styles.container,
-            { backgroundColor: backgroundColor || theme?.colors?.background },
-            style,
-          ]}
+          style={[styles.container, { backgroundColor }, style]}
         >
           {children}
         </TouchableOpacity>
       );
     }
     return (
-      <View
-        style={[
-          styles.container,
-          { backgroundColor: backgroundColor || theme?.colors?.background },
-          style,
-        ]}
-      >
+      <View style={[styles.container, { backgroundColor }, style]}>
         {children}
       </View>
     );
@@ -200,7 +187,6 @@ export const Page: RneFunctionComponent<PageProps> = ({
     scrollEnabled,
     hideKeyboardHandled,
     backgroundColor,
-    theme?.colors?.background,
     style,
     children,
     showsVerticalScrollIndicator,
@@ -223,10 +209,7 @@ export const Page: RneFunctionComponent<PageProps> = ({
       {insetTop ? (
         <SafeAreaView
           edges={['top']}
-          style={[
-            styles.flex0,
-            { backgroundColor: backgroundTop || theme?.colors?.header },
-          ]}
+          style={[styles.flex0, { backgroundColor: backgroundTop }]}
         />
       ) : null}
       {InnerComponent}
@@ -235,7 +218,7 @@ export const Page: RneFunctionComponent<PageProps> = ({
           edges={['bottom']}
           style={[
             styles.flex0,
-            { backgroundColor: backgroundBottom || theme?.colors?.background },
+            { backgroundColor: backgroundBottom || backgroundColor },
           ]}
         />
       ) : null}
@@ -257,3 +240,5 @@ const styles = StyleSheet.create({
 });
 
 Page.displayName = 'Page';
+
+export default Page;

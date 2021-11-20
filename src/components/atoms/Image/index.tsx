@@ -1,5 +1,5 @@
 import { withTheme } from '../../../theme';
-import { Image, ImageProps } from './Component';
+import Image, { ImageProps } from './Component';
 
 export { Image };
 export type { ImageProps };

@@ -1,4 +1,4 @@
-import { View, ViewProps } from './Component';
+import View, { ViewProps } from './Component';
 import { withTheme } from '../../../theme';
 
 export { View };

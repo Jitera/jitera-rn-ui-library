@@ -7,7 +7,7 @@ import {
   Dimensions,
   ActivityIndicator,
 } from 'react-native';
-import { Text } from '../../atoms/Text/Component';
+import Text from '../../atoms/Text/ThemedComponent';
 import type { ThemeProps } from '../../../theme';
 
 const { width } = Dimensions.get('window');
@@ -168,7 +168,7 @@ export class CommonLoadingComponent extends React.Component<
             </Animated.View>
           ) : null}
           {title ? (
-            <Text theme={theme} h3 style={styles.loading_text}>
+            <Text theme={theme} style={styles.loading_text}>
               {title}
             </Text>
           ) : null}

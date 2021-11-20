@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import {
   Platform,
   TouchableHighlight,
@@ -13,11 +13,9 @@ import {
 import type {
   IconButtonProps,
   IconProps as VectorIconProps,
-} from 'react-native-vector-icons/Icon';
-// import Color from '../../../shared/color';
+} from 'react-native-vector-icons';
 import getIconType from './getIconType';
 import getIconStyle from './getIconStyle';
-import type { RneFunctionComponent } from '../../../theme/helpers';
 
 export type IconType =
   | 'material'
@@ -104,7 +102,7 @@ export type IconProps = IconButtonProps & {
 
 /** Icons are visual indicators usually used to describe action or intent.
  * They are also used for displaying information. */
-export const Icon: RneFunctionComponent<IconProps> = ({
+const Icon: FunctionComponent<IconProps> = ({
   type = 'material',
   name,
   size = 24,
@@ -147,15 +145,6 @@ export const Icon: RneFunctionComponent<IconProps> = ({
     height: size * 2 + 4,
     width: size * 2 + 4,
   };
-
-  if (Platform.OS === 'android' && !attributes.background) {
-    if (Platform.Version >= 21) {
-      // attributes.background = TouchableNativeFeedback.Ripple(
-      //   Color(color).alpha(0.2).rgb().string(),
-      //   true
-      // );
-    }
-  }
 
   return (
     <View
@@ -237,3 +226,5 @@ const styles = StyleSheet.create({
 });
 
 Icon.displayName = 'Icon';
+
+export default Icon;

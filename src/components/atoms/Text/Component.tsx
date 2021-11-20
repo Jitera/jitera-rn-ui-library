@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef, FunctionComponent } from 'react';
 import {
   Text as NativeText,
   StyleSheet,
@@ -6,78 +6,33 @@ import {
   TextStyle,
   StyleProp,
 } from 'react-native';
-import { patchWebProps, RneFunctionComponent } from '../../../theme/helpers';
-import normalize from '../../../theme/helpers/normalizeText';
+import { patchWebProps } from '../../../theme/helpers';
 
 export type TextProps = TextProperties & {
-  /**  Add additional styling for Text. */
   style?: StyleProp<TextStyle>;
-
-  /**  Text with Font size 40. */
-  h1?: boolean;
-
-  /**  Text with Font size 34. */
-  h2?: boolean;
-
-  /**  Text with Font size 28. */
-  h3?: boolean;
-
-  /**  Text with Font size 22. */
-  h4?: boolean;
-
-  /**  Styling when h1 is set. */
-  h1Style?: StyleProp<TextStyle>;
-
-  /**  Styling when h2 is set. */
-  h2Style?: StyleProp<TextStyle>;
-
-  /**  Styling when h3 is set. */
-  h3Style?: StyleProp<TextStyle>;
-
-  /**  Styling when h3 is set. */
-  h4Style?: StyleProp<TextStyle>;
+  textColor?: string;
 };
 
 /** Text displays words and characters at various sizes. */
-export const Text: RneFunctionComponent<TextProps> = ({
-  style = {},
-  h1 = false,
-  h2 = false,
-  h3 = false,
-  h4 = false,
-  h1Style = {},
-  h2Style = {},
-  h3Style = {},
-  h4Style = {},
-  children = '',
-  theme,
-  ...rest
-}) => {
-  return (
-    <NativeText
-      style={StyleSheet.flatten([
-        {
-          color: theme?.colors?.text,
-          ...(h1 || h2 || h3 || h4
-            ? {
-                fontFamily: theme?.fonts?.regular?.fontFamily,
-              }
-            : {
-                fontFamily: theme?.fonts?.bold?.fontFamily,
-                fontWeight: theme?.fonts?.bold?.fontWeight,
-              }),
-        } as TextStyle,
-        style,
-        h1 && StyleSheet.flatten([{ fontSize: normalize(40) }, h1Style]),
-        h2 && StyleSheet.flatten([{ fontSize: normalize(34) }, h2Style]),
-        h3 && StyleSheet.flatten([{ fontSize: normalize(28) }, h3Style]),
-        h4 && StyleSheet.flatten([{ fontSize: normalize(22) }, h4Style]),
-      ])}
-      {...patchWebProps(rest)}
-    >
-      {children}
-    </NativeText>
-  );
-};
+const Text: FunctionComponent<TextProps> = forwardRef<any, TextProps>(
+  ({ style = {}, children = '', textColor, ...rest }, ref) => {
+    return (
+      <NativeText
+        ref={ref}
+        style={StyleSheet.flatten([
+          {
+            color: textColor,
+          },
+          style,
+        ])}
+        {...patchWebProps(rest)}
+      >
+        {children}
+      </NativeText>
+    );
+  }
+);
 
 Text.displayName = 'Text';
+
+export default Text;

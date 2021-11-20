@@ -1,5 +1,6 @@
 import { withTheme } from '../../../theme';
-import { Header, HeaderProps } from './Header';
+import type { HeaderProps } from './Component';
+import Header from './ThemedComponent';
 
 export { Header };
 export type { HeaderProps };

@@ -1,5 +1,6 @@
 import { withTheme } from '../../../theme';
-import { Page, PageProps } from './Component';
+import Page from './ThemedComponent';
+import type { PageProps } from './Component';
 
 export { Page };
 export type { PageProps };
