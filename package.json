@@ -70,6 +70,7 @@
   },
   "peerDependencies": {
     "react": "*",
+    "react-dom": "*",
     "react-native": "*"
   },
   "jest": {
@@ -136,7 +137,7 @@
     "output": "lib",
     "targets": [
       "commonjs",
-      "module",
+      ["module", { "copyFlow": true }],
       [
         "typescript",
         {

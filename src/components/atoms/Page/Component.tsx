@@ -1,4 +1,4 @@
-import React, { useMemo, FunctionComponent } from 'react';
+import React, { FunctionComponent, forwardRef } from 'react';
 import {
   View,
   Platform,
@@ -11,54 +11,16 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
 } from 'react-native';
-import type { Edge } from 'react-native-safe-area-context';
 
 export type PageProps = {
-  /**
-   * Scroll enable
-   * @default true
-   */
   scrollEnabled?: boolean;
-  /**
-   * Children of Screen
-   */
   children?: React.ReactNode;
-
   SafeAreaView: any;
-
-  /**
-   * Overwrite style of screen
-   * @default undefined
-   */
   style?: StyleProp<ViewStyle>;
-
-  /**
-   * Color of Screen
-   * @default transparent
-   */
   backgroundColor?: string;
-
-  /**
-   * Status bar style
-   * @default dark-content
-   */
   statusBar?: 'light-content' | 'dark-content';
-
-  /**
-   * Using safe area on ios
-   * @default false
-   */
   unsafe?: boolean;
-
-  /**
-   * Visibility status bar
-   * @default true
-   */
   hidden?: boolean;
-
-  /**
-   * Color of status bar for both Android/IOS
-   */
   statusColor?: string;
 
   /**
@@ -91,34 +53,8 @@ export type PageProps = {
    */
   backgroundBottom?: string;
 
-  /**
-   * Show vertical indicator or not (using when scroll equal true)
-   * @default false
-   */
   showsVerticalScrollIndicator?: boolean;
-
-  /**
-   * Show horizontal indicator or not (using when scroll equal true)
-   * @default false
-   */
   showsHorizontalScrollIndicator?: boolean;
-
-  /**
-   * Using scroll content
-   * @default false
-   */
-  scroll?: boolean;
-
-  /**
-   * Inset for safe area view
-   * @default undefined
-   */
-  forceInset?: Edge[];
-
-  /**
-   * Keyboard offset value
-   * @default 0
-   */
   keyboardVerticalOffset?: number;
 
   /**
@@ -134,97 +70,99 @@ export type PageProps = {
   keyboardShouldPersistTaps?: boolean | 'always' | 'never' | 'handled';
 };
 
-const Page: FunctionComponent<PageProps> = ({
-  scrollEnabled = false,
-  showsHorizontalScrollIndicator = false,
-  showsVerticalScrollIndicator = false,
-  hidden = false,
-  statusColor = undefined,
-  insetTop = false,
-  insetBottom = true,
-  backgroundBottom = undefined,
-  style = {},
-  keyboardVerticalOffset = 0,
-  children,
-  statusBar,
-  backgroundTop,
-  backgroundColor,
-  SafeAreaView = View,
-  hideKeyboardHandled = false,
-  keyboardShouldPersistTaps = 'handled',
-}) => {
-  const InnerComponent = useMemo(() => {
-    if (scrollEnabled) {
+const Page: FunctionComponent<PageProps> = forwardRef(
+  (
+    {
+      scrollEnabled = false,
+      showsHorizontalScrollIndicator = false,
+      showsVerticalScrollIndicator = false,
+      hidden = false,
+      statusColor = undefined,
+      insetTop = false,
+      insetBottom = true,
+      backgroundBottom = undefined,
+      style = {},
+      keyboardVerticalOffset = 0,
+      children,
+      statusBar,
+      backgroundTop,
+      backgroundColor,
+      SafeAreaView = View,
+      hideKeyboardHandled = false,
+      keyboardShouldPersistTaps = 'handled',
+    },
+    ref: any
+  ) => {
+    const renderComponent = () => {
+      if (scrollEnabled) {
+        return (
+          <ScrollView
+            showsVerticalScrollIndicator={showsVerticalScrollIndicator}
+            showsHorizontalScrollIndicator={showsHorizontalScrollIndicator}
+            keyboardShouldPersistTaps={keyboardShouldPersistTaps}
+            style={[styles.container, { backgroundColor }]}
+            contentContainerStyle={style}
+          >
+            {children}
+          </ScrollView>
+        );
+      } else if (hideKeyboardHandled && Platform.OS !== 'web') {
+        return (
+          <TouchableOpacity
+            activeOpacity={1}
+            accessible={false}
+            onPress={Keyboard.dismiss}
+            style={[styles.container, { backgroundColor }, style]}
+          >
+            {children}
+          </TouchableOpacity>
+        );
+      }
       return (
-        <ScrollView
-          showsVerticalScrollIndicator={showsVerticalScrollIndicator}
-          showsHorizontalScrollIndicator={showsHorizontalScrollIndicator}
-          keyboardShouldPersistTaps={keyboardShouldPersistTaps}
-          style={[styles.container, { backgroundColor }]}
-          contentContainerStyle={style}
-        >
+        <View style={[styles.container, { backgroundColor }, style]}>
           {children}
-        </ScrollView>
+        </View>
       );
-    } else if (hideKeyboardHandled && Platform.OS !== 'web') {
-      return (
-        <TouchableOpacity
-          activeOpacity={1}
-          accessible={false}
-          onPress={Keyboard.dismiss}
-          style={[styles.container, { backgroundColor }, style]}
-        >
-          {children}
-        </TouchableOpacity>
-      );
-    }
+    };
+    const WrapperComponent =
+      Platform.OS === 'web' ? View : KeyboardAvoidingView;
     return (
-      <View style={[styles.container, { backgroundColor }, style]}>
-        {children}
-      </View>
+      <WrapperComponent
+        ref={ref}
+        style={styles.container}
+        {...Platform.select({
+          ios: {
+            behavior: 'padding',
+          },
+          default: {},
+        })}
+        keyboardVerticalOffset={keyboardVerticalOffset}
+      >
+        <StatusBar
+          hidden={hidden}
+          backgroundColor={statusColor}
+          barStyle={statusBar || 'dark-content'}
+        />
+        {insetTop ? (
+          <SafeAreaView
+            edges={['top']}
+            style={[styles.flex0, { backgroundColor: backgroundTop }]}
+          />
+        ) : null}
+        {renderComponent()}
+        {insetBottom ? (
+          <SafeAreaView
+            edges={['bottom']}
+            style={[
+              styles.flex0,
+              { backgroundColor: backgroundBottom || backgroundColor },
+            ]}
+          />
+        ) : null}
+      </WrapperComponent>
     );
-  }, [
-    scrollEnabled,
-    hideKeyboardHandled,
-    backgroundColor,
-    style,
-    children,
-    showsVerticalScrollIndicator,
-    showsHorizontalScrollIndicator,
-    keyboardShouldPersistTaps,
-  ]);
-  return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.select({
-        ios: 'padding',
-      })}
-      keyboardVerticalOffset={keyboardVerticalOffset}
-    >
-      <StatusBar
-        hidden={hidden}
-        backgroundColor={statusColor}
-        barStyle={statusBar || 'dark-content'}
-      />
-      {insetTop ? (
-        <SafeAreaView
-          edges={['top']}
-          style={[styles.flex0, { backgroundColor: backgroundTop }]}
-        />
-      ) : null}
-      {InnerComponent}
-      {insetBottom ? (
-        <SafeAreaView
-          edges={['bottom']}
-          style={[
-            styles.flex0,
-            { backgroundColor: backgroundBottom || backgroundColor },
-          ]}
-        />
-      ) : null}
-    </KeyboardAvoidingView>
-  );
-};
+  }
+);
 
 const styles = StyleSheet.create({
   keyboardAvoiding: {
@@ -236,6 +174,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    overflow: 'hidden',
   },
 });
 
