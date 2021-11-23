@@ -36,7 +36,10 @@
     "ios",
     "android"
   ],
-  "repository": "https://github.com/Iruuza/jitera-rn-ui-library",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Iruuza/jitera-rn-ui-library.git"
+  },
   "author": "duong.tan.hung@iruuza.com",
   "license": "MIT",
   "bugs": {
@@ -44,7 +47,7 @@
   },
   "homepage": "https://github.com/Iruuza/jitera-rn-ui-library#readme",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "@edsil.jitera:registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^11.0.0",
@@ -137,7 +140,12 @@
     "output": "lib",
     "targets": [
       "commonjs",
-      ["module", { "copyFlow": true }],
+      [
+        "module",
+        {
+          "copyFlow": true
+        }
+      ],
       [
         "typescript",
         {
@@ -156,5 +164,8 @@
     "react-native-safe-area-context": "^3.3.2",
     "react-native-size-matters": "^0.4.0",
     "react-native-vector-icons": "^9.0.0"
+  },
+  "directories": {
+    "example": "example"
   }
 }
