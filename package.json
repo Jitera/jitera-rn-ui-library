@@ -1,5 +1,5 @@
 {
-  "name": "jitera-rn-ui",
+  "name": "@jitera/jitera-rn-ui-library",
   "version": "0.1.0",
   "description": "atoms and component for rn template project and web",
   "main": "lib/commonjs/index",
@@ -47,7 +47,7 @@
   },
   "homepage": "https://github.com/Iruuza/jitera-rn-ui-library#readme",
   "publishConfig": {
-    "@edsil.jitera:registry": "https://npm.pkg.github.com"
+    "@jitera:registry": "https://npm.pkg.github.com"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^11.0.0",
