@@ -38,14 +38,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Iruuza/jitera-rn-ui-library.git"
+    "url": "git+https://github.com/Jitera/jitera-rn-ui-library.git"
   },
   "author": "duong.tan.hung@iruuza.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Iruuza/jitera-rn-ui-library/issues"
+    "url": "https://github.com/Jitera/jitera-rn-ui-library/issues"
   },
-  "homepage": "https://github.com/Iruuza/jitera-rn-ui-library#readme",
+  "homepage": "https://github.com/Jitera/jitera-rn-ui-library#readme",
   "publishConfig": {
     "@jitera:registry": "https://npm.pkg.github.com"
   },
