@@ -1,6 +1,6 @@
 {
-  "name": "jitera-rn-ui",
-  "version": "0.1.0",
+  "name": "@jitera/jitera-rn-ui-library",
+  "version": "0.0.3-alpha",
   "description": "atoms and component for rn template project and web",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -36,15 +36,18 @@
     "ios",
     "android"
   ],
-  "repository": "https://github.com/Iruuza/jitera-rn-ui-library",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jitera/jitera-rn-ui-library.git"
+  },
   "author": "duong.tan.hung@iruuza.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Iruuza/jitera-rn-ui-library/issues"
+    "url": "https://github.com/Jitera/jitera-rn-ui-library/issues"
   },
-  "homepage": "https://github.com/Iruuza/jitera-rn-ui-library#readme",
+  "homepage": "https://github.com/Jitera/jitera-rn-ui-library#readme",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "@jitera:registry": "https://npm.pkg.github.com"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^11.0.0",
@@ -137,7 +140,12 @@
     "output": "lib",
     "targets": [
       "commonjs",
-      ["module", { "copyFlow": true }],
+      [
+        "module",
+        {
+          "copyFlow": true
+        }
+      ],
       [
         "typescript",
         {
@@ -156,5 +164,9 @@
     "react-native-safe-area-context": "^3.3.2",
     "react-native-size-matters": "^0.4.0",
     "react-native-vector-icons": "^9.0.0"
+  },
+  "directories": {
+    "example": "example",
+    "lib": "lib"
   }
 }
