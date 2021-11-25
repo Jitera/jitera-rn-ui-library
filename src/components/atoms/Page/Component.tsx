@@ -12,63 +12,64 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 
-export type PageProps = {
-  scrollEnabled?: boolean;
-  children?: React.ReactNode;
-  SafeAreaView: any;
-  style?: StyleProp<ViewStyle>;
-  backgroundColor?: string;
-  statusBar?: 'light-content' | 'dark-content';
-  unsafe?: boolean;
-  hidden?: boolean;
-  statusColor?: string;
+export type PageProps = View &
+  KeyboardAvoidingView & {
+    scrollEnabled?: boolean;
+    children?: React.ReactNode;
+    SafeAreaView: any;
+    style?: StyleProp<ViewStyle>;
+    backgroundColor?: string;
+    statusBar?: 'light-content' | 'dark-content';
+    unsafe?: boolean;
+    hidden?: boolean;
+    statusColor?: string;
 
-  /**
-   * Enable to draw behind status bar android
-   * @default false
-   */
-  draw?: boolean;
+    /**
+     * Enable to draw behind status bar android
+     * @default false
+     */
+    draw?: boolean;
 
-  /**
-   * Enable to custom background color of inset bottom on Iphone
-   * @default false
-   */
-  insetTop?: boolean;
+    /**
+     * Enable to custom background color of inset bottom on Iphone
+     * @default false
+     */
+    insetTop?: boolean;
 
-  /**
-   * Enable to custom background color of inset bottom on Iphone
-   * @default false
-   */
-  insetBottom?: boolean;
+    /**
+     * Enable to custom background color of inset bottom on Iphone
+     * @default false
+     */
+    insetBottom?: boolean;
 
-  /**
-   * Color of inset top when customInsetBottom set to true
-   * @default #ffffff
-   */
-  backgroundTop?: string;
+    /**
+     * Color of inset top when customInsetBottom set to true
+     * @default #ffffff
+     */
+    backgroundTop?: string;
 
-  /**
-   * Color of inset bottom IPhone when customInsetBottom set to true
-   * @default #ffffff
-   */
-  backgroundBottom?: string;
+    /**
+     * Color of inset bottom IPhone when customInsetBottom set to true
+     * @default #ffffff
+     */
+    backgroundBottom?: string;
 
-  showsVerticalScrollIndicator?: boolean;
-  showsHorizontalScrollIndicator?: boolean;
-  keyboardVerticalOffset?: number;
+    showsVerticalScrollIndicator?: boolean;
+    showsHorizontalScrollIndicator?: boolean;
+    keyboardVerticalOffset?: number;
 
-  /**
-   * Keyboard will hide when tap outside
-   * @default 0
-   */
-  hideKeyboardHandled?: boolean;
+    /**
+     * Keyboard will hide when tap outside
+     * @default 0
+     */
+    hideKeyboardHandled?: boolean;
 
-  /**
-   * keyboardShouldPersistTaps for scrollview
-   * @default 0
-   */
-  keyboardShouldPersistTaps?: boolean | 'always' | 'never' | 'handled';
-};
+    /**
+     * keyboardShouldPersistTaps for scrollview
+     * @default 0
+     */
+    keyboardShouldPersistTaps?: boolean | 'always' | 'never' | 'handled';
+  };
 
 const Page: FunctionComponent<PageProps> = forwardRef(
   (
