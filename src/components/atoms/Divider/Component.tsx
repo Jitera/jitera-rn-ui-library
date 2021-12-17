@@ -1,5 +1,11 @@
-import React, { FunctionComponent } from 'react';
-import { StyleSheet, StyleProp, ViewStyle } from 'react-native';
+import React, { FunctionComponent, forwardRef, Fragment } from 'react';
+import {
+  StyleSheet,
+  StyleProp,
+  ViewStyle,
+  Platform,
+  KeyboardAvoidingView,
+} from 'react-native';
 import View from '../View/Component';
 import Text from '../Text/Component';
 
@@ -13,49 +19,56 @@ export interface DividerProps {
   containerStyles?: StyleProp<ViewStyle>;
 }
 
-const Divider: FunctionComponent<DividerProps> = ({
-  style,
-  color,
-  size = 1,
-  content,
-  contentPosition = 'center',
-  contentStyles,
-  containerStyles,
-}) => {
-  const renderContent = () => {
-    if (!content) return null;
+const Divider: FunctionComponent<DividerProps> = forwardRef<any, DividerProps>(
+  (
+    {
+      style,
+      color,
+      size = 1,
+      content,
+      contentPosition = 'center',
+      contentStyles,
+      containerStyles,
+    },
+    ref
+  ) => {
+    const renderContent = () => {
+      if (!content) return null;
 
-    if (typeof content === 'string')
-      return <Text style={[defaultStyles.text, contentStyles]}>{content}</Text>;
+      if (typeof content === 'string')
+        return (
+          <Text style={[defaultStyles.text, contentStyles]}>{content}</Text>
+        );
+
+      return (
+        <View style={[defaultStyles.contentContainer, containerStyles]}>
+          {content()}
+        </View>
+      );
+    };
 
     return (
-      <View style={[defaultStyles.contentContainer, containerStyles]}>
-        {content()}
-      </View>
-    );
-  };
-
-  return (
-    <View style={[defaultStyles.container, style]}>
-      <View style={defaultStyles.lineContainer}>
+      <View ref={ref} style={[defaultStyles.container, style]}>
+        <View style={defaultStyles.lineContainer}>
+          <View
+            style={[
+              defaultStyles.line,
+              { borderTopColor: color, borderTopWidth: size },
+            ]}
+          />
+        </View>
         <View
           style={[
-            defaultStyles.line,
-            { borderTopColor: color, borderTopWidth: size },
+            defaultStyles.contentWrapper,
+            { justifyContent: getContentPositionClass(contentPosition) },
           ]}
-        />
+        >
+          {renderContent()}
+        </View>
       </View>
-      <View
-        style={[
-          defaultStyles.contentWrapper,
-          { justifyContent: getContentPositionClass(contentPosition) },
-        ]}
-      >
-        {renderContent()}
-      </View>
-    </View>
-  );
-};
+    );
+  }
+);
 
 const defaultStyles = StyleSheet.create({
   container: {
