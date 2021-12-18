@@ -1,11 +1,5 @@
-import React, { FunctionComponent, forwardRef, Fragment } from 'react';
-import {
-  StyleSheet,
-  StyleProp,
-  ViewStyle,
-  Platform,
-  KeyboardAvoidingView,
-} from 'react-native';
+import React, { FunctionComponent, forwardRef } from 'react';
+import { StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import View from '../View/Component';
 import Text from '../Text/Component';
 
