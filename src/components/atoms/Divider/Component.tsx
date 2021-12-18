@@ -1,13 +1,7 @@
-import React, { FunctionComponent, forwardRef, Fragment } from 'react';
-import {
-  StyleSheet,
-  StyleProp,
-  ViewStyle,
-  Platform,
-  KeyboardAvoidingView,
-} from 'react-native';
-import View from '../View/Component';
-import Text from '../Text/Component';
+import React, { FunctionComponent, forwardRef } from 'react';
+import { StyleSheet, StyleProp, ViewStyle } from 'react-native';
+import View from '../View';
+import Text from '../Text';
 
 export interface DividerProps {
   style?: StyleProp<ViewStyle>;
