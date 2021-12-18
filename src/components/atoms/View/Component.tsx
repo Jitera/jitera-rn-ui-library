@@ -1,7 +1,9 @@
 import React, { forwardRef, FunctionComponent } from 'react';
 import { View as NativeView, ViewProps as NativeViewProps } from 'react-native';
 
-export type ViewProps = NativeViewProps & {};
+export type ViewProps = NativeViewProps & {
+  ref?: any;
+};
 
 const View: FunctionComponent<ViewProps> = forwardRef<any, ViewProps>(
   (props, ref: any) => {
