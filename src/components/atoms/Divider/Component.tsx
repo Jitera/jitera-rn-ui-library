@@ -1,9 +1,10 @@
 import React, { FunctionComponent, forwardRef } from 'react';
 import { StyleSheet, StyleProp, ViewStyle } from 'react-native';
-import View from '../View';
-import Text from '../Text';
+import type { PropsWithRef } from '../../../type';
+import View from '../View/Component';
+import Text from '../Text/Component';
 
-export interface DividerProps {
+export type DividerProps = PropsWithRef<{
   style?: StyleProp<ViewStyle>;
   color?: string;
   size?: number;
@@ -11,7 +12,7 @@ export interface DividerProps {
   contentPosition?: 'left' | 'center' | 'right';
   contentStyles?: StyleProp<ViewStyle>;
   containerStyles?: StyleProp<ViewStyle>;
-}
+}>;
 
 const Divider: FunctionComponent<DividerProps> = forwardRef<any, DividerProps>(
   (
