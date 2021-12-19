@@ -1,5 +1,6 @@
 import { withTheme } from '../../../theme';
-import Divider, { DividerProps } from './Component';
+import type { DividerProps } from './Component';
+import Divider from './ThemedComponent';
 
 export { Divider };
 export type { DividerProps };
