@@ -11,7 +11,7 @@ const ScreenHeight = Screen.height;
 const isIOS = Platform.OS === 'ios';
 
 export type RneFunctionComponent<T> = React.FunctionComponent<
-  T & Partial<ThemeProps<T>> & { ref?: any }
+  T & Partial<ThemeProps<T>>
 >;
 
 export const patchWebProps = <T extends Record<any, any>>({ ...rest }: T) => {
