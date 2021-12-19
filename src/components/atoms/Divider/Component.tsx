@@ -1,8 +1,8 @@
 import React, { FunctionComponent, forwardRef } from 'react';
 import { StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import type { PropsWithRef } from '../../../type';
-import View from '../View';
-import Text from '../Text';
+import View from '../View/Component';
+import Text from '../Text/Component';
 
 export type DividerProps = PropsWithRef<{
   style?: StyleProp<ViewStyle>;
