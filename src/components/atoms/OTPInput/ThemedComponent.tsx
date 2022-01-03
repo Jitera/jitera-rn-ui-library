@@ -2,7 +2,9 @@ import React from 'react';
 import OTPInput, { OTPInputProps } from './Component';
 import type { RneFunctionComponent } from '../../../theme/helpers';
 
-const ThemedOTPInput: RneFunctionComponent<OTPInputProps> = (props) => {
+const ThemedOTPInput: RneFunctionComponent<Omit<OTPInputProps, 'ref'>> = (
+  props
+) => {
   const { theme, errorStyle } = props;
   return (
     <OTPInput

@@ -1,95 +1,103 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, forwardRef } from 'react';
 import { StyleSheet, ViewStyle, StyleProp, TextStyle } from 'react-native';
 import {
   CodeField,
   Cursor,
   CodeFieldProps,
 } from 'react-native-confirmation-code-field';
+import type { PropsWithRef } from '../../../type';
 import Text from '../Text/ThemedComponent';
 import View from '../View/Component';
 
-export type OTPInputProps = CodeFieldProps & {
-  value?: string;
-  pinCount?: number;
-  textContentType?: string;
+export type OTPInputProps = PropsWithRef<
+  CodeFieldProps & {
+    value?: string;
+    pinCount?: number;
+    textContentType?: string;
+    style?: ViewStyle;
+    cellStyle?: ViewStyle;
+    focusCellStyle?: ViewStyle;
+    cellTextStyle?: TextStyle;
+    focusCellTextStyle?: TextStyle;
+    onChangeText?: (code?: string) => void;
+    onCodeChanged?: (code?: string) => void;
+    onBlur?: (code: any) => void;
+    errorMessage?: string;
+    errorProps?: any;
+    renderErrorMessage?: boolean;
+    errorStyle?: StyleProp<TextStyle>;
+  }
+>;
 
-  style?: ViewStyle;
-  cellStyle?: ViewStyle;
-  focusCellStyle?: ViewStyle;
-  cellTextStyle?: TextStyle;
-  focusCellTextStyle?: TextStyle;
-
-  onChangeText?: (code?: string) => void;
-  onCodeChanged?: (code?: string) => void;
-  onBlur?: (code: any) => void;
-
-  errorMessage?: string;
-  errorProps?: any;
-  renderErrorMessage?: boolean;
-  errorStyle?: StyleProp<TextStyle>;
-};
-
-const OTPInput: FunctionComponent<OTPInputProps> = ({
-  style,
-  value,
-  onBlur,
-  pinCount,
-  cellStyle,
-  errorProps,
-  errorStyle,
-  onChangeText,
-  keyboardType,
-  errorMessage,
-  cellTextStyle,
-  focusCellStyle,
-  focusCellTextStyle,
-}) => {
-  return (
-    <>
-      <CodeField
-        value={value}
-        onBlur={onBlur}
-        onChangeText={onChangeText}
-        cellCount={pinCount}
-        rootStyle={[styles.codeFiledRoot, style]}
-        keyboardType={keyboardType}
-        renderCell={({ index, symbol, isFocused }) => (
-          <View
-            key={index}
-            style={[
-              styles.cellRoot,
-              cellStyle,
-              isFocused ? focusCellStyle || styles.focusCell : undefined,
-            ]}
-          >
-            <Text
+const OTPInput: FunctionComponent<OTPInputProps> = forwardRef<
+  any,
+  OTPInputProps
+>(
+  (
+    {
+      style,
+      value,
+      onBlur,
+      pinCount,
+      cellStyle,
+      errorProps,
+      errorStyle,
+      onChangeText,
+      keyboardType,
+      errorMessage,
+      cellTextStyle,
+      focusCellStyle,
+      focusCellTextStyle,
+    },
+    ref
+  ) => {
+    return (
+      <View ref={ref}>
+        <CodeField
+          value={value}
+          onBlur={onBlur}
+          onChangeText={onChangeText}
+          cellCount={pinCount}
+          rootStyle={[styles.codeFiledRoot, style]}
+          keyboardType={keyboardType}
+          renderCell={({ index, symbol, isFocused }) => (
+            <View
+              key={index}
               style={[
-                styles.cellText,
-                cellTextStyle,
-                isFocused && focusCellTextStyle,
+                styles.cellRoot,
+                cellStyle,
+                isFocused ? focusCellStyle || styles.focusCell : undefined,
               ]}
             >
-              {symbol || (isFocused ? <Cursor /> : null)}
-            </Text>
-          </View>
-        )}
-      />
-      <Text
-        {...errorProps}
-        style={StyleSheet.flatten([
-          errorStyle && errorStyle,
-          errorMessage && {
-            height: 0,
-            margin: 0,
-            padding: 0,
-          },
-        ])}
-      >
-        {errorMessage}
-      </Text>
-    </>
-  );
-};
+              <Text
+                style={[
+                  styles.cellText,
+                  cellTextStyle,
+                  isFocused && focusCellTextStyle,
+                ]}
+              >
+                {symbol || (isFocused ? <Cursor /> : null)}
+              </Text>
+            </View>
+          )}
+        />
+        <Text
+          {...errorProps}
+          style={StyleSheet.flatten([
+            errorStyle && errorStyle,
+            errorMessage && {
+              height: 0,
+              margin: 0,
+              padding: 0,
+            },
+          ])}
+        >
+          {errorMessage}
+        </Text>
+      </View>
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   codeFiledRoot: {
