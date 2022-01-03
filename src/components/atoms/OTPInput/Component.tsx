@@ -1,5 +1,5 @@
 import React, { FunctionComponent, forwardRef } from 'react';
-import { StyleSheet, ViewStyle, StyleProp, TextStyle } from 'react-native';
+import { ViewStyle, StyleProp, TextStyle, StyleSheet } from 'react-native';
 import {
   CodeField,
   Cursor,
@@ -11,10 +11,11 @@ import View from '../View/Component';
 
 export type OTPInputProps = PropsWithRef<
   CodeFieldProps & {
+    containerStyle?: StyleProp<ViewStyle>;
+    inputContainerStyle?: StyleProp<ViewStyle>;
     value?: string;
     pinCount?: number;
     textContentType?: string;
-    style?: ViewStyle;
     cellStyle?: ViewStyle;
     focusCellStyle?: ViewStyle;
     cellTextStyle?: TextStyle;
@@ -35,7 +36,8 @@ const OTPInput: FunctionComponent<OTPInputProps> = forwardRef<
 >(
   (
     {
-      style,
+      containerStyle,
+      inputContainerStyle,
       value,
       onBlur,
       pinCount,
@@ -52,13 +54,19 @@ const OTPInput: FunctionComponent<OTPInputProps> = forwardRef<
     ref
   ) => {
     return (
-      <View ref={ref}>
+      <View
+        ref={ref}
+        style={StyleSheet.flatten([styles.container, containerStyle])}
+      >
         <CodeField
           value={value}
           onBlur={onBlur}
           onChangeText={onChangeText}
           cellCount={pinCount}
-          rootStyle={[styles.codeFiledRoot, style]}
+          rootStyle={StyleSheet.flatten([
+            styles.codeFiledRoot,
+            inputContainerStyle,
+          ])}
           keyboardType={keyboardType}
           renderCell={({ index, symbol, isFocused }) => (
             <View
@@ -100,7 +108,11 @@ const OTPInput: FunctionComponent<OTPInputProps> = forwardRef<
 );
 
 const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+  },
   codeFiledRoot: {
+    width: '100%',
     marginLeft: 'auto',
     marginRight: 'auto',
   },
