@@ -1,16 +1,17 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, forwardRef } from 'react';
 import {
-  View,
   TouchableOpacity,
   StyleSheet,
   ViewStyle,
   StyleProp,
   TextStyle,
 } from 'react-native';
+import View from '../View/Component';
+import type { PropsWithRef } from '../../../type';
 import { defaultTheme } from '../../../theme';
 import { Text, Icon } from '../../../index';
 
-export type HeaderProps = {
+export type HeaderProps = PropsWithRef<{
   title?: string;
   renderLeft?: () => JSX.Element;
   renderCenter?: () => JSX.Element;
@@ -31,131 +32,133 @@ export type HeaderProps = {
   rightIconSize?: number;
   rightIconColor?: string;
   onPressRightIcon?: () => void;
-  SafeAreaView?: any;
   titleStyle: TextStyle;
   safeAreaTop?: number;
-};
+}>;
 
-const Header: FunctionComponent<HeaderProps> = ({
-  title,
-  height,
-  renderLeft,
-  renderCenter,
-  renderRight,
-  backgroundColor,
-  unsafe = true,
-  onBackPress,
-  useDefaultBackButton = false,
-  style,
-  leftIconName,
-  leftIconType,
-  leftIconSize,
-  leftIconColor,
-  onPressLeftIcon,
-  rightIconName,
-  rightIconType,
-  rightIconSize,
-  rightIconColor,
-  onPressRightIcon,
-  SafeAreaView,
-  titleStyle,
-  safeAreaTop,
-}) => {
-  const onPressBack = () => {
-    if (onBackPress) {
-      return onBackPress();
-    }
-  };
-  const renderCenterComponent = () => {
-    if (renderCenter) {
-      return renderCenter();
-    }
-    return <Text style={[styles.labelText, titleStyle]}>{title}</Text>;
-  };
+const Header: FunctionComponent<HeaderProps> = forwardRef<any, HeaderProps>(
+  (
+    {
+      title,
+      height,
+      renderLeft,
+      renderCenter,
+      renderRight,
+      backgroundColor,
+      unsafe = true,
+      onBackPress,
+      useDefaultBackButton = false,
+      style,
+      leftIconName,
+      leftIconType,
+      leftIconSize,
+      leftIconColor,
+      onPressLeftIcon,
+      rightIconName,
+      rightIconType,
+      rightIconSize,
+      rightIconColor,
+      onPressRightIcon,
+      titleStyle,
+      safeAreaTop,
+    },
+    ref
+  ) => {
+    const onPressBack = () => {
+      if (onBackPress) {
+        return onBackPress();
+      }
+    };
+    const renderCenterComponent = () => {
+      if (renderCenter) {
+        return renderCenter();
+      }
+      return <Text style={[styles.labelText, titleStyle]}>{title}</Text>;
+    };
 
-  // Render the default left button
-  const renderDefaultLeftButton = () => (
-    <TouchableOpacity onPress={onPressBack} style={styles.buttonBackContainer}>
-      <Icon
-        type="Feather"
-        name="chevron-left"
-        size={rightIconSize || defaultTheme?.fontSizes?.FONT_24}
-        color={rightIconColor}
-      />
-    </TouchableOpacity>
-  );
-
-  const renderLeftComponents = () => {
-    if (useDefaultBackButton) {
-      return renderDefaultLeftButton();
-    } else if (renderLeft) {
-      return renderLeft();
-    } else if (leftIconName) {
-      return (
-        <TouchableOpacity
-          onPress={onPressLeftIcon}
-          style={styles.buttonBackContainer}
-        >
-          <Icon
-            type={leftIconType}
-            name={leftIconName}
-            size={leftIconSize || defaultTheme?.fontSizes?.FONT_24}
-            color={leftIconColor}
-          />
-        </TouchableOpacity>
-      );
-    }
-    return null;
-  };
-
-  const renderRightComponents = () => {
-    if (renderRight) {
-      return renderRight();
-    } else if (rightIconName) {
-      return (
-        <TouchableOpacity
-          onPress={onPressRightIcon}
-          style={styles.rightButtonContainer}
-        >
-          <Icon
-            type={rightIconType}
-            name={rightIconName}
-            size={rightIconSize || defaultTheme?.fontSizes?.FONT_24}
-            color={rightIconColor}
-          />
-        </TouchableOpacity>
-      );
-    }
-    return null;
-  };
-
-  const renderInside = () => {
-    const defaultHeight: number =
-      (defaultTheme?.spacing?.SPACING_45 || 0) +
-      ((unsafe ? safeAreaTop : 0) || 0);
-    return (
-      <View
-        style={[
-          styles.wrapper,
-          {
-            backgroundColor,
-            height: height || defaultHeight,
-            paddingTop: unsafe ? safeAreaTop : 0,
-          },
-          style,
-        ]}
+    // Render the default left button
+    const renderDefaultLeftButton = () => (
+      <TouchableOpacity
+        onPress={onPressBack}
+        style={styles.buttonBackContainer}
       >
-        <View style={styles.leftWrapper}>{renderLeftComponents()}</View>
-        <View style={styles.centerWrapper}>{renderCenterComponent()}</View>
-        <View style={styles.rightWrapper}>{renderRightComponents()}</View>
-      </View>
+        <Icon
+          type="Feather"
+          name="chevron-left"
+          size={rightIconSize || defaultTheme?.fontSizes?.FONT_24}
+          color={rightIconColor}
+        />
+      </TouchableOpacity>
     );
-  };
-  if (unsafe) {
+
+    const renderLeftComponents = () => {
+      if (useDefaultBackButton) {
+        return renderDefaultLeftButton();
+      } else if (renderLeft) {
+        return renderLeft();
+      } else if (leftIconName) {
+        return (
+          <TouchableOpacity
+            onPress={onPressLeftIcon}
+            style={styles.buttonBackContainer}
+          >
+            <Icon
+              type={leftIconType}
+              name={leftIconName}
+              size={leftIconSize || defaultTheme?.fontSizes?.FONT_24}
+              color={leftIconColor}
+            />
+          </TouchableOpacity>
+        );
+      }
+      return null;
+    };
+
+    const renderRightComponents = () => {
+      if (renderRight) {
+        return renderRight();
+      } else if (rightIconName) {
+        return (
+          <TouchableOpacity
+            onPress={onPressRightIcon}
+            style={styles.rightButtonContainer}
+          >
+            <Icon
+              type={rightIconType}
+              name={rightIconName}
+              size={rightIconSize || defaultTheme?.fontSizes?.FONT_24}
+              color={rightIconColor}
+            />
+          </TouchableOpacity>
+        );
+      }
+      return null;
+    };
+
+    const renderInside = () => {
+      const defaultHeight: number = height || defaultTheme?.spacing?.SPACING_45;
+      return (
+        <View
+          ref={ref}
+          style={[
+            styles.wrapper,
+            {
+              backgroundColor,
+              height: height || defaultHeight,
+              paddingTop: unsafe ? safeAreaTop : 0,
+            },
+            style,
+          ]}
+        >
+          <View style={styles.leftWrapper}>{renderLeftComponents()}</View>
+          <View style={styles.centerWrapper}>{renderCenterComponent()}</View>
+          <View style={styles.rightWrapper}>{renderRightComponents()}</View>
+        </View>
+      );
+    };
     return renderInside();
   }
-  return <SafeAreaView edges={['top']} />;
-};
+);
 
 const styles = StyleSheet.create({
   buttonBackContainer: {
