@@ -11,8 +11,7 @@ import View from '../View/Component';
 
 export type OTPInputProps = PropsWithRef<
   CodeFieldProps & {
-    containerStyle?: StyleProp<ViewStyle>;
-    inputContainerStyle?: StyleProp<ViewStyle>;
+    style?: StyleProp<ViewStyle>;
     value?: string;
     pinCount?: number;
     autoFocus?: boolean;
@@ -37,8 +36,7 @@ const OTPInput: FunctionComponent<OTPInputProps> = forwardRef<
 >(
   (
     {
-      containerStyle,
-      inputContainerStyle,
+      style,
       value,
       onBlur,
       pinCount,
@@ -56,20 +54,14 @@ const OTPInput: FunctionComponent<OTPInputProps> = forwardRef<
     ref
   ) => {
     return (
-      <View
-        ref={ref}
-        style={StyleSheet.flatten([styles.container, containerStyle])}
-      >
+      <View ref={ref} style={StyleSheet.flatten([styles.container, style])}>
         <CodeField
           autoFocus={autoFocus}
           value={value}
           onBlur={onBlur}
           onChangeText={onChangeText}
           cellCount={pinCount}
-          rootStyle={StyleSheet.flatten([
-            styles.codeFiledRoot,
-            inputContainerStyle,
-          ])}
+          rootStyle={styles.codeFiledRoot}
           keyboardType={keyboardType}
           renderCell={({ index, symbol, isFocused }) => (
             <View
@@ -116,6 +108,7 @@ const styles = StyleSheet.create({
   },
   codeFiledRoot: {
     width: '100%',
+    height: '100%',
     marginLeft: 'auto',
     marginRight: 'auto',
   },
