@@ -15,6 +15,7 @@ export type OTPInputProps = PropsWithRef<
     inputContainerStyle?: StyleProp<ViewStyle>;
     value?: string;
     pinCount?: number;
+    autoFocus?: boolean;
     textContentType?: string;
     cellStyle?: ViewStyle;
     focusCellStyle?: ViewStyle;
@@ -50,6 +51,7 @@ const OTPInput: FunctionComponent<OTPInputProps> = forwardRef<
       cellTextStyle,
       focusCellStyle,
       focusCellTextStyle,
+      autoFocus,
     },
     ref
   ) => {
@@ -59,6 +61,7 @@ const OTPInput: FunctionComponent<OTPInputProps> = forwardRef<
         style={StyleSheet.flatten([styles.container, containerStyle])}
       >
         <CodeField
+          autoFocus={autoFocus}
           value={value}
           onBlur={onBlur}
           onChangeText={onChangeText}
