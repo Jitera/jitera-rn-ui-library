@@ -1,29 +1,32 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import {
   Animated,
   Image as ImageNative,
   StyleSheet,
-  View,
   TouchableOpacity,
   ImageProps as RNImageProps,
   ViewStyle,
   StyleProp,
   ImageStyle,
 } from 'react-native';
+import type { PropsWithRef } from '../../../type';
+import View from '../View/Component';
 
-export type ImageProps = RNImageProps & {
-  Component?: typeof React.Component;
-  onPress?(): void;
-  fastImage?: boolean;
-  onLongPress?(): void;
-  ImageComponent?: React.ComponentType<any>;
-  PlaceholderContent?: React.ReactElement<any>;
-  containerStyle?: StyleProp<ViewStyle>;
-  childrenContainerStyle?: StyleProp<ViewStyle>;
-  placeholderStyle?: StyleProp<ViewStyle>;
-  transition?: boolean;
-  transitionDuration?: number;
-};
+export type ImageProps = PropsWithRef<
+  RNImageProps & {
+    Component?: typeof React.Component;
+    onPress?(): void;
+    fastImage?: boolean;
+    onLongPress?(): void;
+    ImageComponent?: React.ComponentType<any>;
+    PlaceholderContent?: React.ReactElement<any>;
+    containerStyle?: StyleProp<ViewStyle>;
+    childrenContainerStyle?: StyleProp<ViewStyle>;
+    placeholderStyle?: StyleProp<ViewStyle>;
+    transition?: boolean;
+    transitionDuration?: number;
+  }
+>;
 
 type ImageState = {
   placeholderOpacity: Animated.Value;
@@ -68,6 +71,7 @@ class Image extends React.Component<ImageProps, ImageState> {
       style = {},
       ImageComponent = ImageNative,
       children,
+      ref,
       ...attributes
     } = this.props;
 
@@ -78,6 +82,7 @@ class Image extends React.Component<ImageProps, ImageState> {
 
     return (
       <Component
+        ref={ref}
         onPress={onPress}
         onLongPress={onLongPress}
         accessibilityIgnoresInvertColors={true}
@@ -142,4 +147,6 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Image;
+export default forwardRef<any, ImageProps>((props, ref) => (
+  <Image ref={ref} {...props} />
+));
