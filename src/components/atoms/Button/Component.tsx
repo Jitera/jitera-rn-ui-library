@@ -9,10 +9,8 @@ import {
   TouchableNativeFeedbackProps,
   StyleProp,
   ViewStyle,
-  ActivityIndicatorProps,
   TextStyle,
 } from 'react-native';
-import Color from '../../../shared/color';
 import type { TextProps } from '../../../index';
 import { renderNode } from '../../../theme/helpers';
 
@@ -23,22 +21,13 @@ export type ButtonProps = TouchableOpacityProps &
     titleProps?: TextProps;
     buttonStyle?: StyleProp<ViewStyle>;
     type?: 'solid' | 'clear' | 'outline';
-    loading?: boolean;
-    loadingStyle?: StyleProp<ViewStyle>;
-    loadingProps?: ActivityIndicatorProps;
-    containerStyle?: StyleProp<ViewStyle>;
-    linearGradientProps?: any;
     TouchableComponent?: typeof React.Component;
     ViewComponent?: typeof React.Component;
     disabled?: boolean;
     disabledStyle?: StyleProp<ViewStyle>;
     disabledTitleStyle?: StyleProp<TextStyle>;
-    raised?: boolean;
     prefixComponent?: typeof React.Component;
     suffixComponent?: typeof React.Component;
-    borderColor?: string;
-    primaryColor?: string;
-    disableColor?: string;
   };
 
 const Button: FunctionComponent<ButtonProps> = forwardRef<any, ButtonProps>(
@@ -55,13 +44,9 @@ const Button: FunctionComponent<ButtonProps> = forwardRef<any, ButtonProps>(
       disabled = false,
       disabledStyle,
       disabledTitleStyle,
-      linearGradientProps,
       ViewComponent = View,
       prefixComponent,
       suffixComponent,
-      disableColor,
-      primaryColor,
-      borderColor,
       children,
       ...attributes
     },
@@ -76,14 +61,8 @@ const Button: FunctionComponent<ButtonProps> = forwardRef<any, ButtonProps>(
       });
 
     const titleStyle: StyleProp<TextStyle> = StyleSheet.flatten([
-      {
-        color: type === 'solid' ? '#FFFFFF' : primaryColor,
-      },
       styles.title,
       passedTitleStyle,
-      disabled && {
-        color: Color(disableColor).darken(0.3).string(),
-      },
       disabled && disabledTitleStyle,
     ]);
 
@@ -108,7 +87,6 @@ const Button: FunctionComponent<ButtonProps> = forwardRef<any, ButtonProps>(
         {...attributes}
       >
         <ViewComponent
-          {...linearGradientProps}
           style={StyleSheet.flatten([
             styles.button,
             styles.buttonOrientation,
@@ -116,17 +94,16 @@ const Button: FunctionComponent<ButtonProps> = forwardRef<any, ButtonProps>(
               height: containerHeight,
               backgroundColor:
                 type === 'solid' ? backgroundColor : 'transparent',
-              borderColor: borderColor,
               borderWidth: type === 'outline' ? StyleSheet.hairlineWidth : 0,
             },
             buttonStyle,
             disabled &&
               type === 'solid' && {
-                backgroundColor: disableColor,
+                backgroundColor: '#dddddd',
               },
             disabled &&
               type === 'outline' && {
-                borderColor: Color(disableColor).darken(0.3).string(),
+                borderColor: '#dddddd',
               },
             disabled && disabledStyle,
           ])}
@@ -160,6 +137,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   title: {
+    color: '#FFFFFF',
     textAlign: 'center',
     paddingVertical: 1,
     ...Platform.select({
@@ -173,24 +151,6 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     marginHorizontal: 5,
-  },
-  raised: {
-    backgroundColor: '#fff',
-    overflow: 'visible',
-    ...Platform.select({
-      android: {
-        elevation: 4,
-      },
-      default: {
-        shadowColor: 'rgba(0,0,0, .4)',
-        shadowOffset: { height: 1, width: 1 },
-        shadowOpacity: 1,
-        shadowRadius: 1,
-      },
-    }),
-  },
-  loading: {
-    marginVertical: 2,
   },
 });
 
