@@ -10,7 +10,7 @@ import {
   GestureResponderEvent,
 } from 'react-native';
 import type { PropsWithRef } from '../../../type';
-import { isHexColor, hexToRgb } from '../../../theme/helpers';
+import { Color } from '../../../theme/helpers';
 
 export type ButtonProps = PropsWithRef<{
   style?: StyleProp<ViewStyle>;
@@ -44,22 +44,8 @@ const Button: FC<ButtonProps> = forwardRef<any, ButtonProps>(
 
     let backgroundColor = containerStyle.backgroundColor as string;
 
-    if (backgroundColor && isHexColor(backgroundColor)) {
-      const hexToRgbObj = hexToRgb(backgroundColor);
-
-      if (hexToRgbObj) {
-        backgroundColor = `rgb(${hexToRgbObj.r}, ${hexToRgbObj.g}, ${hexToRgbObj.b})`;
-      }
-    }
-
-    if (
-      (disabled || loading) &&
-      backgroundColor &&
-      backgroundColor.includes('rgb')
-    ) {
-      backgroundColor = backgroundColor.includes('rgb')
-        ? backgroundColor.replace('rgb', 'rgba').replace(')', ',0.2)')
-        : backgroundColor.replace(')', ',0.2)');
+    if ((disabled || loading) && backgroundColor) {
+      backgroundColor = Color(backgroundColor).alpha(0.2).toString();
     }
 
     containerStyle.backgroundColor = backgroundColor;
