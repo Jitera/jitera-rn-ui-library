@@ -35,7 +35,7 @@ const Button: FC<ButtonProps> = forwardRef<any, ButtonProps>(
     },
     ref
   ) => {
-    let containerStyle = StyleSheet.flatten([styles.container, style]);
+    const containerStyle = StyleSheet.flatten([styles.container, style]);
     const titleStyle = StyleSheet.flatten([
       styles.title,
       titleStyleProps,
@@ -72,7 +72,6 @@ const Button: FC<ButtonProps> = forwardRef<any, ButtonProps>(
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     height: 50,
     backgroundColor: '#40a9ff',
     justifyContent: 'center',
