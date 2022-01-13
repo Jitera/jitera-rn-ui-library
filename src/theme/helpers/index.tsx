@@ -4,6 +4,7 @@ import renderNode from './renderNode';
 import styleCache from './styleCache';
 import normalizeText from './normalizeText';
 import type { ThemeProps } from '../index';
+import { isHexColor, hexToRgb } from './converColor';
 
 const Screen = Dimensions.get('window');
 const ScreenWidth = Screen.width;
@@ -26,4 +27,6 @@ export {
   styleCache,
   isIOS,
   Color,
+  isHexColor,
+  hexToRgb,
 };

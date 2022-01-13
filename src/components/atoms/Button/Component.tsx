@@ -1,156 +1,92 @@
-import React, { forwardRef, FunctionComponent } from 'react';
+import React, { forwardRef, FC } from 'react';
 import {
-  View,
   Text,
   TouchableOpacity,
-  Platform,
   StyleSheet,
-  TouchableOpacityProps,
-  TouchableNativeFeedbackProps,
+  ActivityIndicator,
   StyleProp,
   ViewStyle,
   TextStyle,
+  GestureResponderEvent,
 } from 'react-native';
-import type { TextProps } from '../../../index';
-import { renderNode } from '../../../theme/helpers';
+import type { PropsWithRef } from '../../../type';
+import { isHexColor, hexToRgb } from '../../../theme/helpers';
 
-export type ButtonProps = TouchableOpacityProps &
-  TouchableNativeFeedbackProps & {
-    title?: string | React.ReactElement<any>;
-    titleStyle?: StyleProp<TextStyle>;
-    titleProps?: TextProps;
-    buttonStyle?: StyleProp<ViewStyle>;
-    type?: 'solid' | 'clear' | 'outline';
-    TouchableComponent?: typeof React.Component;
-    ViewComponent?: typeof React.Component;
-    disabled?: boolean;
-    disabledStyle?: StyleProp<ViewStyle>;
-    disabledTitleStyle?: StyleProp<TextStyle>;
-    prefixComponent?: typeof React.Component;
-    suffixComponent?: typeof React.Component;
-  };
+export type ButtonProps = PropsWithRef<{
+  style?: StyleProp<ViewStyle>;
+  title: string;
+  titleStyle?: StyleProp<TextStyle>;
+  disabled?: boolean;
+  loading?: boolean;
+  onPress?: (event: GestureResponderEvent) => void;
+}>;
 
-const Button: FunctionComponent<ButtonProps> = forwardRef<any, ButtonProps>(
+const Button: FC<ButtonProps> = forwardRef<any, ButtonProps>(
   (
-    {
-      style,
-      TouchableComponent,
-      onPress = () => console.log('Please attach a method to this component'),
-      buttonStyle,
-      type = 'solid',
-      title = '',
-      titleProps,
-      titleStyle: passedTitleStyle,
-      disabled = false,
-      disabledStyle,
-      disabledTitleStyle,
-      ViewComponent = View,
-      prefixComponent,
-      suffixComponent,
-      children,
-      ...attributes
-    },
+    { style, title, titleStyle: titleStyleProps, disabled, loading, onPress },
     ref
   ) => {
-    // Refactor to Pressable
-    const TouchableComponentInternal =
-      TouchableComponent ||
-      Platform.select({
-        android: TouchableOpacity,
-        default: TouchableOpacity,
-      });
-
-    const titleStyle: StyleProp<TextStyle> = StyleSheet.flatten([
+    let containerStyle = StyleSheet.flatten([styles.container, style]);
+    const titleStyle = StyleSheet.flatten([
       styles.title,
-      passedTitleStyle,
-      disabled && disabledTitleStyle,
+      titleStyleProps,
+      (disabled || loading) && { opacity: 0.1 },
     ]);
 
-    const accessibilityState = {
-      disabled: !!disabled,
+    let backgroundColor = containerStyle.backgroundColor as string;
+
+    if (backgroundColor && isHexColor(backgroundColor)) {
+      const hexToRgbObj = hexToRgb(backgroundColor);
+
+      if (hexToRgbObj) {
+        backgroundColor = `rgb(${hexToRgbObj.r}, ${hexToRgbObj.g}, ${hexToRgbObj.b})`;
+      }
+    }
+
+    if (
+      (disabled || loading) &&
+      backgroundColor &&
+      backgroundColor.includes('rgb')
+    ) {
+      backgroundColor = backgroundColor.includes('rgb')
+        ? backgroundColor.replace('rgb', 'rgba').replace(')', ',0.2)')
+        : backgroundColor.replace(')', ',0.2)');
+    }
+
+    containerStyle.backgroundColor = backgroundColor;
+
+    const handlePress = (event: GestureResponderEvent) => {
+      if (!loading || !disabled) return;
+
+      if (onPress) {
+        return onPress(event);
+      }
     };
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const backgroundColor = style ? style.backgroundColor : undefined;
-    // @ts-ignore
-    const containerHeight = style ? style.height : undefined;
-
     return (
-      <TouchableComponentInternal
-        ref={ref}
-        style={style}
-        onPress={onPress}
-        accessibilityRole="button"
-        accessibilityState={accessibilityState}
-        disabled={disabled}
-        {...attributes}
-      >
-        <ViewComponent
-          style={StyleSheet.flatten([
-            styles.button,
-            styles.buttonOrientation,
-            {
-              height: containerHeight,
-              backgroundColor:
-                type === 'solid' ? backgroundColor : 'transparent',
-              borderWidth: type === 'outline' ? StyleSheet.hairlineWidth : 0,
-            },
-            buttonStyle,
-            disabled &&
-              type === 'solid' && {
-                backgroundColor: '#dddddd',
-              },
-            disabled &&
-              type === 'outline' && {
-                borderColor: '#dddddd',
-              },
-            disabled && disabledStyle,
-          ])}
-        >
-          {suffixComponent ? suffixComponent : null}
-          {children || typeof title === 'string'
-            ? renderNode(Text, title, {
-                style: titleStyle,
-                ...titleProps,
-              })
-            : null}
-          {prefixComponent ? prefixComponent : null}
-        </ViewComponent>
-      </TouchableComponentInternal>
+      <TouchableOpacity ref={ref} style={containerStyle} onPress={handlePress}>
+        <>
+          {loading && <ActivityIndicator style={styles.loading} size="small" />}
+          <Text style={titleStyle}>{title}</Text>
+        </>
+      </TouchableOpacity>
     );
   }
 );
 
 const styles = StyleSheet.create({
-  button: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonOrientation: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 8,
-  },
   container: {
-    overflow: 'hidden',
+    flex: 1,
+    height: 50,
+    backgroundColor: '#40a9ff',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   title: {
-    color: '#FFFFFF',
-    textAlign: 'center',
-    paddingVertical: 1,
-    ...Platform.select({
-      android: {
-        fontSize: 16,
-      },
-      default: {
-        fontSize: 18,
-      },
-    }),
+    fontSize: 20,
   },
-  iconContainer: {
-    marginHorizontal: 5,
+  loading: {
+    position: 'absolute',
   },
 });
 
