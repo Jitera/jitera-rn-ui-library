@@ -1,4 +1,4 @@
-import React, { forwardRef, FC } from 'react';
+import React, { forwardRef, FC, ReactNode } from 'react';
 import {
   Text,
   TouchableOpacity,
@@ -14,16 +14,25 @@ import { isHexColor, hexToRgb } from '../../../theme/helpers';
 
 export type ButtonProps = PropsWithRef<{
   style?: StyleProp<ViewStyle>;
-  title: string;
+  title?: string;
   titleStyle?: StyleProp<TextStyle>;
   disabled?: boolean;
   loading?: boolean;
   onPress?: (event: GestureResponderEvent) => void;
+  children?: ReactNode;
 }>;
 
 const Button: FC<ButtonProps> = forwardRef<any, ButtonProps>(
   (
-    { style, title, titleStyle: titleStyleProps, disabled, loading, onPress },
+    {
+      style,
+      title,
+      titleStyle: titleStyleProps,
+      disabled,
+      loading,
+      onPress,
+      children,
+    },
     ref
   ) => {
     let containerStyle = StyleSheet.flatten([styles.container, style]);
@@ -67,7 +76,8 @@ const Button: FC<ButtonProps> = forwardRef<any, ButtonProps>(
       <TouchableOpacity ref={ref} style={containerStyle} onPress={handlePress}>
         <>
           {loading && <ActivityIndicator style={styles.loading} size="small" />}
-          <Text style={titleStyle}>{title}</Text>
+          {title && <Text style={titleStyle}>{title}</Text>}
+          {children}
         </>
       </TouchableOpacity>
     );
