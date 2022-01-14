@@ -41,7 +41,7 @@ const Header: FunctionComponent<HeaderProps> = forwardRef<any, HeaderProps>(
   (
     {
       title,
-      height = Platform.OS === 'web' ? 50 : defaultTheme.spacing.SPACING_50,
+      height,
       renderLeft,
       renderCenter,
       renderRight,
