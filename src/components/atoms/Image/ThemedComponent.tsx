@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImageProps, Image } from './Component';
+import Image, { ImageProps } from './Component';
 import type { RneFunctionComponent } from '../../../theme/helpers';
 
 const ThemedImage: RneFunctionComponent<Omit<ImageProps, 'ref'>> = (props) => {

@@ -1,35 +1,48 @@
 import React, { FC, forwardRef } from 'react';
-import { Image as RnImage, StyleProp, ImageStyle } from 'react-native';
-import FastImage from 'react-native-fast-image';
+import {
+  Image as RnImage,
+  ImageProps as RnImageProps,
+  Platform,
+} from 'react-native';
+import FastImage, { FastImageProps } from 'react-native-fast-image';
 import type { PropsWithRef } from '../../../type';
 
-export type ImageProps = PropsWithRef<{
-  style?: StyleProp<ImageStyle>;
-  resizeMode: 'contain' | 'cover' | 'stretch' | 'center';
-  fastImage?: boolean;
-  uri?: string;
-}>;
+export type ImageProps = PropsWithRef<
+  RnImageProps &
+    Omit<FastImageProps, 'children'> & {
+      fastImage?: boolean;
+      uri?: string;
+    }
+>;
 
-const Image: FC<ImageProps> = ({ style, resizeMode, fastImage, uri }) => {
-  let Component = fastImage ? FastImage : RnImage;
+const Image: FC<ImageProps> = forwardRef<any, ImageProps>(
+  ({ style, resizeMode, fastImage, uri, ...props }, ref) => {
+    let Component = fastImage ? FastImage : RnImage;
+    const isWeb = Platform.OS === 'web';
 
-  return <Component style={style} source={{ uri }} resizeMode={resizeMode} />;
-};
+    if (isWeb) {
+      return (
+        <RnImage
+          ref={ref}
+          style={style}
+          source={{ uri }}
+          resizeMode={resizeMode}
+          {...props}
+        />
+      );
+    }
 
-const MobileEditorImage: FC<ImageProps> = forwardRef<any, ImageProps>(
-  ({ style, uri, resizeMode }, ref) => {
     return (
-      <RnImage
-        ref={ref}
+      <Component
         style={style}
         source={{ uri }}
         resizeMode={resizeMode}
+        {...props}
       />
     );
   }
 );
 
-MobileEditorImage.displayName = 'Image';
+Image.displayName = 'Image';
 
-export default MobileEditorImage;
-export { Image };
+export default Image;

@@ -5,6 +5,7 @@ import {
   ViewStyle,
   StyleProp,
   TextStyle,
+  Platform,
 } from 'react-native';
 import View from '../View/Component';
 import type { PropsWithRef } from '../../../type';
@@ -40,7 +41,7 @@ const Header: FunctionComponent<HeaderProps> = forwardRef<any, HeaderProps>(
   (
     {
       title,
-      height,
+      height = Platform.OS === 'web' ? 50 : defaultTheme.spacing.SPACING_50,
       renderLeft,
       renderCenter,
       renderRight,
@@ -64,6 +65,16 @@ const Header: FunctionComponent<HeaderProps> = forwardRef<any, HeaderProps>(
     },
     ref
   ) => {
+    const defaultLeftIconSize =
+      leftIconSize || Platform.OS === 'web'
+        ? 24
+        : defaultTheme.fontSizes.FONT_24;
+
+    const defaultRightIconSize =
+      rightIconSize || Platform.OS === 'web'
+        ? 24
+        : defaultTheme.fontSizes.FONT_24;
+
     const onPressBack = () => {
       if (onBackPress) {
         return onBackPress();
@@ -85,8 +96,8 @@ const Header: FunctionComponent<HeaderProps> = forwardRef<any, HeaderProps>(
         <Icon
           type="Feather"
           name="chevron-left"
-          size={rightIconSize || defaultTheme?.fontSizes?.FONT_24}
-          color={rightIconColor}
+          size={defaultLeftIconSize}
+          color={leftIconColor}
         />
       </TouchableOpacity>
     );
@@ -105,7 +116,7 @@ const Header: FunctionComponent<HeaderProps> = forwardRef<any, HeaderProps>(
             <Icon
               type={leftIconType}
               name={leftIconName}
-              size={leftIconSize || defaultTheme?.fontSizes?.FONT_24}
+              size={defaultLeftIconSize}
               color={leftIconColor}
             />
           </TouchableOpacity>
@@ -126,7 +137,7 @@ const Header: FunctionComponent<HeaderProps> = forwardRef<any, HeaderProps>(
             <Icon
               type={rightIconType}
               name={rightIconName}
-              size={rightIconSize || defaultTheme?.fontSizes?.FONT_24}
+              size={defaultRightIconSize}
               color={rightIconColor}
             />
           </TouchableOpacity>
@@ -136,7 +147,11 @@ const Header: FunctionComponent<HeaderProps> = forwardRef<any, HeaderProps>(
     };
 
     const renderInside = () => {
-      const defaultHeight: number = height || defaultTheme?.spacing?.SPACING_45;
+      const defaultHeight =
+        height || Platform.OS === 'web'
+          ? 45
+          : defaultTheme?.spacing?.SPACING_45;
+
       return (
         <View
           ref={ref}
@@ -144,7 +159,7 @@ const Header: FunctionComponent<HeaderProps> = forwardRef<any, HeaderProps>(
             styles.wrapper,
             {
               backgroundColor,
-              height: height || defaultHeight,
+              height: defaultHeight,
               paddingTop: unsafe ? safeAreaTop : 0,
             },
             style,
@@ -164,12 +179,12 @@ const styles = StyleSheet.create({
   buttonBackContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingLeft: defaultTheme.spacing.SPACING_10,
+    paddingLeft: Platform.OS === 'web' ? 10 : defaultTheme.spacing.SPACING_10,
   },
   rightButtonContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingRight: defaultTheme.spacing.SPACING_10,
+    paddingRight: Platform.OS === 'web' ? 10 : defaultTheme.spacing.SPACING_10,
   },
   wrapper: {
     flexDirection: 'row',
@@ -187,7 +202,7 @@ const styles = StyleSheet.create({
   },
   labelText: {
     fontWeight: '600',
-    fontSize: defaultTheme.fontSizes.FONT_16,
+    fontSize: Platform.OS === 'web' ? 16 : defaultTheme.fontSizes.FONT_16,
   },
   rightWrapper: {
     flex: 0.22,
