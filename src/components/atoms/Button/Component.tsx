@@ -1,4 +1,4 @@
-import React, { forwardRef, FC, ReactNode } from 'react';
+import React, { forwardRef, FC } from 'react';
 import {
   Text,
   TouchableOpacity,
@@ -19,7 +19,6 @@ export type ButtonProps = PropsWithRef<{
   disabled?: boolean;
   loading?: boolean;
   onPress?: (event: GestureResponderEvent) => void;
-  children?: ReactNode;
 }>;
 
 const Button: FC<ButtonProps> = forwardRef<any, ButtonProps>(
