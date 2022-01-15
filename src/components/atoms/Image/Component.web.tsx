@@ -1,6 +1,6 @@
 import React, { FC, forwardRef } from 'react';
 import { Image as RnImage, ImageProps as RnImageProps } from 'react-native';
-import FastImage, { FastImageProps } from 'react-native-fast-image';
+import type { FastImageProps } from 'react-native-fast-image';
 import type { PropsWithRef } from '../../../type';
 
 export type ImageProps = PropsWithRef<
@@ -12,11 +12,9 @@ export type ImageProps = PropsWithRef<
 >;
 
 const Image: FC<ImageProps> = forwardRef<any, ImageProps>(
-  ({ style, resizeMode, fastImage, uri, ...props }, ref) => {
-    let Component = fastImage ? FastImage : RnImage;
-
+  ({ style, resizeMode, uri, ...props }, ref) => {
     return (
-      <Component
+      <RnImage
         ref={ref}
         style={style}
         source={{ uri }}
