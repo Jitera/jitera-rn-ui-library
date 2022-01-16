@@ -66,14 +66,12 @@ const Header: FunctionComponent<HeaderProps> = forwardRef<any, HeaderProps>(
     ref
   ) => {
     const defaultLeftIconSize =
-      leftIconSize || Platform.OS === 'web'
-        ? 24
-        : defaultTheme.fontSizes.FONT_24;
+      leftIconSize ||
+      (Platform.OS === 'web' ? 24 : defaultTheme.fontSizes.FONT_24);
 
     const defaultRightIconSize =
-      rightIconSize || Platform.OS === 'web'
-        ? 24
-        : defaultTheme.fontSizes.FONT_24;
+      rightIconSize ||
+      (Platform.OS === 'web' ? 24 : defaultTheme.fontSizes.FONT_24);
 
     const onPressBack = () => {
       if (onBackPress) {
@@ -148,9 +146,8 @@ const Header: FunctionComponent<HeaderProps> = forwardRef<any, HeaderProps>(
 
     const renderInside = () => {
       const defaultHeight =
-        height || Platform.OS === 'web'
-          ? 45
-          : defaultTheme?.spacing?.SPACING_45;
+        height ||
+        (Platform.OS === 'web' ? 45 : defaultTheme?.spacing?.SPACING_45);
 
       return (
         <View
