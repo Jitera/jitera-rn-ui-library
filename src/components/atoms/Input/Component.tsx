@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: 'e1e8ee',
+    borderColor: '#e1e8ee',
     marginTop: 10,
     borderRadius: 5,
     flex: 1,
