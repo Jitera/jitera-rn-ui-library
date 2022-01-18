@@ -1024,7 +1024,7 @@
     chalk "^4.0.0"
 
 "@jitera/jitera-rn-ui-library@../":
-  version "0.0.10-alpha"
+  version "0.0.11-alpha"
   dependencies:
     "@expo/vector-icons" "^12.0.5"
     color "^4.0.1"
