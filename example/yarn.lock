@@ -7174,7 +7174,7 @@ jimp-compact@0.16.1:
   integrity sha512-dZ6Ra7u1G8c4Letq/B5EzAxj4tLFHL+cGtdpR+PVm4yzPDj+lCk+AbivWt1eOM+ikzkowtyV7qSqX6qr3t71Ww==
 
 jitera-rn-ui@../:
-  version "0.0.4-alpha"
+  version "0.0.9-alpha"
   dependencies:
     "@expo/vector-icons" "^12.0.5"
     color "^4.0.1"
@@ -7182,6 +7182,7 @@ jitera-rn-ui@../:
     expo-font "^10.0.3"
     hoist-non-react-statics "^3.3.2"
     react-native-confirmation-code-field "^7.1.0"
+    react-native-fast-image "^8.5.11"
     react-native-safe-area-context "^3.3.2"
     react-native-size-matters "^0.4.0"
     react-native-vector-icons "^9.0.0"
@@ -10062,6 +10063,11 @@ react-native-confirmation-code-field@^7.1.0:
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/react-native-confirmation-code-field/-/react-native-confirmation-code-field-7.2.0.tgz#d0f23476209a4d03c8edf6b888c6c41a91360fc2"
   integrity sha512-jnNLvU7XPdPAcPpJAeYAlLpNsXmz7eTN3j9gOEeBJujrLj4n81wCKPFvwZ0crycawxh8UhqE/0df6274yMiIeg==
+
+react-native-fast-image@^8.5.11:
+  version "8.5.11"
+  resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-8.5.11.tgz#e3dc969d0e4e8df026646bf18194465aa55cbc2b"
+  integrity sha512-cNW4bIJg3nvKaheG8vGMfqCt5LMWX9MS5+wMudgKIHbGO51spRr4sgnlhVgwHLcZ5aeNOVJ8CPRxDIWKRq/0QA==
 
 react-native-safe-area-context@3.2.0:
   version "3.2.0"
