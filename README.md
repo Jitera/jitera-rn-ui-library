@@ -1,5 +1,7 @@
 ## Jitera React Native UI public library
 
+A public React Native library providing UI components and making it simple for you to build mobile application
+
 ## Dependences
 
 ### require
