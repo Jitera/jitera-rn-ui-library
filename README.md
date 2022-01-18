@@ -1,3 +1,5 @@
+## Jitera React Native UI public library
+
 ## Dependences
 
 ### require
