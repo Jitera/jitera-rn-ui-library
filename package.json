@@ -74,7 +74,7 @@
   "peerDependencies": {
     "react": "*",
     "react-dom": "*",
-    "react-native": "*"
+    "react-native-webview": "*"
   },
   "jest": {
     "preset": "react-native",
