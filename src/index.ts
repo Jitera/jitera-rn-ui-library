@@ -8,6 +8,7 @@ import Icon, { IconProps } from './components/atoms/Icon';
 import Header, { HeaderProps } from './components/atoms/Header';
 import OTPInput, { OTPInputProps } from './components/atoms/OTPInput';
 import Divider, { DividerProps } from './components/atoms/Divider';
+import WebView, { WebViewProps } from './components/atoms/WebView';
 
 import CommonLoading, {
   CommonLoadingProps,
@@ -64,6 +65,7 @@ export {
   CommonLoading,
   Toast,
   Modal,
+  WebView,
 };
 
 // Atoms Components Props exports
@@ -81,6 +83,7 @@ export type {
   CommonLoadingProps,
   ToastProps,
   ModalProps,
+  WebViewProps,
 };
 
 export default components;
