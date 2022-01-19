@@ -13,6 +13,7 @@ import OTPInputViews from '~/views/OTPInput';
 import PageViews from '~/views/Page';
 import TextViews from '~/views/Text';
 import ViewViews from '~/views/View';
+import WebViewViews from '~/views/WebView';
 
 const Stack = createNativeStackNavigator();
 
@@ -31,6 +32,7 @@ const App = () => {
         <Stack.Screen name="Page" component={PageViews} />
         <Stack.Screen name="Text" component={TextViews} />
         <Stack.Screen name="View" component={ViewViews} />
+        <Stack.Screen name="WebView" component={WebViewViews} />
       </Stack.Navigator>
     </NavigationContainer>
   );
