@@ -7,7 +7,9 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "add-library": "yarn remove @jitera/jitera-rn-ui-library && yarn cache clean && yarn add ../",
+    "reset": "watchman watch-del '/Users/justinphan/www/jitera-rn-ui-library/example' ; watchman watch-project '/Users/justinphan/www/jitera-rn-ui-library/example'"
   },
   "dependencies": {
     "@jitera/jitera-rn-ui-library": "../",

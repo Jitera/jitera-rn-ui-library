@@ -5,34 +5,22 @@ import getIconType from './getIconType';
 import getIconStyle from './getIconStyle';
 import type { PropsWithRef } from 'src/type';
 
-export type IconType =
-  | 'material'
-  | 'material-community'
-  | 'simple-line-icon'
-  | 'zocial'
-  | 'font-awesome'
-  | 'octicon'
-  | 'ionicon'
-  | 'foundation'
-  | 'evilicon'
-  | 'entypo'
-  | 'antdesign'
-  | 'font-awesome-5'
-  | 'Zocial'
-  | 'Octicons'
-  | 'MaterialIcons'
-  | 'MaterialCommunityIcons'
-  | 'Ionicons'
-  | 'Foundation'
-  | 'EvilIcons'
-  | 'Entypo'
-  | 'FontAwesome'
-  | 'FontAwesome5'
-  | 'SimpleLineIcons'
-  | 'Feather'
-  | 'AntDesign'
-  | 'Fontisto'
-  | string;
+export enum IconType {
+  Zocial = 'Zocial',
+  Octicons = 'Octicons',
+  MaterialIcons = 'MaterialIcons',
+  MaterialCommunityIcons = 'MaterialCommunityIcons',
+  Ionicons = 'Ionicons',
+  Foundation = 'Foundation',
+  EvilIcons = 'EvilIcons',
+  Entypo = 'Entypo',
+  FontAwesome = 'FontAwesome',
+  FontAwesome5 = 'FontAwesome5',
+  SimpleLineIcons = 'SimpleLineIcons',
+  Feather = 'Feather',
+  AntDesign = 'AntDesign',
+  Fontisto = 'Fontisto',
+}
 
 export type IconProps = PropsWithRef<
   VectorIconProps & {
