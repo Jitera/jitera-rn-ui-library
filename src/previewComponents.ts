@@ -8,7 +8,7 @@ import Icon from './components/atoms/Icon/Component';
 import Header from './components/atoms/Header/Component';
 import OTPInput from './components/atoms/OTPInput/Component';
 import Divider from './components/atoms/Divider/Component';
-import WebView from './components/atoms/WebView';
+import WebView from './components/atoms/WebView/Component';
 
 export default {
   Button,
