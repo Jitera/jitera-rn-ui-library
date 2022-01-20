@@ -7,6 +7,7 @@ import type {
   IconProps,
   PageProps,
   DividerProps,
+  WebViewProps,
 } from '../';
 import type {
   ModalProps,
@@ -47,6 +48,7 @@ export interface FullTheme {
   fonts: Partial<FontTypes>;
   safeArea: Partial<SafeAreaSize>;
   Divider: Partial<DividerProps>;
+  WebView: Partial<WebViewProps>;
 }
 
 export type Theme<T = any> = Partial<FullTheme> & T;
