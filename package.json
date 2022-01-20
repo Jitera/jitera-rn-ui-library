@@ -26,7 +26,7 @@
     "test": "jest",
     "typescript": "tsc --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
-    "prepare": "bob build",
+    "prepare": "rm -rf lib && bob build",
     "release": "release-it",
     "example": "yarn --cwd example",
     "pods": "cd example && pod-install --quiet",
@@ -57,6 +57,7 @@
     "@types/jest": "^26.0.0",
     "@types/react": "^16.9.19",
     "@types/react-native": "0.62.13",
+    "@types/react-native-snap-carousel": "^3.8.5",
     "babel-loader": "^8.2.3",
     "commitlint": "^11.0.0",
     "eslint": "^7.2.0",
@@ -167,6 +168,7 @@
     "react-native-fast-image": "^8.5.11",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-size-matters": "^0.4.0",
+    "react-native-snap-carousel": "^3.9.1",
     "react-native-vector-icons": "^9.0.0"
   },
   "directories": {

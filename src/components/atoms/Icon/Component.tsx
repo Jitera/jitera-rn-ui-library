@@ -1,5 +1,5 @@
 import React, { FunctionComponent, forwardRef } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import type { IconProps as VectorIconProps } from 'react-native-vector-icons';
 import getIconType from './getIconType';
 import getIconStyle from './getIconStyle';
@@ -37,16 +37,17 @@ const Icon: FunctionComponent<IconProps> = forwardRef<any, IconProps>(
     const iconSpecificStyle = getIconStyle(type, {});
 
     return (
-      <IconComponent
-        ref={ref}
-        testID="iconIcon"
-        style={StyleSheet.flatten([styles.icon, style && style])}
-        size={size}
-        name={name}
-        color={color}
-        {...iconSpecificStyle}
-        {...props}
-      />
+      <View ref={ref} style={style}>
+        <IconComponent
+          testID="iconIcon"
+          style={StyleSheet.flatten([styles.icon])}
+          size={size}
+          name={name}
+          color={color}
+          {...iconSpecificStyle}
+          {...props}
+        />
+      </View>
     );
   }
 );

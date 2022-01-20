@@ -1,107 +1,59 @@
-import React, { useRef, useState, forwardRef, FC } from 'react';
+import React, { forwardRef, FC, useCallback, useState } from 'react';
 import {
-  FlatList,
   View,
-  ListRenderItemInfo,
-  ViewToken,
   Image,
-  LayoutChangeEvent,
   ViewStyle,
-  ImageResizeMode,
   StyleSheet,
   ImageSourcePropType,
+  StyleProp,
+  LayoutChangeEvent,
 } from 'react-native';
 import type { PropsWithRef } from '../../../type';
-import CarouselIndicator, { IndicatorStyle } from './Indicator';
 
-export type CarouselProps = PropsWithRef<{
-  separatorWidth?: number;
-  data: Array<ImageSourcePropType>;
-  imageResizeMode?: ImageResizeMode;
-  decelerationRate?: 'fast' | 'normal' | number;
-  indicatorStyles?: IndicatorStyle;
-  style?: ViewStyle;
-}>;
+import SCarousel, {
+  CarouselProps as SCarouselProps,
+  Pagination,
+} from 'react-native-snap-carousel';
+
+export type CarouselProps = PropsWithRef<
+  Omit<SCarouselProps<ImageSourcePropType>, 'renderItem'> & {
+    style?: StyleProp<ViewStyle>;
+  }
+>;
 
 const Carousel: FC<CarouselProps> = forwardRef<any, CarouselProps>(
-  (
-    {
-      style,
-      separatorWidth = 0,
-      data,
-      imageResizeMode = 'stretch',
-      decelerationRate = 'fast',
-      indicatorStyles,
-    },
-    ref
-  ) => {
-    const [index, setIndex] = useState<number>(0);
-    const slider = useRef<FlatList>(null);
-    const [totalItemWidth, setTotalItemWidth] = useState<number>();
+  ({ data, style = {}, ...props }, ref) => {
+    const [sliderWidth, setSliderWidth] = useState(1);
+    const [activeSlide, setActiveSlide] = useState(0);
 
-    const onViewableItemsChangedRef = useRef(
-      (info: {
-        viewableItems: Array<ViewToken>;
-        changed: Array<ViewToken>;
-      }) => {
-        const { viewableItems } = info;
-
-        if (viewableItems.length > 0) {
-          setIndex(viewableItems[0].index || 0);
-        }
-      }
+    const renderItem = useCallback(
+      ({ item }) => (
+        <Image source={item} style={styles.imageItem} resizeMode="stretch" />
+      ),
+      []
     );
 
-    const viewabilityConfigRef = useRef({
-      viewAreaCoveragePercentThreshold: 50,
-    });
-
-    const renderSeparator = () => <View style={{ width: separatorWidth }} />;
-    const renderItem = (params: ListRenderItemInfo<ImageSourcePropType>) => {
-      return (
-        <View
-          style={StyleSheet.flatten([
-            { width: totalItemWidth },
-            styles.containerItem,
-          ])}
-        >
-          <Image
-            resizeMode={imageResizeMode}
-            style={styles.imageItem}
-            source={params.item}
-          />
-        </View>
-      );
-    };
-    const handleLayout = (e: LayoutChangeEvent) => {
-      const {
-        nativeEvent: {
-          layout: { width },
-        },
-      } = e;
-
-      setTotalItemWidth(width + separatorWidth);
-    };
+    const onLayout = useCallback((event: LayoutChangeEvent) => {
+      const { width } = event.nativeEvent.layout;
+      setSliderWidth(width);
+    }, []);
 
     return (
-      <View ref={ref} style={style} onLayout={handleLayout}>
-        <FlatList
-          ref={slider}
-          horizontal
-          snapToInterval={totalItemWidth}
-          decelerationRate={decelerationRate}
+      <View ref={ref} style={style} onLayout={onLayout}>
+        <SCarousel
+          {...props}
+          itemWidth={sliderWidth}
+          sliderWidth={sliderWidth}
+          onSnapToItem={(index) => setActiveSlide(index)}
           data={data}
           renderItem={renderItem}
-          showsHorizontalScrollIndicator={false}
-          ItemSeparatorComponent={renderSeparator}
-          keyExtractor={(item, i) => `${item}_${i}`}
-          onViewableItemsChanged={onViewableItemsChangedRef.current}
-          viewabilityConfig={viewabilityConfigRef.current}
         />
-        <CarouselIndicator
-          totalItems={data.length}
-          currentIndex={index}
-          {...indicatorStyles}
+        <Pagination
+          dotsLength={data.length}
+          activeDotIndex={activeSlide}
+          dotStyle={styles.dotStyle}
+          inactiveDotOpacity={0.4}
+          inactiveDotScale={0.6}
         />
       </View>
     );
@@ -113,8 +65,12 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  containerItem: {
-    height: '100%',
+  dotStyle: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginHorizontal: 8,
+    backgroundColor: '#000000',
   },
 });
 
