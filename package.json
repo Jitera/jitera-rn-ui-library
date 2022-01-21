@@ -1,6 +1,6 @@
 {
   "name": "@jitera/jitera-rn-ui-library",
-  "version": "0.0.13-alpha",
+  "version": "0.0.14-alpha",
   "description": "atoms and component for rn template project and web",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -21,8 +21,7 @@
     "!**/__fixtures__",
     "!**/__mocks__"
   ],
-  "scripts": {
-    "preinstall": "rm -rf node_modules",
+  "scripts": {    
     "test": "jest",
     "typescript": "tsc --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
@@ -57,7 +56,6 @@
     "@types/jest": "^26.0.0",
     "@types/react": "^16.9.19",
     "@types/react-native": "0.62.13",
-    "@types/react-native-snap-carousel": "^3.8.5",
     "babel-loader": "^8.2.3",
     "commitlint": "^11.0.0",
     "eslint": "^7.2.0",
@@ -168,8 +166,8 @@
     "react-native-fast-image": "^8.5.11",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-size-matters": "^0.4.0",
-    "react-native-snap-carousel": "^3.9.1",
-    "react-native-vector-icons": "^9.0.0"
+    "react-native-vector-icons": "^9.0.0",
+    "react-native-web-swiper": "^2.2.2"
   },
   "directories": {
     "example": "example",

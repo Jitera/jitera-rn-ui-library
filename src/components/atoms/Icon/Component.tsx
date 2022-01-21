@@ -37,10 +37,10 @@ const Icon: FunctionComponent<IconProps> = forwardRef<any, IconProps>(
     const iconSpecificStyle = getIconStyle(type, {});
 
     return (
-      <View ref={ref} style={style}>
+      <View ref={ref} style={StyleSheet.flatten([styles.container, style])}>
         <IconComponent
           testID="iconIcon"
-          style={StyleSheet.flatten([styles.icon])}
+          style={styles.icon}
           size={size}
           name={name}
           color={color}
@@ -53,6 +53,9 @@ const Icon: FunctionComponent<IconProps> = forwardRef<any, IconProps>(
 );
 
 const styles = StyleSheet.create({
+  container: {
+    alignSelf: 'flex-start',
+  },
   icon: { backgroundColor: 'transparent' },
 });
 
