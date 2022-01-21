@@ -34,13 +34,12 @@ const Carousel: FC<CarouselProps> = forwardRef<any, CarouselProps>(
         >
           {data.map((source, i) => (
             <View style={styles.slideContainer} key={i}>
-              <Image                
+              <Image
                 source={source}
                 style={styles.imageItem}
                 resizeMode="stretch"
               />
             </View>
-            
           ))}
         </Swiper>
       </View>
@@ -54,8 +53,8 @@ const styles = StyleSheet.create({
   },
   slideContainer: {
     flex: 1,
-    alignItems:"center",
-    justifyContent:"center"
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   imageItem: {
     width: '100%',
