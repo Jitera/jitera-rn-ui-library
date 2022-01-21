@@ -7,7 +7,9 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "add-library": "yarn cache clean @jitera/jitera-rn-ui-library && yarn add ../",
+    "reset": "watchman watch-del-all"
   },
   "dependencies": {
     "@jitera/jitera-rn-ui-library": "../",

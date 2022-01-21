@@ -1,4 +1,4 @@
-import type { IconType } from './Component';
+import { IconType } from './Component';
 
 const customIcons: any = {};
 
@@ -8,69 +8,47 @@ export const registerCustomIconType = (id: string, customIcon: any) => {
 
 export default (type: IconType): any => {
   switch (type) {
-    case 'Zocial':
-    case 'zocial':
+    case IconType.Zocial:
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       return require('react-native-vector-icons/Zocial').default;
-    case 'Octicons':
-    case 'octicon':
+    case IconType.Octicons:
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       return require('react-native-vector-icons/Octicons').default;
-    case 'MaterialIcons':
-    case 'material':
+    case IconType.MaterialIcons:
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       return require('react-native-vector-icons/MaterialIcons').default;
-    case 'MaterialCommunityIcons':
-    case 'materialcommunity':
-    case 'material-community':
+    case IconType.MaterialCommunityIcons:
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       return require('react-native-vector-icons/MaterialCommunityIcons')
         .default;
-    case 'Ionicons':
-    case 'ionicon':
-      console.log('Ionicons');
+    case IconType.Ionicons:
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       return require('react-native-vector-icons/Ionicons').default;
-    case 'Foundation':
-    case 'foundation':
+    case IconType.Foundation:
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       return require('react-native-vector-icons/Foundation').default;
-    case 'EvilIcons':
-    case 'evilicon':
+    case IconType.EvilIcons:
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       return require('react-native-vector-icons/EvilIcons').default;
-    case 'Entypo':
-    case 'entypo':
+    case IconType.Entypo:
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       return require('react-native-vector-icons/Entypo').default;
-    case 'FontAwesome':
-    case 'fontawesome':
-    case 'font-awesome':
+    case IconType.FontAwesome:
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       return require('react-native-vector-icons/FontAwesome').default;
-    case 'FontAwesome5':
-    case 'fontawesome-5':
-    case 'font-awesome-5':
+    case IconType.FontAwesome5:
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       return require('react-native-vector-icons/FontAwesome5').default;
-    case 'SimpleLineIcons':
-    case 'simplelineicon':
-    case 'simpleline-icon':
-    case 'simple-line-icon':
+    case IconType.SimpleLineIcons:
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       return require('react-native-vector-icons/SimpleLineIcons').default;
-    case 'Feather':
-    case 'feather':
+    case IconType.Feather:
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       return require('react-native-vector-icons/Feather').default;
-    case 'AntDesign':
-    case 'antDesign':
-    case 'antdesign':
-    case 'ant-design':
+    case IconType.AntDesign:
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       return require('react-native-vector-icons/AntDesign').default;
-    case 'Fontisto':
-    case 'fontisto':
+    case IconType.Fontisto:
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       return require('react-native-vector-icons/Fontisto').default;
     default:

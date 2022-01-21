@@ -1,38 +1,26 @@
 import React, { FunctionComponent, forwardRef } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import type { IconProps as VectorIconProps } from 'react-native-vector-icons';
 import getIconType from './getIconType';
 import getIconStyle from './getIconStyle';
 import type { PropsWithRef } from 'src/type';
 
-export type IconType =
-  | 'material'
-  | 'material-community'
-  | 'simple-line-icon'
-  | 'zocial'
-  | 'font-awesome'
-  | 'octicon'
-  | 'ionicon'
-  | 'foundation'
-  | 'evilicon'
-  | 'entypo'
-  | 'antdesign'
-  | 'font-awesome-5'
-  | 'Zocial'
-  | 'Octicons'
-  | 'MaterialIcons'
-  | 'MaterialCommunityIcons'
-  | 'Ionicons'
-  | 'Foundation'
-  | 'EvilIcons'
-  | 'Entypo'
-  | 'FontAwesome'
-  | 'FontAwesome5'
-  | 'SimpleLineIcons'
-  | 'Feather'
-  | 'AntDesign'
-  | 'Fontisto'
-  | string;
+export enum IconType {
+  Zocial = 'Zocial',
+  Octicons = 'Octicons',
+  MaterialIcons = 'MaterialIcons',
+  MaterialCommunityIcons = 'MaterialCommunityIcons',
+  Ionicons = 'Ionicons',
+  Foundation = 'Foundation',
+  EvilIcons = 'EvilIcons',
+  Entypo = 'Entypo',
+  FontAwesome = 'FontAwesome',
+  FontAwesome5 = 'FontAwesome5',
+  SimpleLineIcons = 'SimpleLineIcons',
+  Feather = 'Feather',
+  AntDesign = 'AntDesign',
+  Fontisto = 'Fontisto',
+}
 
 export type IconProps = PropsWithRef<
   VectorIconProps & {
@@ -49,21 +37,25 @@ const Icon: FunctionComponent<IconProps> = forwardRef<any, IconProps>(
     const iconSpecificStyle = getIconStyle(type, {});
 
     return (
-      <IconComponent
-        ref={ref}
-        testID="iconIcon"
-        style={StyleSheet.flatten([styles.icon, style && style])}
-        size={size}
-        name={name}
-        color={color}
-        {...iconSpecificStyle}
-        {...props}
-      />
+      <View ref={ref} style={StyleSheet.flatten([styles.container, style])}>
+        <IconComponent
+          testID="iconIcon"
+          style={styles.icon}
+          size={size}
+          name={name}
+          color={color}
+          {...iconSpecificStyle}
+          {...props}
+        />
+      </View>
     );
   }
 );
 
 const styles = StyleSheet.create({
+  container: {
+    alignSelf: 'flex-start',
+  },
   icon: { backgroundColor: 'transparent' },
 });
 
