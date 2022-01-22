@@ -77,7 +77,8 @@
     "react": "*",
     "react-dom": "*",
     "react-native": "*",
-    "react-native-webview": "*"
+    "react-native-webview": "*",
+    "react-native-image-picker": "*"
   },
   "jest": {
     "preset": "react-native",
