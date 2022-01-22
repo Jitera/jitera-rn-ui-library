@@ -14,6 +14,7 @@ import PageViews from '~/views/Page';
 import TextViews from '~/views/Text';
 import ViewViews from '~/views/View';
 import WebViewViews from '~/views/WebView';
+import ImagePickerViews from '~/views/ImagePicker';
 import CarouselViews from '~/views/Carousel';
 
 const Stack = createNativeStackNavigator();
@@ -34,6 +35,7 @@ const App = () => {
         <Stack.Screen name="Text" component={TextViews} />
         <Stack.Screen name="View" component={ViewViews} />
         <Stack.Screen name="WebView" component={WebViewViews} />
+        <Stack.Screen name="ImagePicker" component={ImagePickerViews} />
         <Stack.Screen name="Carousel" component={CarouselViews} />
       </Stack.Navigator>
     </NavigationContainer>

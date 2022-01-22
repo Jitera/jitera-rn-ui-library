@@ -37,7 +37,14 @@ const HomeView: React.FC = () => {
       <ButtonView title="Page" onPress={() => navigation.navigate('Page')} />
       <ButtonView title="Text" onPress={() => navigation.navigate('Text')} />
       <ButtonView title="View" onPress={() => navigation.navigate('View')} />
-      <ButtonView title="WebView" onPress={() => navigation.navigate('WebView')} />
+      <ButtonView
+        title="WebView"
+        onPress={() => navigation.navigate('WebView')}
+      />
+      <ButtonView
+        title="ImagePicker"
+        onPress={() => navigation.navigate('ImagePicker')}
+      />
       <ButtonView
         title="Carousel"
         onPress={() => navigation.navigate('Carousel')}
