@@ -9,6 +9,7 @@ import Header from './components/atoms/Header/Component';
 import OTPInput from './components/atoms/OTPInput/Component';
 import Divider from './components/atoms/Divider/Component';
 import WebView from './components/atoms/WebView/Component';
+import ImagePicker from './components/atoms/ImagePicker/Component';
 import Carousel from './components/molecules/Carousel/Component';
 
 export default {
@@ -23,5 +24,6 @@ export default {
   OTPInput,
   Divider,
   WebView,
+  ImagePicker,
   Carousel,
 };

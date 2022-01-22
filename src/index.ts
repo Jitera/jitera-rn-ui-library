@@ -9,6 +9,7 @@ import Header, { HeaderProps } from './components/atoms/Header';
 import OTPInput, { OTPInputProps } from './components/atoms/OTPInput';
 import Divider, { DividerProps } from './components/atoms/Divider';
 import WebView, { WebViewProps } from './components/atoms/WebView';
+import ImagePicker, { ImagePickerProps } from './components/atoms/ImagePicker';
 import Carousel, { CarouselProps } from './components/molecules/Carousel';
 
 import CommonLoading, {
@@ -67,6 +68,7 @@ export {
   Toast,
   Modal,
   WebView,
+  ImagePicker,
   Carousel,
 };
 
@@ -86,6 +88,7 @@ export type {
   ToastProps,
   ModalProps,
   WebViewProps,
+  ImagePickerProps,
   CarouselProps,
 };
 
