@@ -1,10 +1,23 @@
 import React from 'react';
-import {StyleSheet, SafeAreaView, ScrollView, View} from 'react-native';
+import {
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
+  View,
+  ViewStyle,
+  StyleProp,
+} from 'react-native';
 
-const BaseLayout: React.FC = ({children}) => (
+export type BaseLayoutProps = {
+  viewStyle?: StyleProp<ViewStyle>;
+};
+
+const BaseLayout: React.FC<BaseLayoutProps> = ({children, viewStyle}) => (
   <SafeAreaView>
     <ScrollView contentInsetAdjustmentBehavior="automatic">
-      <View style={style.view}>{children}</View>
+      <View style={StyleSheet.flatten([style.view, viewStyle && viewStyle])}>
+        {children}
+      </View>
     </ScrollView>
   </SafeAreaView>
 );

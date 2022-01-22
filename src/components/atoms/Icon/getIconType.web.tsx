@@ -1,4 +1,4 @@
-import type { IconType } from './Component';
+import { IconType } from './Component';
 import {
   Zocial,
   Entypo,
@@ -24,68 +24,46 @@ export const registerCustomIconType = (id: string, customIcon: any) => {
 
 export default (type: IconType): any => {
   switch (type) {
-    case 'Zocial':
-    case 'zocial':
+    case IconType.Zocial:
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       return Zocial;
-    case 'Octicons':
-    case 'octicon':
+    case IconType.Octicons:
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       return Octicons;
-    case 'MaterialIcons':
-    case 'material':
+    case IconType.MaterialIcons:
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       return MaterialIcons;
-    case 'MaterialCommunityIcons':
-    case 'materialcommunity':
-    case 'material-community':
+    case IconType.MaterialCommunityIcons:
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       return MaterialCommunityIcons;
-    case 'Ionicons':
-    case 'ionicon':
-      console.log('Ionicons');
+    case IconType.Ionicons:
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       return Ionicons;
-    case 'Foundation':
-    case 'foundation':
+    case IconType.Foundation:
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       return Foundation;
-    case 'EvilIcons':
-    case 'evilicon':
+    case IconType.EvilIcons:
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       return EvilIcons;
-    case 'Entypo':
-    case 'entypo':
+    case IconType.Entypo:
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       return Entypo;
-    case 'FontAwesome':
-    case 'fontawesome':
-    case 'font-awesome':
+    case IconType.FontAwesome:
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       return FontAwesome;
-    case 'FontAwesome5':
-    case 'fontawesome-5':
-    case 'font-awesome-5':
+    case IconType.FontAwesome5:
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       return FontAwesome5;
-    case 'SimpleLineIcons':
-    case 'simplelineicon':
-    case 'simpleline-icon':
-    case 'simple-line-icon':
+    case IconType.SimpleLineIcons:
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       return SimpleLineIcons;
-    case 'Feather':
-    case 'feather':
+    case IconType.Feather:
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       return Feather;
-    case 'AntDesign':
-    case 'antDesign':
-    case 'antdesign':
-    case 'ant-design':
+    case IconType.AntDesign:
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       return AntDesign;
-    case 'Fontisto':
-    case 'fontisto':
+    case IconType.Fontisto:
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       return Fontisto;
     default:

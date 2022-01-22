@@ -9,6 +9,7 @@ import Header, { HeaderProps } from './components/atoms/Header';
 import OTPInput, { OTPInputProps } from './components/atoms/OTPInput';
 import Divider, { DividerProps } from './components/atoms/Divider';
 import WebView, { WebViewProps } from './components/atoms/WebView';
+import Carousel, { CarouselProps } from './components/molecules/Carousel';
 
 import CommonLoading, {
   CommonLoadingProps,
@@ -66,6 +67,7 @@ export {
   Toast,
   Modal,
   WebView,
+  Carousel,
 };
 
 // Atoms Components Props exports
@@ -84,6 +86,7 @@ export type {
   ToastProps,
   ModalProps,
   WebViewProps,
+  CarouselProps,
 };
 
 export default components;
