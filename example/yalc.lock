@@ -1,0 +1,11 @@
+{
+  "version": "v1",
+  "packages": {
+    "@jitera/jitera-rn-ui-library": {
+      "version": "0.0.11-alpha-30",
+      "signature": "589b773d08e77ff39fd6c8229e1767ab",
+      "file": true,
+      "replaced": "file:../"
+    }
+  }
+}

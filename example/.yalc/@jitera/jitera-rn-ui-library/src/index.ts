@@ -8,8 +8,6 @@ import Icon, { IconProps } from './components/atoms/Icon';
 import Header, { HeaderProps } from './components/atoms/Header';
 import OTPInput, { OTPInputProps } from './components/atoms/OTPInput';
 import Divider, { DividerProps } from './components/atoms/Divider';
-import WebView, { WebViewProps } from './components/atoms/WebView';
-import Carousel, { CarouselProps } from './components/molecules/Carousel';
 import DateTimePicker, {
   DateTimePickerProps,
 } from './components/atoms/DateTimePicker';
@@ -69,8 +67,6 @@ export {
   CommonLoading,
   Toast,
   Modal,
-  WebView,
-  Carousel,
   DateTimePicker,
 };
 
@@ -89,8 +85,6 @@ export type {
   CommonLoadingProps,
   ToastProps,
   ModalProps,
-  WebViewProps,
-  CarouselProps,
   DateTimePickerProps,
 };
 
