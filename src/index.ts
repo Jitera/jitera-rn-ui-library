@@ -4,7 +4,7 @@ import Input, { InputProps } from './components/atoms/Input';
 import Text, { TextProps } from './components/atoms/Text';
 import Page, { PageProps } from './components/atoms/Page';
 import View, { ViewProps } from './components/atoms/View';
-import Icon, { IconProps } from './components/atoms/Icon';
+import Icon, { IconProps, IconType } from './components/atoms/Icon';
 import Header, { HeaderProps } from './components/atoms/Header';
 import OTPInput, { OTPInputProps } from './components/atoms/OTPInput';
 import Divider, { DividerProps } from './components/atoms/Divider';
@@ -91,5 +91,10 @@ export type {
   ImagePickerProps,
   CarouselProps,
 };
+
+// Atoms Components Enum exports
+export {
+  IconType
+}
 
 export default components;

@@ -32,7 +32,10 @@ export type IconProps = PropsWithRef<
 /** Icons are visual indicators usually used to describe action or intent.
  * They are also used for displaying information. */
 const Icon: FunctionComponent<IconProps> = forwardRef<any, IconProps>(
-  ({ type = 'material', name, size = 24, color, style, ...props }, ref) => {
+  (
+    { type = IconType.MaterialIcons, name, size = 24, color, style, ...props },
+    ref
+  ) => {
     const IconComponent = getIconType(type);
     const iconSpecificStyle = getIconStyle(type, {});
 
