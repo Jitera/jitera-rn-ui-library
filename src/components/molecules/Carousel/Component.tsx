@@ -6,6 +6,7 @@ import {
   StyleSheet,
   ImageSourcePropType,
   StyleProp,
+  ImageResizeMode,
 } from 'react-native';
 import type { PropsWithRef } from '../../../type';
 
@@ -14,16 +15,20 @@ import Swiper, { SwiperProps } from 'react-native-web-swiper';
 export type CarouselProps = PropsWithRef<
   SwiperProps & {
     data: ImageSourcePropType[];
+    resizeMode?: ImageResizeMode;
     style?: StyleProp<ViewStyle>;
   }
 >;
 
 const Carousel: FC<CarouselProps> = forwardRef<any, CarouselProps>(
-  ({ data, style = {}, ...props }, ref) => {
+  (
+    { data, resizeMode = 'stretch', style = {}, loop = true, ...props },
+    ref
+  ) => {
     return (
       <View ref={ref} style={StyleSheet.flatten([styles.container, style])}>
         <Swiper
-          loop
+          loop={loop}
           controlsProps={{
             dotsTouchable: true,
             prevPos: false,
@@ -37,7 +42,7 @@ const Carousel: FC<CarouselProps> = forwardRef<any, CarouselProps>(
               <Image
                 source={source}
                 style={styles.imageItem}
-                resizeMode="stretch"
+                resizeMode={resizeMode}
               />
             </View>
           ))}
