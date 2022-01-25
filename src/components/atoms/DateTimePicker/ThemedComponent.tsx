@@ -1,13 +1,11 @@
 import React from 'react';
-import Image, { DateTimePickerProps } from './Component';
 import type { RneFunctionComponent } from '../../../theme/helpers';
+import DateTimePicker, { DateTimePickerProps } from './Component';
 
 const ThemedDateTimePicker: RneFunctionComponent<
   Omit<DateTimePickerProps, 'ref'>
 > = (props) => {
-  return <Image {...props} />;
+  return <DateTimePicker {...props} />;
 };
-
-ThemedDateTimePicker.displayName = 'DateTimePicker';
 
 export default ThemedDateTimePicker;

@@ -15,6 +15,7 @@ import TextViews from '~/views/Text';
 import ViewViews from '~/views/View';
 import WebViewViews from '~/views/WebView';
 import CarouselViews from '~/views/Carousel';
+import DateTimePickerViews from '~/views/DateTimePicker';
 
 const Stack = createNativeStackNavigator();
 
@@ -35,6 +36,7 @@ const App = () => {
         <Stack.Screen name="View" component={ViewViews} />
         <Stack.Screen name="WebView" component={WebViewViews} />
         <Stack.Screen name="Carousel" component={CarouselViews} />
+        <Stack.Screen name="DateTimePicker" component={DateTimePickerViews} />
       </Stack.Navigator>
     </NavigationContainer>
   );
