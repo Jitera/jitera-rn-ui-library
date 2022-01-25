@@ -1,7 +1,6 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, forwardRef } from 'react';
 import {
   TextInput,
-  Animated,
   Platform,
   StyleSheet,
   ViewStyle,
@@ -9,7 +8,8 @@ import {
   TextStyle,
   TouchableOpacity,
 } from 'react-native';
-import { View, Text, Icon } from '../../..';
+import View from '../View/Component';
+import { Text, Icon } from '../../..';
 import { renderNode, patchWebProps } from '../../../theme/helpers';
 
 const renderText = (content: any, defaultProps: any, style: StyleProp<any>) =>
@@ -21,104 +21,95 @@ const renderText = (content: any, defaultProps: any, style: StyleProp<any>) =>
 export type InputProps = React.ComponentPropsWithRef<typeof TextInput> & {
   containerStyle?: StyleProp<ViewStyle>;
   disabled?: boolean;
-  disabledInputStyle?: StyleProp<TextStyle>;
-  focusInputColor?: string;
   inputContainerStyle?: StyleProp<ViewStyle>;
   inputStyle?: StyleProp<TextStyle>;
-  InputComponent?: typeof React.Component;
-  errorProps?: any;
   errorStyle?: StyleProp<TextStyle>;
   errorMessage?: string;
   label?: string | React.ReactNode;
   labelStyle?: StyleProp<TextStyle>;
-  labelProps?: any;
-  renderErrorMessage?: boolean;
   showClearText?: boolean;
   iconStyle?: StyleProp<TextStyle>;
   multiline?: boolean;
   numberOfLines?: number;
   maxLength?: number;
+  onClear?: () => void;
 };
 
-const Input: FunctionComponent<InputProps> = ({
-  containerStyle,
-  disabled,
-  disabledInputStyle,
-  inputContainerStyle,
-  InputComponent = TextInput,
-  inputStyle,
-  errorProps,
-  errorStyle,
-  errorMessage,
-  label,
-  labelStyle,
-  labelProps,
-  renderErrorMessage = true,
-  style,
-  showClearText,
-  iconStyle,
-  multiline,
-  numberOfLines,
-  maxLength,
-  ...attributes
-}) => {
-  const hideErrorMessage = !renderErrorMessage && !errorMessage;
+const Input: FunctionComponent<InputProps> = forwardRef<any, InputProps>(
+  (
+    {
+      containerStyle,
+      disabled,
+      inputContainerStyle,
+      inputStyle,
+      errorStyle,
+      errorMessage,
+      label,
+      labelStyle,
+      showClearText,
+      iconStyle,
+      multiline,
+      numberOfLines,
+      maxLength,
+      onClear,
+      ...attributes
+    },
+    ref
+  ) => {
+    const hideErrorMessage = !errorMessage;
 
-  return (
-    <View style={StyleSheet.flatten([styles.container, containerStyle])}>
-      {renderText(label, { style: labelStyle, ...labelProps }, {})}
-
-      <Animated.View
-        style={StyleSheet.flatten([
-          styles.animatedContainer,
-          inputContainerStyle,
-        ])}
+    return (
+      <View
+        ref={ref}
+        style={StyleSheet.flatten([styles.container, containerStyle])}
       >
-        <InputComponent
-          underlineColorAndroid="transparent"
-          editable={!disabled}
+        {renderText(label, { style: labelStyle }, {})}
+
+        <View
           style={StyleSheet.flatten([
-            {
-              minHeight:
-                Platform.OS === 'ios' && numberOfLines
-                  ? 25 * numberOfLines
-                  : 50,
-            },
-            styles.input,
-            inputStyle,
-            disabled && styles.disabledInput,
-            disabled && disabledInputStyle,
-            style,
+            styles.animatedContainer,
+            inputContainerStyle,
           ])}
-          multiline={multiline}
-          maxLength={maxLength}
-          numberOfLines={numberOfLines}
-          {...patchWebProps(attributes)}
-        />
-        {showClearText ? (
-          <TouchableOpacity
-            style={StyleSheet.flatten([styles.icon, iconStyle])}
-          >
-            <Icon type="AntDesign" name="close" />
-          </TouchableOpacity>
-        ) : null}
-      </Animated.View>
-      <Text
-        {...errorProps}
-        style={StyleSheet.flatten([
-          errorStyle && errorStyle,
-          hideErrorMessage && {
-            height: 0,
-            margin: 0,
-            padding: 0,
-          },
-        ])}
-      >
-        {errorMessage}
-      </Text>
-    </View>
-  );
-};
+        >
+          <TextInput
+            underlineColorAndroid="transparent"
+            editable={!disabled}
+            style={StyleSheet.flatten([
+              {
+                minHeight:
+                  Platform.OS === 'ios' && numberOfLines
+                    ? 25 * numberOfLines
+                    : 50,
+              },
+              styles.input,
+              inputStyle,
+              disabled && styles.disabledInput,
+              { paddingRight: showClearText ? 15 : 0 },
+            ])}
+            multiline={multiline}
+            maxLength={maxLength}
+            numberOfLines={numberOfLines}
+            {...patchWebProps(attributes)}
+          />
+          {showClearText ? (
+            <TouchableOpacity
+              style={StyleSheet.flatten([styles.icon, iconStyle])}
+              onPress={onClear}
+            >
+              <Icon type="AntDesign" name="close" />
+            </TouchableOpacity>
+          ) : null}
+        </View>
+
+        {!hideErrorMessage && (
+          <Text style={StyleSheet.flatten([styles.errorStyle, errorStyle])}>
+            {errorMessage}
+          </Text>
+        )}
+      </View>
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -126,6 +117,10 @@ const styles = StyleSheet.create({
   },
   disabledInput: {
     opacity: 0.5,
+  },
+  errorStyle: {
+    marginTop: 5,
+    color: '#B00020',
   },
   animatedContainer: {
     flexDirection: 'row',
