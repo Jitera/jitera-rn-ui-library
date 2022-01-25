@@ -13,9 +13,16 @@ import type { PropsWithRef } from '../../../type';
 import { defaultTheme } from '../../../theme';
 import { Text, Icon } from '../../../index';
 
+/**
+ * DateTimePicker support date/time select on iOS and Android and built on top of react-native-datetimepicker
+ * Reference: https://github.com/react-native-datetimepicker/datetimepicker
+**/
+
+type DateMode = 'date' | 'time' | 'datetime'
+
 export type DateTimePickerProps = PropsWithRef<{
   value?: Date;
-  dateMode?: 'date' | 'time' | 'datetime';
+  dateMode?: DateMode;
   confirmText?: string;
   cancelText?: string;
   onChange?: (date: any) => void;
@@ -35,11 +42,30 @@ export type DateTimePickerProps = PropsWithRef<{
   maximumDate?: Date;
   minimumDate?: Date;
   display?: 'default' | 'compact' | 'inline' | 'spinner' | 'clock' | 'calendar';
-  errorProps?: any;
   errorStyle?: StyleProp<TextStyle>;
   errorMessage?: string;
   renderErrorMessage?: boolean;
 }>;
+
+const formatDateTime = (date: Date, mode: DateMode) => {
+  const hour = date.getHours()
+  const HH = hour < 10 ? `0${hour}` : hour
+  const minute = date.getMinutes()
+  const MM = minute < 10 ? `0${minute}` : minute
+  const day = date.getDate()
+  const DD = day < 10 ? `0${day}` : day
+  const month = date.getMonth() + 1
+  const MO = month < 10 ? `0${month}` : month
+
+  if (mode === 'date') {
+    return `${DD}/${MO}/${date.getFullYear()}`;
+  }
+  
+  if (mode === 'time') {
+    return `${HH}:${MM}`;
+  }
+  return `${DD}/${MO}/${date.getFullYear()} ${HH}:${MM}`;
+};
 
 const DateTimePicker: FunctionComponent<DateTimePickerProps> = forwardRef<
   any,
@@ -49,21 +75,19 @@ const DateTimePicker: FunctionComponent<DateTimePickerProps> = forwardRef<
     {
       value,
       style,
-      display,
-      dateMode,
+      display = "spinner",
+      dateMode = "datetime",
       placeholder,
       placeholderStyle,
-      confirmText,
-      cancelText,
+      confirmText = "Confirm",
+      cancelText = "Cancel",
       onBlur,
       onChange,
       showIcon = true,
       disabled,
-      iconComponent,
       cancelButtonStyle,
       confirmButtonStyle,
       errorStyle,
-      errorProps,
       errorMessage,
       renderErrorMessage,
       ...props
@@ -84,6 +108,7 @@ const DateTimePicker: FunctionComponent<DateTimePickerProps> = forwardRef<
       if (dateMode !== 'datetime') {
         onChange(date);
         setShow(false);
+        setDate(date);
       } else if (step === 1) {
         setStep(2);
         handleOpenPicker();
@@ -109,12 +134,11 @@ const DateTimePicker: FunctionComponent<DateTimePickerProps> = forwardRef<
       if (dateMode !== 'datetime' || step === 1) {
         setDate(newDate);
       } else {
-        setDate((lastDate) => {
-          lastDate?.setHours(newDate?.getHours() || 0);
-          lastDate?.setMinutes(newDate?.getMinutes() || 0);
-          lastDate?.setSeconds(newDate?.getSeconds() || 0);
-          return lastDate;
-        });
+        const lastDate = date;
+        lastDate?.setHours(newDate?.getHours() || 0);
+        lastDate?.setMinutes(newDate?.getMinutes() || 0);
+        lastDate?.setSeconds(newDate?.getSeconds() || 0);
+        setDate(lastDate)
       }
     };
 
@@ -132,22 +156,19 @@ const DateTimePicker: FunctionComponent<DateTimePickerProps> = forwardRef<
           style={[styles.dateInput, style]}
         >
           <Text style={[styles.placeholderText, placeholderStyle]}>
-            {value ? value.toDateString() : placeholder || '--'}
+            {value ? formatDateTime(value, dateMode) : placeholder || '--'}
           </Text>
           {showIcon ? (
             <View style={styles.iconContainer}>
-              {iconComponent || (
-                <Icon
-                  color={defaultTheme?.colors?.grey3}
-                  name="calendar"
-                  type="antdesign"
-                />
-              )}
+              <Icon
+                color={defaultTheme?.colors?.grey3}
+                name="calendar"
+                type="antdesign"
+              />
             </View>
           ) : null}
         </TouchableOpacity>
         <Text
-          {...errorProps}
           style={StyleSheet.flatten([
             {
               marginTop: defaultTheme?.spacing?.SPACING_5,
@@ -186,7 +207,6 @@ const DateTimePicker: FunctionComponent<DateTimePickerProps> = forwardRef<
               </TouchableOpacity>
             </View>
             <RNDateTimePicker
-              ref={ref}
               value={date ? date : new Date()}
               timeZoneOffsetInSeconds={0}
               mode={selectedMode}
@@ -229,7 +249,6 @@ const styles = StyleSheet.create({
   modalContainer: {
     position: 'absolute',
     width: '100%',
-    height: undefined,
     bottom: 0,
     backgroundColor: defaultTheme?.colors?.white,
     borderTopLeftRadius: defaultTheme?.spacing?.SPACING_8,

@@ -8,6 +8,7 @@ import {
   ViewStyle,
   TextStyle,
   GestureResponderEvent,
+  View,
 } from 'react-native';
 import type { PropsWithRef } from '../../../type';
 import { Color } from '../../../theme/helpers';
@@ -57,15 +58,16 @@ const Button: FC<ButtonProps> = forwardRef<any, ButtonProps>(
       }
     };
 
-    return (
-      <TouchableOpacity ref={ref} style={containerStyle} onPress={handlePress}>
-        <>
-          {loading && <ActivityIndicator style={styles.loading} size="small" />}
-          {title && <Text style={titleStyle}>{title}</Text>}
-          {children}
-        </>
-      </TouchableOpacity>
-    );
+    return (<View />)
+    // return (
+    //   <TouchableOpacity ref={ref} style={containerStyle} onPress={handlePress}>
+    //     <>
+    //       {loading && <ActivityIndicator style={styles.loading} size="small" />}
+    //       {title && <Text style={titleStyle}>{title}</Text>}
+    //       {children}
+    //     </>
+    //   </TouchableOpacity>
+    // );
   }
 );
 
