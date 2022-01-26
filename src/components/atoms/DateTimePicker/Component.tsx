@@ -28,23 +28,12 @@ export type DateTimePickerProps = PropsWithRef<{
   onChange?: (date: any) => void;
   onBlur?: any;
   style?: ViewStyle;
-  placeholder?: string;
-  showIcon?: boolean;
   disabled?: boolean;
-  iconComponent?: JSX.Element;
-  placeholderStyle?: TextStyle;
   cancelButtonStyle?: TextStyle;
   confirmButtonStyle?: TextStyle;
-  locale?: string;
-  timeZoneOffsetInMinutes?: number;
-  textColor?: string;
-  themeVariant?: 'dark' | 'light';
-  maximumDate?: Date;
-  minimumDate?: Date;
   display?: 'default' | 'compact' | 'inline' | 'spinner' | 'clock' | 'calendar';
   errorStyle?: StyleProp<TextStyle>;
   errorMessage?: string;
-  renderErrorMessage?: boolean;
 }>;
 
 const formatDateTime = (date: Date, mode: DateMode) => {
@@ -77,19 +66,15 @@ const DateTimePicker: FunctionComponent<DateTimePickerProps> = forwardRef<
       style,
       display = "spinner",
       dateMode = "datetime",
-      placeholder,
-      placeholderStyle,
       confirmText = "Confirm",
       cancelText = "Cancel",
       onBlur,
       onChange,
-      showIcon = true,
       disabled,
       cancelButtonStyle,
       confirmButtonStyle,
       errorStyle,
       errorMessage,
-      renderErrorMessage,
       ...props
     },
     ref
@@ -146,7 +131,7 @@ const DateTimePicker: FunctionComponent<DateTimePickerProps> = forwardRef<
       setShow(true);
     };
 
-    const hideErrorMessage = !renderErrorMessage && !errorMessage;
+    const hideErrorMessage = !errorMessage;
 
     return (
       <>
@@ -155,18 +140,16 @@ const DateTimePicker: FunctionComponent<DateTimePickerProps> = forwardRef<
           onPress={handleOpenPicker}
           style={[styles.dateInput, style]}
         >
-          <Text style={[styles.placeholderText, placeholderStyle]}>
-            {value ? formatDateTime(value, dateMode) : placeholder || '--'}
+          <Text style={[styles.placeholderText]}>
+            {value ? formatDateTime(value, dateMode) : '--'}
           </Text>
-          {showIcon ? (
-            <View style={styles.iconContainer}>
-              <Icon
-                color={defaultTheme?.colors?.grey3}
-                name="calendar"
-                type="antdesign"
-              />
-            </View>
-          ) : null}
+          <View style={styles.iconContainer}>
+            <Icon
+              color={defaultTheme?.colors?.grey3}
+              name="calendar"
+              type="antdesign"
+            />
+          </View>
         </TouchableOpacity>
         <Text
           style={StyleSheet.flatten([
