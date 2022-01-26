@@ -21,7 +21,7 @@
     "!**/__fixtures__",
     "!**/__mocks__"
   ],
-  "scripts": {    
+  "scripts": {
     "test": "jest",
     "typescript": "tsc --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
@@ -167,7 +167,8 @@
     "react-native-safe-area-context": "^3.3.2",
     "react-native-size-matters": "^0.4.0",
     "react-native-vector-icons": "^9.0.0",
-    "react-native-web-swiper": "^2.2.2"
+    "react-native-web-swiper": "^2.2.2",
+    "react-native-webview": "^11.17.1"
   },
   "directories": {
     "example": "example",

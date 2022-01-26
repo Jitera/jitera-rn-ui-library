@@ -60,5 +60,5 @@ buck-out/
 /ios/Pods/
 
 # yalc
-.yalc
+.yalc/
 yalc.lock
