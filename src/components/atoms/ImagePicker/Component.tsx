@@ -1,54 +1,371 @@
-import React, { forwardRef } from 'react';
-import { Pressable } from 'react-native';
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import React, { useState, useRef, useCallback, useMemo } from 'react';
+import { StyleSheet, Pressable } from 'react-native';
+import deepmerge from 'deepmerge';
+import { View, Icon, IconType, Image, Text } from '../../../index';
+import {
+  ImageInfo,
+  ImagePickerOptions,
+  ImagePickerResult,
+  launchCameraAsync,
+  launchImageLibraryAsync,
+  MediaTypeOptions,
+  requestCameraPermissionsAsync,
+  requestMediaLibraryPermissionsAsync,
+} from 'expo-image-picker';
+import ScrollBottomSheet from 'react-native-scroll-bottom-sheet';
+import {
+  TapGestureHandler,
+  TapGestureHandlerGestureEvent,
+} from 'react-native-gesture-handler';
+import Animated, {
+  Extrapolate,
+  interpolate,
+  runOnJS,
+  useAnimatedGestureHandler,
+  useAnimatedStyle,
+} from 'react-native-reanimated';
 
-import type { GestureResponderEvent, View } from 'react-native';
-import type {
-  ImageLibraryOptions,
-  ImagePickerResponse,
-} from 'react-native-image-picker';
+type LauncherTypeKind = 'default' | 'camera' | 'image-library';
 
-type ImagePickerLaunchType = 'camera' | 'image-library';
-
-export type OpenPicker = (event: GestureResponderEvent) => void;
-
-export interface ImagePickerProps {
-  launchType: ImagePickerLaunchType;
-  preview: (ImagePickerResponse: ImagePickerResponse) => void;
-  options?: ImageLibraryOptions;
-  children:
-    | React.ReactNode
-    | ((childrenParam: { openPicker: OpenPicker }) => void);
+interface PickerData {
+  kind: LauncherTypeKind;
+  icon: string;
+  label: string;
 }
 
-const ImagePicker = forwardRef<View, ImagePickerProps>(
-  ({ children, preview, launchType, options, ...props }, ref) => {
-    const [imagePickerResponse, setImagePickerResponse] =
-      React.useState<ImagePickerResponse>();
+interface ErrorMessageProps {
+  errorMessage?: string;
+}
 
-    const openPicker = React.useCallback<OpenPicker>(async () => {
-      if (launchType === 'camera') {
-        setImagePickerResponse(await launchCamera(options));
-      } else if (launchType === 'image-library') {
-        setImagePickerResponse(await launchImageLibrary(options));
-      }
-    }, [launchType, options]);
+interface ImagePickerPlaceholderProps extends ErrorMessageProps {}
 
-    return (
-      <>
-        {typeof children === 'function' ? (
-          children({ openPicker })
-        ) : (
-          <Pressable ref={ref} onPress={openPicker} {...props}>
-            {children}
-          </Pressable>
-        )}
-        {preview(imagePickerResponse)}
-      </>
-    );
-  }
+interface ImagePickerImageProps extends ErrorMessageProps {
+  uri: string;
+}
+
+interface SheetRefProps {
+  sheetRef: React.RefObject<ScrollBottomSheet<PickerData>>;
+}
+
+interface BackdropProps extends SheetRefProps {
+  snapPosition: number;
+}
+
+interface BottomSheetProps extends SheetRefProps {
+  pickerData: PickerData[];
+  triggerLaunch: (type: LauncherTypeKind) => void;
+  handleSheetChange: (index: number) => void;
+}
+
+const ERROR_COLOR = '#dc2626';
+
+const CAMERA_KIND: PickerData = {
+  kind: 'camera',
+  icon: 'camera',
+  label: 'Open Camera',
+};
+const IMAGE_LIBRARY_KIND: PickerData = {
+  kind: 'image-library',
+  icon: 'image-search',
+  label: 'Select from Gallery',
+};
+
+const sharedStyleSheet = StyleSheet.create({
+  size: {
+    width: '100%',
+    height: 200,
+  },
+  appearance: {
+    backgroundColor: '#e2e8f0',
+    borderWidth: 3,
+    borderColor: '#94a3b8',
+  },
+});
+
+const styleSheet = StyleSheet.create({
+  placeholder: StyleSheet.flatten([
+    sharedStyleSheet.size,
+    sharedStyleSheet.appearance,
+    { justifyContent: 'center' },
+  ]),
+  placeholderIcon: {
+    alignSelf: 'center',
+  },
+  imageWrapper: StyleSheet.flatten([sharedStyleSheet.appearance]),
+  image: StyleSheet.flatten([sharedStyleSheet.size, { resizeMode: 'contain' }]),
+  bottomSheetItem: {
+    paddingLeft: 24,
+    paddingRight: 24,
+    paddingTop: 12,
+    paddingBottom: 12,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  bottomSheetItemText: {
+    marginLeft: 24,
+  },
+  header: {
+    alignItems: 'center',
+    backgroundColor: 'white',
+    paddingVertical: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  panelHandle: {
+    width: 40,
+    height: 2,
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    borderRadius: 4,
+  },
+  bottomSheetContent: {
+    backgroundColor: '#fff',
+  },
+  backdrop: {
+    backgroundColor: 'black',
+  },
+  errorMessage: {
+    color: ERROR_COLOR,
+    marginTop: 5,
+  },
+});
+
+const ImagePickerPlaceholder: React.FC<ImagePickerPlaceholderProps> = ({
+  errorMessage,
+}) => (
+  <View
+    style={StyleSheet.flatten([
+      styleSheet.placeholder,
+      errorMessage ? { borderColor: ERROR_COLOR } : undefined,
+    ])}
+  >
+    <Icon
+      style={styleSheet.placeholderIcon}
+      type={IconType.AntDesign}
+      name="camerao"
+      size={36}
+      color={errorMessage ? ERROR_COLOR : undefined}
+    />
+  </View>
 );
 
-ImagePicker.displayName = 'ImagePicker';
+const ImagePickerImage: React.FC<ImagePickerImageProps> = ({
+  uri,
+  errorMessage,
+}) => (
+  <View
+    style={StyleSheet.flatten([
+      styleSheet.imageWrapper,
+      errorMessage ? { borderColor: ERROR_COLOR } : undefined,
+    ])}
+  >
+    <Image source={{ uri }} style={styleSheet.image} />
+  </View>
+);
+
+const ErrorMessage: React.FC<ErrorMessageProps> = ({ errorMessage }) => (
+  <Text style={styleSheet.errorMessage}>{errorMessage}</Text>
+);
+
+const Backdrop: React.FC<BackdropProps> = ({ snapPosition, sheetRef }) => {
+  const containerAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(snapPosition, [0, 1], [0.7, 0], Extrapolate.CLAMP),
+    flex: 1,
+    display: snapPosition === 1 ? 'none' : 'flex',
+  }));
+
+  const handleOnPress = () => {
+    sheetRef.current?.snapTo(1);
+  };
+
+  const gestureHandler =
+    useAnimatedGestureHandler<TapGestureHandlerGestureEvent>(
+      {
+        onFinish: () => {
+          runOnJS(handleOnPress)();
+        },
+      },
+      [handleOnPress]
+    );
+
+  return (
+    <TapGestureHandler onGestureEvent={gestureHandler}>
+      <Animated.View
+        style={[
+          StyleSheet.absoluteFillObject,
+          styleSheet.backdrop,
+          containerAnimatedStyle,
+        ]}
+      />
+    </TapGestureHandler>
+  );
+};
+
+const BottomSheet: React.FC<BottomSheetProps> = ({
+  sheetRef,
+  pickerData,
+  triggerLaunch,
+  handleSheetChange,
+}) => {
+  const renderHandle = useCallback<() => JSX.Element>(
+    () => (
+      <View style={styleSheet.header}>
+        <View style={styleSheet.panelHandle} />
+      </View>
+    ),
+    []
+  );
+
+  const renderItem = useCallback<
+    ({ item }: { item: PickerData }) => JSX.Element
+  >(
+    ({ item }: { item: PickerData }) => (
+      <Pressable onPress={() => triggerLaunch(item.kind)}>
+        <View style={styleSheet.bottomSheetItem}>
+          <Icon type={IconType.MaterialIcons} name={item.icon} size={24} />
+          <Text style={styleSheet.bottomSheetItemText}>{item.label}</Text>
+        </View>
+      </Pressable>
+    ),
+    [triggerLaunch]
+  );
+
+  return (
+    <ScrollBottomSheet
+      ref={sheetRef}
+      componentType="FlatList"
+      snapPoints={['70%', '100%']}
+      data={pickerData}
+      scrollEnabled={false}
+      initialSnapIndex={1}
+      keyExtractor={(item) => item.kind}
+      renderHandle={renderHandle}
+      onSettle={handleSheetChange}
+      contentContainerStyle={styleSheet.bottomSheetContent}
+      renderItem={renderItem}
+    />
+  );
+};
+
+export interface ImagePickerProps {
+  launcherType?: LauncherTypeKind;
+  options?: ImagePickerOptions;
+  errorMessage?: string;
+  value: ImagePickerResult | string | undefined;
+  onChange: (imagePickerResult: ImagePickerResult) => void;
+}
+
+const ImagePicker: React.FC<ImagePickerProps> = ({
+  launcherType = 'default',
+  value,
+  onChange,
+  errorMessage,
+  options,
+}) => {
+  const [snapPosition, setSnapPosition] = useState<number>(1);
+  const sheetRef = useRef<ScrollBottomSheet<PickerData>>(null);
+  const handleSheetChange = useCallback((index: number) => {
+    setSnapPosition(index);
+  }, []);
+  const getPickerData = useCallback<() => PickerData[]>(() => {
+    switch (launcherType) {
+      case 'camera':
+        return [CAMERA_KIND];
+      case 'image-library':
+        return [IMAGE_LIBRARY_KIND];
+      default:
+        return [CAMERA_KIND, IMAGE_LIBRARY_KIND];
+    }
+  }, [launcherType]);
+  const mergedOptions = useMemo<ImagePickerOptions>(
+    () =>
+      deepmerge<ImagePickerOptions, ImagePickerOptions>(
+        options || ({} as ImagePickerOptions),
+        {
+          mediaTypes: MediaTypeOptions.Images,
+          allowsEditing: true,
+          aspect: [4, 3],
+          quality: 1,
+          base64: true,
+        } as ImagePickerOptions
+      ),
+    [options]
+  );
+
+  const pickImage = useCallback(async () => {
+    try {
+      const mediaLibraryPermissionsResult =
+        await requestMediaLibraryPermissionsAsync();
+
+      if (mediaLibraryPermissionsResult.granted) {
+        const imagePickerResult = await launchImageLibraryAsync(mergedOptions);
+
+        if (!imagePickerResult.cancelled) {
+          onChange(imagePickerResult);
+          sheetRef.current?.snapTo(1);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [mergedOptions, onChange]);
+
+  const takeImage = useCallback(async () => {
+    try {
+      const cameraPermissionsResult = await requestCameraPermissionsAsync();
+
+      if (cameraPermissionsResult.granted) {
+        const imagePickerResult = await launchCameraAsync(mergedOptions);
+
+        if (!imagePickerResult.cancelled) {
+          onChange(imagePickerResult);
+          sheetRef.current?.snapTo(1);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [mergedOptions, onChange]);
+
+  const triggerLaunch = useCallback<(type: LauncherTypeKind) => void>(
+    (type) => {
+      switch (type) {
+        case 'camera':
+          takeImage();
+          break;
+        case 'image-library':
+          pickImage();
+          break;
+        default:
+          sheetRef.current?.snapTo(0);
+          break;
+      }
+    },
+    [pickImage, takeImage]
+  );
+
+  return (
+    <>
+      <Pressable onPress={() => triggerLaunch(launcherType)}>
+        {value ? (
+          <ImagePickerImage
+            uri={typeof value === 'string' ? value : (value as ImageInfo).uri}
+            errorMessage={errorMessage}
+          />
+        ) : (
+          <ImagePickerPlaceholder errorMessage={errorMessage} />
+        )}
+      </Pressable>
+      {errorMessage ? <ErrorMessage errorMessage={errorMessage} /> : undefined}
+      <Backdrop sheetRef={sheetRef} snapPosition={snapPosition} />
+      <BottomSheet
+        sheetRef={sheetRef}
+        pickerData={getPickerData()}
+        triggerLaunch={triggerLaunch}
+        handleSheetChange={handleSheetChange}
+      />
+    </>
+  );
+};
 
 export default ImagePicker;
