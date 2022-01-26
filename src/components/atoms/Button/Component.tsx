@@ -1,7 +1,7 @@
 import React, { forwardRef, FC } from 'react';
 import {
   Text,
-  TouchableOpacity,
+  Pressable,
   StyleSheet,
   ActivityIndicator,
   StyleProp,
@@ -50,21 +50,21 @@ const Button: FC<ButtonProps> = forwardRef<any, ButtonProps>(
     containerStyle.backgroundColor = backgroundColor;
 
     const handlePress = (event: GestureResponderEvent) => {
-      if (!loading || !disabled) return;
+      if (loading || disabled) return;
 
       if (onPress) {
-        return onPress(event);
+        onPress(event);
       }
     };
 
     return (
-      <TouchableOpacity ref={ref} style={containerStyle} onPress={handlePress}>
+      <Pressable ref={ref} style={containerStyle} onPress={handlePress}>
         <>
           {loading && <ActivityIndicator style={styles.loading} size="small" />}
           {title && <Text style={titleStyle}>{title}</Text>}
           {children}
         </>
-      </TouchableOpacity>
+      </Pressable>
     );
   }
 );
