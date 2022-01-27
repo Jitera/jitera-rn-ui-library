@@ -20,7 +20,7 @@ export type InputProps = PropsWithRef<
     disabled?: boolean;
     inputStyle?: StyleProp<TextStyle>;
     errorMessage?: string;
-    label?: string | React.ReactNode;
+    title?: string | React.ReactNode;
     showClearText?: boolean;
     numberOfLines?: number;
     onClear?: () => void;
@@ -34,7 +34,7 @@ const Input: FunctionComponent<InputProps> = forwardRef<any, InputProps>(
       disabled,
       inputStyle,
       errorMessage,
-      label,
+      title,
       showClearText,
       numberOfLines,
       onClear,
@@ -46,7 +46,7 @@ const Input: FunctionComponent<InputProps> = forwardRef<any, InputProps>(
 
     return (
       <View ref={ref} style={StyleSheet.flatten([styles.container, style])}>
-        {renderNode(Text, label)}
+        {renderNode(Text, title)}
 
         <View style={styles.animatedContainer}>
           <TextInput
