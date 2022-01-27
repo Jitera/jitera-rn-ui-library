@@ -8,6 +8,7 @@ import {
   ViewStyle,
   TextStyle,
   GestureResponderEvent,
+  View,
 } from 'react-native';
 import type { PropsWithRef } from '../../../type';
 import { Color } from '../../../theme/helpers';

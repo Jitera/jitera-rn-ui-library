@@ -11,6 +11,9 @@ import Divider, { DividerProps } from './components/atoms/Divider';
 import WebView, { WebViewProps } from './components/atoms/WebView';
 import ImagePicker, { ImagePickerProps } from './components/atoms/ImagePicker';
 import Carousel, { CarouselProps } from './components/molecules/Carousel';
+import DateTimePicker, {
+  DateTimePickerProps,
+} from './components/atoms/DateTimePicker';
 
 import CommonLoading, {
   CommonLoadingProps,
@@ -70,6 +73,7 @@ export {
   WebView,
   ImagePicker,
   Carousel,
+  DateTimePicker,
 };
 
 // Atoms Components Props exports
@@ -90,6 +94,7 @@ export type {
   WebViewProps,
   ImagePickerProps,
   CarouselProps,
+  DateTimePickerProps,
 };
 
 // Atoms Components Enum exports
