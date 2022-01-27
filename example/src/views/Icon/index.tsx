@@ -1,11 +1,11 @@
 import React from 'react';
-import {Icon} from '@jitera/jitera-rn-ui-library';
+import {Icon, IconType} from '@jitera/jitera-rn-ui-library';
 
 import BaseLayout from '~/layouts/Base';
 
 const IconViews: React.FC = () => (
   <BaseLayout>
-    <Icon name="check" />
+    <Icon type={IconType.AntDesign} name="star" />
   </BaseLayout>
 );
 

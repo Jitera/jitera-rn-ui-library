@@ -68,6 +68,7 @@
     "react": "^17.0.2",
     "react-native": "^0.67.1",
     "react-native-builder-bob": "^0.18.2",
+    "react-native-webview": "^11.17.0",
     "release-it": "^14.12.4",
     "typescript": "^4.5.5"
   },
@@ -75,6 +76,9 @@
     "react": "*",
     "react-dom": "*",
     "react-native": "*",
+    "react-native-gesture-handler": "^1.10.3",
+    "react-native-reanimated": "~2.2.4",
+    "react-native-scroll-bottom-sheet": "^0.7.0",
     "react-native-webview": "*"
   },
   "jest": {
@@ -158,17 +162,20 @@
   "dependencies": {
     "@expo/vector-icons": "^12.0.5",
     "@react-native-community/datetimepicker": "^5.1.0",
-    "color": "^4.0.1",
+    "color": "^4.2.0",
     "deepmerge": "^4.2.2",
     "expo-font": "^10.0.3",
+    "expo-image-picker": "^12.0.1",
     "hoist-non-react-statics": "^3.3.2",
     "react-native-confirmation-code-field": "^7.1.0",
     "react-native-fast-image": "^8.5.11",
+    "react-native-gesture-handler": "^1.10.3",
+    "react-native-reanimated": "~2.2.4",
     "react-native-safe-area-context": "^3.3.2",
+    "react-native-scroll-bottom-sheet": "^0.7.0",
     "react-native-size-matters": "^0.4.0",
     "react-native-vector-icons": "^9.0.0",
-    "react-native-web-swiper": "^2.2.2",
-    "react-native-webview": "^11.17.1"
+    "react-native-web-swiper": "^2.2.2"
   },
   "directories": {
     "example": "example",

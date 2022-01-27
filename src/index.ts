@@ -4,11 +4,12 @@ import Input, { InputProps } from './components/atoms/Input';
 import Text, { TextProps } from './components/atoms/Text';
 import Page, { PageProps } from './components/atoms/Page';
 import View, { ViewProps } from './components/atoms/View';
-import Icon, { IconProps } from './components/atoms/Icon';
+import Icon, { IconProps, IconType } from './components/atoms/Icon';
 import Header, { HeaderProps } from './components/atoms/Header';
 import OTPInput, { OTPInputProps } from './components/atoms/OTPInput';
 import Divider, { DividerProps } from './components/atoms/Divider';
 import WebView, { WebViewProps } from './components/atoms/WebView';
+import ImagePicker, { ImagePickerProps } from './components/atoms/ImagePicker';
 import Carousel, { CarouselProps } from './components/molecules/Carousel';
 import DateTimePicker, {
   DateTimePickerProps,
@@ -70,6 +71,7 @@ export {
   Toast,
   Modal,
   WebView,
+  ImagePicker,
   Carousel,
   DateTimePicker,
 };
@@ -90,8 +92,14 @@ export type {
   ToastProps,
   ModalProps,
   WebViewProps,
+  ImagePickerProps,
   CarouselProps,
   DateTimePickerProps,
 };
+
+// Atoms Components Enum exports
+export {
+  IconType
+}
 
 export default components;

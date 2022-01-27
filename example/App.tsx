@@ -1,3 +1,5 @@
+import 'react-native-gesture-handler';
+
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -14,6 +16,7 @@ import PageViews from '~/views/Page';
 import TextViews from '~/views/Text';
 import ViewViews from '~/views/View';
 import WebViewViews from '~/views/WebView';
+import ImagePickerViews from '~/views/ImagePicker';
 import CarouselViews from '~/views/Carousel';
 import DateTimePickerViews from '~/views/DateTimePicker';
 
@@ -35,6 +38,7 @@ const App = () => {
         <Stack.Screen name="Text" component={TextViews} />
         <Stack.Screen name="View" component={ViewViews} />
         <Stack.Screen name="WebView" component={WebViewViews} />
+        <Stack.Screen name="ImagePicker" component={ImagePickerViews} />
         <Stack.Screen name="Carousel" component={CarouselViews} />
         <Stack.Screen name="DateTimePicker" component={DateTimePickerViews} />
       </Stack.Navigator>
