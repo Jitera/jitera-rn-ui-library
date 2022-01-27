@@ -42,6 +42,10 @@ const HomeView: React.FC = () => {
         title="Carousel"
         onPress={() => navigation.navigate('Carousel')}
       />
+      <ButtonView
+        title="DateTimePicker"
+        onPress={() => navigation.navigate('DateTimePicker')}
+      />
     </BaseLayout>
   );
 };

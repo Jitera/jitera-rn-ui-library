@@ -10,6 +10,9 @@ import OTPInput, { OTPInputProps } from './components/atoms/OTPInput';
 import Divider, { DividerProps } from './components/atoms/Divider';
 import WebView, { WebViewProps } from './components/atoms/WebView';
 import Carousel, { CarouselProps } from './components/molecules/Carousel';
+import DateTimePicker, {
+  DateTimePickerProps,
+} from './components/atoms/DateTimePicker';
 
 import CommonLoading, {
   CommonLoadingProps,
@@ -68,6 +71,7 @@ export {
   Modal,
   WebView,
   Carousel,
+  DateTimePicker,
 };
 
 // Atoms Components Props exports
@@ -87,6 +91,7 @@ export type {
   ModalProps,
   WebViewProps,
   CarouselProps,
+  DateTimePickerProps,
 };
 
 export default components;

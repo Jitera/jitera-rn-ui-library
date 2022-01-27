@@ -10,6 +10,7 @@ import OTPInput from './components/atoms/OTPInput/Component';
 import Divider from './components/atoms/Divider/Component';
 import WebView from './components/atoms/WebView/Component';
 import Carousel from './components/molecules/Carousel/Component';
+import DateTimePicker from './components/atoms/DateTimePicker/Component';
 
 export default {
   Button,
@@ -24,4 +25,5 @@ export default {
   Divider,
   WebView,
   Carousel,
+  DateTimePicker,
 };
