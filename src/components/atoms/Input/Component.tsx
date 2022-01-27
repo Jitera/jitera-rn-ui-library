@@ -7,50 +7,36 @@ import {
   StyleProp,
   TextStyle,
   TouchableOpacity,
+  TextInputProps,
 } from 'react-native';
 import View from '../View/Component';
+import type { PropsWithRef } from '../../../type';
 import { Text, Icon } from '../../..';
 import { renderNode, patchWebProps } from '../../../theme/helpers';
 
-const renderText = (content: any, defaultProps: any, style: StyleProp<any>) =>
-  renderNode(Text, content, {
-    ...defaultProps,
-    style: StyleSheet.flatten([style, defaultProps && defaultProps.style]),
-  });
-
-export type InputProps = React.ComponentPropsWithRef<typeof TextInput> & {
-  containerStyle?: StyleProp<ViewStyle>;
-  disabled?: boolean;
-  inputContainerStyle?: StyleProp<ViewStyle>;
-  inputStyle?: StyleProp<TextStyle>;
-  errorStyle?: StyleProp<TextStyle>;
-  errorMessage?: string;
-  label?: string | React.ReactNode;
-  labelStyle?: StyleProp<TextStyle>;
-  showClearText?: boolean;
-  iconStyle?: StyleProp<TextStyle>;
-  multiline?: boolean;
-  numberOfLines?: number;
-  maxLength?: number;
-  onClear?: () => void;
-};
+export type InputProps = PropsWithRef<
+  Omit<TextInputProps, 'style' | 'multiline'> & {
+    style?: StyleProp<ViewStyle>;
+    disabled?: boolean;
+    inputStyle?: StyleProp<TextStyle>;
+    errorMessage?: string;
+    label?: string | React.ReactNode;
+    showClearText?: boolean;
+    numberOfLines?: number;
+    onClear?: () => void;
+  }
+>;
 
 const Input: FunctionComponent<InputProps> = forwardRef<any, InputProps>(
   (
     {
-      containerStyle,
+      style,
       disabled,
-      inputContainerStyle,
       inputStyle,
-      errorStyle,
       errorMessage,
       label,
-      labelStyle,
       showClearText,
-      iconStyle,
-      multiline,
       numberOfLines,
-      maxLength,
       onClear,
       ...attributes
     },
@@ -59,18 +45,10 @@ const Input: FunctionComponent<InputProps> = forwardRef<any, InputProps>(
     const hideErrorMessage = !errorMessage;
 
     return (
-      <View
-        ref={ref}
-        style={StyleSheet.flatten([styles.container, containerStyle])}
-      >
-        {renderText(label, { style: labelStyle }, {})}
+      <View ref={ref} style={StyleSheet.flatten([styles.container, style])}>
+        {renderNode(Text, label)}
 
-        <View
-          style={StyleSheet.flatten([
-            styles.animatedContainer,
-            inputContainerStyle,
-          ])}
-        >
+        <View style={styles.animatedContainer}>
           <TextInput
             underlineColorAndroid="transparent"
             editable={!disabled}
@@ -86,14 +64,13 @@ const Input: FunctionComponent<InputProps> = forwardRef<any, InputProps>(
               disabled && styles.disabledInput,
               { paddingRight: showClearText ? 15 : 0 },
             ])}
-            multiline={multiline}
-            maxLength={maxLength}
+            multiline={typeof numberOfLines === 'number' && numberOfLines > 2}
             numberOfLines={numberOfLines}
             {...patchWebProps(attributes)}
           />
           {showClearText ? (
             <TouchableOpacity
-              style={StyleSheet.flatten([styles.icon, iconStyle])}
+              style={StyleSheet.flatten([styles.icon])}
               onPress={onClear}
             >
               <Icon type="AntDesign" name="close" />
@@ -102,7 +79,7 @@ const Input: FunctionComponent<InputProps> = forwardRef<any, InputProps>(
         </View>
 
         {!hideErrorMessage && (
-          <Text style={StyleSheet.flatten([styles.errorStyle, errorStyle])}>
+          <Text style={StyleSheet.flatten([styles.errorStyle])}>
             {errorMessage}
           </Text>
         )}
