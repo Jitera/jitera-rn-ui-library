@@ -58,16 +58,15 @@ const Button: FC<ButtonProps> = forwardRef<any, ButtonProps>(
       }
     };
 
-    return (<View />)
-    // return (
-    //   <TouchableOpacity ref={ref} style={containerStyle} onPress={handlePress}>
-    //     <>
-    //       {loading && <ActivityIndicator style={styles.loading} size="small" />}
-    //       {title && <Text style={titleStyle}>{title}</Text>}
-    //       {children}
-    //     </>
-    //   </TouchableOpacity>
-    // );
+    return (
+      <TouchableOpacity ref={ref} style={containerStyle} onPress={handlePress}>
+        <>
+          {loading && <ActivityIndicator style={styles.loading} size="small" />}
+          {title && <Text style={titleStyle}>{title}</Text>}
+          {children}
+        </>
+      </TouchableOpacity>
+    );
   }
 );
 
