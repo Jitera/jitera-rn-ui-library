@@ -5,7 +5,7 @@ import React, {
   useCallback,
   useMemo,
 } from 'react';
-import { StyleSheet, Pressable, View, ViewProps } from 'react-native';
+import { StyleSheet, Pressable, View, ViewProps, Animated, ViewStyle } from 'react-native';
 import deepmerge from 'deepmerge';
 import { Icon, IconType, Image, Text } from '../../../index';
 import {
@@ -19,17 +19,6 @@ import {
   requestMediaLibraryPermissionsAsync,
 } from 'expo-image-picker';
 import ScrollBottomSheet from 'react-native-scroll-bottom-sheet';
-import {
-  TapGestureHandler,
-  TapGestureHandlerGestureEvent,
-} from 'react-native-gesture-handler';
-import Animated, {
-  Extrapolate,
-  interpolate,
-  runOnJS,
-  useAnimatedGestureHandler,
-  useAnimatedStyle,
-} from 'react-native-reanimated';
 
 type LauncherTypeKind = 'default' | 'camera' | 'image-library';
 
@@ -177,40 +166,6 @@ const ImagePickerImage = forwardRef<View, ImagePickerImageProps>(
 const ErrorMessage: React.FC<ErrorMessageProps> = ({ errorMessage }) => (
   <Text style={styleSheet.errorMessage}>{errorMessage}</Text>
 );
-
-const Backdrop: React.FC<BackdropProps> = ({ snapPosition, sheetRef }) => {
-  const containerAnimatedStyle = useAnimatedStyle(() => ({
-    opacity: interpolate(snapPosition, [0, 1], [0.7, 0], Extrapolate.CLAMP),
-    flex: 1,
-    display: snapPosition === 1 ? 'none' : 'flex',
-  }));
-
-  const handleOnPress = () => {
-    sheetRef.current?.snapTo(1);
-  };
-
-  const gestureHandler =
-    useAnimatedGestureHandler<TapGestureHandlerGestureEvent>(
-      {
-        onFinish: () => {
-          runOnJS(handleOnPress)();
-        },
-      },
-      [handleOnPress]
-    );
-
-  return (
-    <TapGestureHandler onGestureEvent={gestureHandler}>
-      <Animated.View
-        style={[
-          StyleSheet.absoluteFillObject,
-          styleSheet.backdrop,
-          containerAnimatedStyle,
-        ]}
-      />
-    </TapGestureHandler>
-  );
-};
 
 const BottomSheet: React.FC<BottomSheetProps> = ({
   sheetRef,
@@ -386,7 +341,6 @@ const ImagePicker = forwardRef<View, ImagePickerProps>(
         {errorMessage ? (
           <ErrorMessage errorMessage={errorMessage} />
         ) : undefined}
-        <Backdrop sheetRef={sheetRef} snapPosition={snapPosition} />
         <BottomSheet
           sheetRef={sheetRef}
           pickerData={getPickerData()}
