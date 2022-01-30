@@ -60,9 +60,12 @@ const Input: FunctionComponent<InputProps> = forwardRef<any, InputProps>(
                     : 50,
               },
               styles.input,
+              (title || (typeof title === 'string' && title.length > 0)) && {
+                marginTop: 10,
+              },
+              { paddingRight: showClearText ? 15 : 0 },
               inputStyle,
               disabled && styles.disabledInput,
-              { paddingRight: showClearText ? 15 : 0 },
             ])}
             multiline={typeof numberOfLines === 'number' && numberOfLines > 2}
             numberOfLines={numberOfLines}
@@ -114,7 +117,6 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     borderColor: '#e1e8ee',
-    marginTop: 10,
     borderRadius: 5,
     flex: 1,
     paddingHorizontal: 10,
