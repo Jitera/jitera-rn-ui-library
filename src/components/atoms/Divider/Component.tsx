@@ -68,7 +68,6 @@ const Divider: FunctionComponent<DividerProps> = forwardRef<any, DividerProps>(
 const defaultStyles = StyleSheet.create({
   container: {
     position: 'relative',
-    marginVertical: 10,
   },
   lineContainer: {
     position: 'absolute',
