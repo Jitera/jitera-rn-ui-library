@@ -1,7 +1,7 @@
 import { withTheme } from '../../../theme';
-import type { DateTimePickerProps } from './Component';
+import type { DateTimePickerProps, DateMode } from './Component';
 import DateTimePicker from './ThemedComponent';
 
 export { DateTimePicker };
-export type { DateTimePickerProps };
+export type { DateTimePickerProps, DateMode };
 export default withTheme(DateTimePicker, 'DateTimePicker');
