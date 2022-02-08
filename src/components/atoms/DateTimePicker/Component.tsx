@@ -11,7 +11,7 @@ import {
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import type { PropsWithRef } from '../../../type';
 import { defaultTheme } from '../../../theme';
-import { Text, Icon } from '../../../index';
+import { Text, Icon, IconType } from '../../../index';
 
 /**
  * DateTimePicker support date/time select on iOS and Android and built on top of react-native-datetimepicker
@@ -147,7 +147,7 @@ const DateTimePicker: FunctionComponent<DateTimePickerProps> = forwardRef<
             <Icon
               color={defaultTheme?.colors?.grey3}
               name="calendar"
-              type="AntDesign"
+              type={IconType.AntDesign}
             />
           </View>
         </TouchableOpacity>
