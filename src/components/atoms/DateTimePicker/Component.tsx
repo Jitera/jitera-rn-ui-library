@@ -11,14 +11,14 @@ import {
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import type { PropsWithRef } from '../../../type';
 import { defaultTheme } from '../../../theme';
-import { Text, Icon } from '../../../index';
+import { Text, Icon, IconType } from '../../../index';
 
 /**
  * DateTimePicker support date/time select on iOS and Android and built on top of react-native-datetimepicker
  * Reference: https://github.com/react-native-datetimepicker/datetimepicker
 **/
 
-type DateMode = 'date' | 'time' | 'datetime'
+export type DateMode = 'date' | 'time' | 'datetime'
 
 export type DateTimePickerProps = PropsWithRef<{
   value?: Date;
@@ -147,7 +147,7 @@ const DateTimePicker: FunctionComponent<DateTimePickerProps> = forwardRef<
             <Icon
               color={defaultTheme?.colors?.grey3}
               name="calendar"
-              type="antdesign"
+              type={IconType.AntDesign}
             />
           </View>
         </TouchableOpacity>
@@ -213,42 +213,42 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     position: 'absolute',
-    right: defaultTheme?.spacing?.SPACING_10,
+    right: 10,
   },
   dateInput: {
-    borderRadius: defaultTheme?.spacing?.SPACING_5,
-    fontSize: defaultTheme?.fontSizes?.FONT_18,
+    borderRadius: 5,
+    fontSize: 18,
     width: '100%',
     borderWidth: 1,
     justifyContent: 'center',
     borderColor: defaultTheme?.colors?.grey5,
-    minHeight: defaultTheme?.spacing?.SPACING_50,
-    paddingHorizontal: defaultTheme?.spacing?.SPACING_10,
-    paddingRight: defaultTheme?.spacing?.SPACING_30,
+    minHeight: 50,
+    paddingHorizontal: 10,
+    paddingRight: 30,
   },
   placeholderText: {
-    fontSize: defaultTheme?.fontSizes?.FONT_16,
+    fontSize: 16,
   },
   modalContainer: {
     position: 'absolute',
     width: '100%',
     bottom: 0,
     backgroundColor: defaultTheme?.colors?.white,
-    borderTopLeftRadius: defaultTheme?.spacing?.SPACING_8,
-    borderTopRightRadius: defaultTheme?.spacing?.SPACING_8,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
   },
   modalActionContainer: {
-    paddingVertical: defaultTheme?.spacing?.SPACING_15,
-    paddingHorizontal: defaultTheme?.spacing?.SPACING_15,
+    paddingVertical: 8,
+    paddingHorizontal: 8,
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   cancelButton: {
-    fontSize: defaultTheme?.fontSizes?.FONT_15,
+    fontSize: 15,
   },
   confirmButton: {
-    fontSize: defaultTheme?.fontSizes?.FONT_15,
+    fontSize: 15,
     color: defaultTheme?.colors?.success,
   },
 });

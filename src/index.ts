@@ -12,7 +12,7 @@ import WebView, { WebViewProps } from './components/atoms/WebView';
 import ImagePicker, { ImagePickerProps } from './components/atoms/ImagePicker';
 import Carousel, { CarouselProps } from './components/molecules/Carousel';
 import DateTimePicker, {
-  DateTimePickerProps,
+  DateTimePickerProps, DateMode,
 } from './components/atoms/DateTimePicker';
 
 import CommonLoading, {
@@ -100,6 +100,10 @@ export type {
 // Atoms Components Enum exports
 export {
   IconType
+}
+
+export type {
+  DateMode
 }
 
 export default components;
