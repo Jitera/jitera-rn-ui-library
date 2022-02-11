@@ -68,7 +68,7 @@ const IMAGE_LIBRARY_KIND: PickerData = {
 const sharedStyleSheet = StyleSheet.create({
   size: {
     width: '100%',
-    height: 200,
+    height: '100%',
   },
   appearance: {
     backgroundColor: '#e2e8f0',
@@ -126,14 +126,13 @@ const styleSheet = StyleSheet.create({
 });
 
 const ImagePickerPlaceholder = forwardRef<View, ImagePickerPlaceholderProps>(
-  ({ errorMessage, style, ...props }, ref) => (
+  ({ errorMessage, ...props }, ref) => (
     <View
       {...props}
       ref={ref}
       style={StyleSheet.flatten([
         styleSheet.placeholder,
         errorMessage ? { borderColor: ERROR_COLOR } : undefined,
-        style,
       ])}
     >
       <Icon
@@ -148,14 +147,13 @@ const ImagePickerPlaceholder = forwardRef<View, ImagePickerPlaceholderProps>(
 );
 
 const ImagePickerImage = forwardRef<View, ImagePickerImageProps>(
-  ({ uri, errorMessage, style, ...props }, ref) => (
+  ({ uri, errorMessage, ...props }, ref) => (
     <View
       {...props}
       ref={ref}
       style={StyleSheet.flatten([
         styleSheet.imageWrapper,
         errorMessage ? { borderColor: ERROR_COLOR } : undefined,
-        style,
       ])}
     >
       <Image source={{ uri }} style={styleSheet.image} />
@@ -320,21 +318,19 @@ const ImagePicker = forwardRef<View, ImagePickerProps>(
 
     return (
       <>
-        <Pressable onPress={() => triggerLaunch(launcherType)}>
+        <Pressable onPress={() => triggerLaunch(launcherType)} style={style}>
           {value ? (
             <ImagePickerImage
               {...props}
               ref={ref}
               uri={typeof value === 'string' ? value : (value as ImageInfo).uri}
               errorMessage={errorMessage}
-              style={style}
             />
           ) : (
             <ImagePickerPlaceholder
               {...props}
               ref={ref}
               errorMessage={errorMessage}
-              style={style}
             />
           )}
         </Pressable>

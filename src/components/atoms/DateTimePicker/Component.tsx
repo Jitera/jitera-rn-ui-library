@@ -34,6 +34,7 @@ export type DateTimePickerProps = PropsWithRef<{
   display?: 'default' | 'compact' | 'inline' | 'spinner' | 'clock' | 'calendar';
   errorStyle?: StyleProp<TextStyle>;
   errorMessage?: string;
+  isPreview?: boolean;
 }>;
 
 const formatDateTime = (date: Date, mode: DateMode) => {
@@ -75,6 +76,7 @@ const DateTimePicker: FunctionComponent<DateTimePickerProps> = forwardRef<
       confirmButtonStyle,
       errorStyle,
       errorMessage,
+      isPreview = false,
       ...props
     },
     ref
@@ -128,6 +130,9 @@ const DateTimePicker: FunctionComponent<DateTimePickerProps> = forwardRef<
     };
 
     const handleOpenPicker = () => {
+      if (isPreview) {
+        return
+      }
       setShow(true);
     };
 
