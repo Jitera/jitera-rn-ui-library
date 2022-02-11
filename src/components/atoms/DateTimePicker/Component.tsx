@@ -139,6 +139,7 @@ const DateTimePicker: FunctionComponent<DateTimePickerProps> = forwardRef<
           disabled={disabled}
           onPress={handleOpenPicker}
           style={[styles.dateInput, style]}
+          ref={ref}
         >
           <Text style={[styles.placeholderText]}>
             {value ? formatDateTime(value, dateMode) : '--'}
