@@ -14,7 +14,6 @@ import Carousel, { CarouselProps } from './components/molecules/Carousel';
 import DateTimePicker, {
   DateTimePickerProps, DateMode,
 } from './components/atoms/DateTimePicker';
-
 import CommonLoading, {
   CommonLoadingProps,
 } from './components/widgets/CommonLoading';
@@ -38,6 +37,7 @@ import {
   ReplaceTheme,
   Colors,
 } from './theme';
+import type { RneFunctionComponent } from './theme/helpers'
 import components from './previewComponents';
 
 // For theme
@@ -52,9 +52,10 @@ export {
   withTheme,
   useTheme,
   makeStyles,
+  
 };
 // For theme type
-export type { Theme, FullTheme, UpdateTheme, ReplaceTheme, ThemeProps, Colors };
+export type { Theme, FullTheme, UpdateTheme, ReplaceTheme, ThemeProps, Colors, RneFunctionComponent };
 // Components exports
 export {
   Button,
