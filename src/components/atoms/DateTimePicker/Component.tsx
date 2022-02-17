@@ -9,7 +9,7 @@ import {
   Modal,
 } from 'react-native';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
-import type { PropsWithRef } from '../../../type';
+import type { PropsWithRef, PreviewProps } from '../../../type';
 import { defaultTheme } from '../../../theme';
 import { Text, Icon, IconType } from '../../../index';
 
@@ -20,7 +20,7 @@ import { Text, Icon, IconType } from '../../../index';
 
 export type DateMode = 'date' | 'time' | 'datetime'
 
-export type DateTimePickerProps = PropsWithRef<{
+export type DateTimePickerProps = PropsWithRef<PreviewProps & {
   value?: Date;
   dateMode?: DateMode;
   confirmText?: string;
@@ -34,7 +34,6 @@ export type DateTimePickerProps = PropsWithRef<{
   display?: 'default' | 'compact' | 'inline' | 'spinner' | 'clock' | 'calendar';
   errorStyle?: StyleProp<TextStyle>;
   errorMessage?: string;
-  isPreview?: boolean;
 }>;
 
 const formatDateTime = (date: Date, mode: DateMode) => {

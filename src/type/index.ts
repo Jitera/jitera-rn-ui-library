@@ -3,3 +3,7 @@ export type Ref<T> = {
 };
 
 export type PropsWithRef<T> = T & Ref<any>;
+
+export type PreviewProps = {
+  isPreview?: boolean
+}
