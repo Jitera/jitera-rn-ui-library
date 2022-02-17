@@ -10,12 +10,14 @@ import {
   TextInputProps,
 } from 'react-native';
 import View from '../View/Component';
-import type { PropsWithRef } from '../../../type';
+import type { PreviewProps, PropsWithRef } from '../../../type';
 import { Text, Icon } from '../../..';
 import { renderNode, patchWebProps } from '../../../theme/helpers';
 
 export type InputProps = PropsWithRef<
-  Omit<TextInputProps, 'style' | 'multiline'> & {
+  PreviewProps &
+  Omit<TextInputProps, 'style' | 'multiline'> &
+  {
     style?: StyleProp<ViewStyle>;
     disabled?: boolean;
     inputStyle?: StyleProp<TextStyle>;
@@ -38,6 +40,7 @@ const Input: FunctionComponent<InputProps> = forwardRef<any, InputProps>(
       showClearText,
       numberOfLines,
       onClear,
+      isPreview,
       ...attributes
     },
     ref
@@ -50,6 +53,7 @@ const Input: FunctionComponent<InputProps> = forwardRef<any, InputProps>(
 
         <View style={styles.animatedContainer}>
           <TextInput
+            pointerEvents={isPreview ? 'none' : undefined}
             underlineColorAndroid="transparent"
             editable={!disabled}
             style={StyleSheet.flatten([
