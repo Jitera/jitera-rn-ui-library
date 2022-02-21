@@ -217,6 +217,7 @@ export interface ImagePickerProps extends ViewProps {
   errorMessage?: string;
   value: ImagePickerResult | string | undefined;
   onChange: (imagePickerResult: ImagePickerResult) => void;
+  isPreview?: boolean;
 }
 
 const ImagePicker = forwardRef<View, ImagePickerProps>(
@@ -228,6 +229,7 @@ const ImagePicker = forwardRef<View, ImagePickerProps>(
       errorMessage,
       options,
       style,
+      isPreview,
       ...props
     },
     ref
@@ -301,6 +303,8 @@ const ImagePicker = forwardRef<View, ImagePickerProps>(
 
     const triggerLaunch = useCallback<(type: LauncherTypeKind) => void>(
       (type) => {
+        if (isPreview) return
+
         switch (type) {
           case 'camera':
             takeImage();
@@ -313,7 +317,7 @@ const ImagePicker = forwardRef<View, ImagePickerProps>(
             break;
         }
       },
-      [pickImage, takeImage]
+      [pickImage, takeImage, isPreview]
     );
 
     return (
