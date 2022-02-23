@@ -8,15 +8,9 @@ const CarouselViews = () => (
     <Carousel
       style={styles.carousel}
       data={[
-        {
-          uri: 'https://engineering.fb.com/wp-content/uploads/2016/04/yearinreview.jpg',
-        },
-        {
-          uri: 'https://engineering.fb.com/wp-content/uploads/2016/04/yearinreview.jpg',
-        },
-        {
-          uri: 'https://engineering.fb.com/wp-content/uploads/2016/04/yearinreview.jpg',
-        },
+        'https://engineering.fb.com/wp-content/uploads/2016/04/yearinreview.jpg',
+        'https://engineering.fb.com/wp-content/uploads/2016/04/yearinreview.jpg',
+        'https://engineering.fb.com/wp-content/uploads/2016/04/yearinreview.jpg',
       ]}
     />
   </BaseLayout>

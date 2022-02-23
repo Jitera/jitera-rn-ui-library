@@ -1,13 +1,23 @@
 import React from 'react';
 import {Image} from '@jitera/jitera-rn-ui-library';
+import {StyleSheet} from 'react-native';
 
 import BaseLayout from '~/layouts/Base';
+
+const styles = StyleSheet.create({
+  tinyLogo: {
+    width: 50,
+    height: 50,
+  },
+});
 
 const ImageViews: React.FC = () => (
   <BaseLayout>
     <Image
+      style={styles.tinyLogo}
+      fastImage={false}
       source={{
-        uri: 'https://jitera.com/packs/media/styles/img/logo-jitera-white-0cba213098fb44f164173063eaef1f34.svg',
+        uri: 'https://reactnative.dev/img/tiny_logo.png',
       }}
     />
   </BaseLayout>

@@ -1,10 +1,9 @@
-import React, { forwardRef, FC } from 'react';
+import React, { useMemo, forwardRef, FC } from 'react';
 import {
   View,
   Image,
   ViewStyle,
   StyleSheet,
-  ImageSourcePropType,
   StyleProp,
   ImageResizeMode,
 } from 'react-native';
@@ -14,7 +13,7 @@ import Swiper, { SwiperProps } from 'react-native-web-swiper';
 
 export type CarouselProps = PropsWithRef<
   SwiperProps & {
-    data: ImageSourcePropType[];
+    data: string[];
     resizeMode?: ImageResizeMode;
     style?: StyleProp<ViewStyle>;
   }
@@ -25,6 +24,16 @@ const Carousel: FC<CarouselProps> = forwardRef<any, CarouselProps>(
     { data, resizeMode = 'stretch', style = {}, loop = true, ...props },
     ref
   ) => {
+
+    const images = useMemo(() => {
+      return data
+        .map((url) => {
+          if (url) return { uri: url }
+          return undefined
+        })
+        .filter((image) => !!image)
+    }, [data])
+
     return (
       <View ref={ref} style={StyleSheet.flatten([styles.container, style])}>
         <Swiper
@@ -37,7 +46,7 @@ const Carousel: FC<CarouselProps> = forwardRef<any, CarouselProps>(
           }}
           {...props}
         >
-          {data.map((source, i) => (
+          {images.map((source, i) => (
             <View style={styles.slideContainer} key={i}>
               <Image
                 source={source}
