@@ -1,6 +1,6 @@
 {
   "name": "@jitera/jitera-rn-ui-library",
-  "version": "0.0.28-alpha",
+  "version": "0.0.30-alpha",
   "description": "atoms and component for rn template project and web",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -47,7 +47,7 @@
   },
   "homepage": "https://github.com/Jitera/jitera-rn-ui-library#readme",
   "publishConfig": {
-    "@jitera:registry": "https://npm.pkg.github.com"
+    "@jitera:registry": "https://registry.npmjs.org"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^16.0.0",
