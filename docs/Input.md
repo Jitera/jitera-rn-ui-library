@@ -4,25 +4,25 @@
 
 ## Props
 
-#### `value`
+### `value`
 
 Type: `string`
 
 Set input value.
 
-#### `onChange`
+### `onChange`
 
 Type: `(value: string) => void`
 
 Callback that is called when text input's text changes.
 
-#### `onBlur`
+### `onBlur`
 
 Type: `(event: NativeSyntheticEvent<TextInputEndEditingEventData>) => void`
 
 Callback that is called when text input is blurred.
 
-#### `errorMessage`
+### `errorMessage`
 
 Type: `string`
 
