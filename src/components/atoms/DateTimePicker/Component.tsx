@@ -98,11 +98,13 @@ const DateTimePicker: FunctionComponent<DateTimePickerProps> = forwardRef<
       } else if (step === 1) {
         setStep(2);
         handleOpenPicker();
+        return;
       } else {
         onChange(date);
         setStep(1);
         setShow(false);
       }
+
       if (typeof onBlur === 'function') {
         onBlur();
       }
