@@ -85,7 +85,7 @@ By default all button will raised ( have shadow ). and height: 56 . But you can 
 ### Theme variable:
 
 ```javascript
-import { withTheme } from 'jitera-rn-ui';
+import { withTheme } from '@jitera/jitera-rn-ui-library';
 
 withTheme(YourComponent);
 
@@ -105,7 +105,7 @@ const YourComponent = ({
 ### Default components:
 
 ```javascript
-import { Button, View, Image, View, Text, Page } from 'jitera-rn-ui';
+import { Button, View, Image, View, Text, Page } from '@jitera/jitera-rn-ui-library';
 ```
 
 ### Default widgets:
@@ -113,7 +113,7 @@ import { Button, View, Image, View, Text, Page } from 'jitera-rn-ui';
 - CommonLoading
 
 ```javascript
-import { CommonLoading } from 'jitera-rn-ui';
+import { CommonLoading } from '@jitera/jitera-rn-ui-library';
 
 const action = async () => {
   try {
@@ -131,7 +131,7 @@ const action = async () => {
 
 ```javascript
 
-import { Modal } from 'jitera-rn-ui'
+import { Modal } from '@jitera/jitera-rn-ui-library'
 
 const onPressButton = async () => {
     Modal.show(
@@ -151,7 +151,7 @@ const onPressButton = async () => {
 - Toast
 
 ```javascript
-import { Toast } from 'jitera-rn-ui';
+import { Toast } from '@jitera/jitera-rn-ui-library';
 
 const onPressButton = async () => {
   Toast.show(' -- Your Message -- ', { type: 'error' });

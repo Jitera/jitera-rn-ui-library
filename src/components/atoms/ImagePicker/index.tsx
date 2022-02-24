@@ -1,8 +1,8 @@
-import ImagePicker from './Component';
+import ImagePicker, { LauncherTypeKind } from './Component';
 import { withTheme } from '../../../theme';
 
 import type { ImagePickerProps } from './Component';
 
-export { ImagePicker };
+export { ImagePicker, LauncherTypeKind };
 export type { ImagePickerProps };
 export default withTheme(ImagePicker, 'ImagePicker');
