@@ -10,7 +10,7 @@ import Text from '../Text/ThemedComponent';
 import View from '../View/Component';
 
 export type OTPInputProps = PropsWithRef<
-  CodeFieldProps & {
+  Omit<CodeFieldProps, 'renderCell'> & {
     style?: StyleProp<ViewStyle>;
     value?: string;
     pinCount?: number;
@@ -20,9 +20,10 @@ export type OTPInputProps = PropsWithRef<
     focusCellStyle?: ViewStyle;
     cellTextStyle?: TextStyle;
     focusCellTextStyle?: TextStyle;
-    onChangeText?: (code?: string) => void;
+    onChange?: (code?: string) => void;
     onCodeChanged?: (code?: string) => void;
-    onBlur?: (code: any) => void;
+    onBlur?: (e: any) => void;
+    renderCell?: any;
     errorMessage?: string;
     errorProps?: any;
     renderErrorMessage?: boolean;
@@ -88,11 +89,6 @@ const OTPInput: FunctionComponent<OTPInputProps> = forwardRef<
           {...errorProps}
           style={StyleSheet.flatten([
             errorStyle && errorStyle,
-            errorMessage && {
-              height: 0,
-              margin: 0,
-              padding: 0,
-            },
           ])}
         >
           {errorMessage}
@@ -108,7 +104,6 @@ const styles = StyleSheet.create({
   },
   codeFiledRoot: {
     width: '100%',
-    height: '100%',
     marginLeft: 'auto',
     marginRight: 'auto',
   },
