@@ -20,7 +20,7 @@ This is called when the user changes all the data of cells in the UI. It receive
 
 ### `onBlur`
 
-Type: `(event: NativeSyntheticEvent<TextInputEndEditingEventData>) => void`
+Type: `(event: NativeSyntheticEvent<TextInputFocusEventData>) => void`
 
 Callback that is called when component is blurred.
 

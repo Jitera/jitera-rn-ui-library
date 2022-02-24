@@ -20,7 +20,7 @@ This is called when the user changes the date or time in the UI. It receives the
 
 ### `onBlur`
 
-Type: `(event: NativeSyntheticEvent<TextInputEndEditingEventData>) => void`
+Type: `() => void`
 
 Callback that is called when component is blurred.
 
