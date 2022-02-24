@@ -26,7 +26,12 @@ import {
 import ScrollBottomSheet from 'react-native-scroll-bottom-sheet';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-type LauncherTypeKind = 'default' | 'camera' | 'image-library';
+// type LauncherTypeKind = 'default' | 'camera' | 'image-library';
+export enum LauncherTypeKind {
+  DEFAULT = 'default',
+  CAMERA = 'camera',
+  IMAGE_LIBRARY = 'image-library'
+}
 
 interface PickerData {
   kind: LauncherTypeKind;
@@ -57,12 +62,12 @@ interface BottomSheetProps extends SheetRefProps {
 const ERROR_COLOR = '#dc2626';
 
 const CAMERA_KIND: PickerData = {
-  kind: 'camera',
+  kind: LauncherTypeKind.CAMERA,
   icon: 'camera',
   label: 'Open Camera',
 };
 const IMAGE_LIBRARY_KIND: PickerData = {
-  kind: 'image-library',
+  kind: LauncherTypeKind.IMAGE_LIBRARY,
   icon: 'image-search',
   label: 'Select from Gallery',
 };
@@ -215,7 +220,7 @@ export interface ImagePickerProps extends ViewProps {
 const ImagePicker = forwardRef<View, ImagePickerProps>(
   (
     {
-      launcherType = 'default',
+      launcherType = LauncherTypeKind.DEFAULT,
       value,
       onChange,
       onBlur,
@@ -298,10 +303,10 @@ const ImagePicker = forwardRef<View, ImagePickerProps>(
       if (isPreview) return;
 
       switch (type) {
-        case 'camera':
+        case LauncherTypeKind.CAMERA:
           await takeImage();
           break;
-        case 'image-library':
+        case LauncherTypeKind.IMAGE_LIBRARY:
           await pickImage();
           break;
         default:
