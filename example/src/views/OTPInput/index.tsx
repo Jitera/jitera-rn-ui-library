@@ -21,7 +21,7 @@ const OTPInputViews: React.FC = () => {
     <BaseLayout>
       <OTPInput
         autoFocus
-        onChangeText={handleChange}
+        onChange={handleChange}
         value={value}
         onBlur={handleBlur as any}
         errorMessage={errorMessage}

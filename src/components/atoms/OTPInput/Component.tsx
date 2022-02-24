@@ -20,7 +20,7 @@ export type OTPInputProps = PropsWithRef<
     focusCellStyle?: ViewStyle;
     cellTextStyle?: TextStyle;
     focusCellTextStyle?: TextStyle;
-    onChangeText?: (code?: string) => void;
+    onChange?: (code?: string) => void;
     onCodeChanged?: (code?: string) => void;
     onBlur?: (e: any) => void;
     renderCell?: any;
