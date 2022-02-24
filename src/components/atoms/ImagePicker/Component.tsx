@@ -2,10 +2,15 @@ import React, {
   forwardRef,
   useState,
   useRef,
-  useCallback,
   useMemo,
 } from 'react';
-import { StyleSheet, Pressable, View, ViewProps, Animated, ViewStyle } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  ViewProps,
+  NativeSyntheticEvent,
+  TargetedEvent,
+} from 'react-native';
 import deepmerge from 'deepmerge';
 import { Icon, IconType, Image, Text } from '../../../index';
 import {
@@ -19,6 +24,7 @@ import {
   requestMediaLibraryPermissionsAsync,
 } from 'expo-image-picker';
 import ScrollBottomSheet from 'react-native-scroll-bottom-sheet';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 type LauncherTypeKind = 'default' | 'camera' | 'image-library';
 
@@ -40,10 +46,6 @@ interface ImagePickerImageProps extends ErrorMessageProps, ViewProps {
 
 interface SheetRefProps {
   sheetRef: React.RefObject<ScrollBottomSheet<PickerData>>;
-}
-
-interface BackdropProps extends SheetRefProps {
-  snapPosition: number;
 }
 
 interface BottomSheetProps extends SheetRefProps {
@@ -113,11 +115,8 @@ const styleSheet = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.3)',
     borderRadius: 4,
   },
-  bottomSheetContent: {
+  content: {
     backgroundColor: '#fff',
-  },
-  backdrop: {
-    backgroundColor: 'black',
   },
   errorMessage: {
     color: ERROR_COLOR,
@@ -171,27 +170,19 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
   triggerLaunch,
   handleSheetChange,
 }) => {
-  const renderHandle = useCallback<() => JSX.Element>(
-    () => (
-      <View style={styleSheet.header}>
-        <View style={styleSheet.panelHandle} />
-      </View>
-    ),
-    []
+  const renderHandle = () => (
+    <View style={styleSheet.header}>
+      <View style={styleSheet.panelHandle} />
+    </View>
   );
 
-  const renderItem = useCallback<
-    ({ item }: { item: PickerData }) => JSX.Element
-  >(
-    ({ item }: { item: PickerData }) => (
-      <Pressable onPress={() => triggerLaunch(item.kind)}>
-        <View style={styleSheet.bottomSheetItem}>
-          <Icon type={IconType.MaterialIcons} name={item.icon} size={24} />
-          <Text style={styleSheet.bottomSheetItemText}>{item.label}</Text>
-        </View>
-      </Pressable>
-    ),
-    [triggerLaunch]
+  const renderItem = ({ item }: { item: PickerData }) => (
+    <TouchableOpacity onPress={() => triggerLaunch(item.kind)}>
+      <View style={styleSheet.bottomSheetItem}>
+        <Icon type={IconType.MaterialIcons} name={item.icon} size={24} />
+        <Text style={styleSheet.bottomSheetItemText}>{item.label}</Text>
+      </View>
+    </TouchableOpacity>
   );
 
   return (
@@ -205,7 +196,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
       keyExtractor={(item) => item.kind}
       renderHandle={renderHandle}
       onSettle={handleSheetChange}
-      contentContainerStyle={styleSheet.bottomSheetContent}
+      contentContainerStyle={styleSheet.content}
       renderItem={renderItem}
     />
   );
@@ -215,8 +206,9 @@ export interface ImagePickerProps extends ViewProps {
   launcherType?: LauncherTypeKind;
   options?: ImagePickerOptions;
   errorMessage?: string;
-  value: ImagePickerResult | string | undefined;
-  onChange: (imagePickerResult: ImagePickerResult) => void;
+  value?: ImagePickerResult | string | undefined;
+  onChange?: (imagePickerResult: ImagePickerResult) => void;
+  onBlur?: (event: NativeSyntheticEvent<TargetedEvent>) => void;
   isPreview?: boolean;
 }
 
@@ -226,6 +218,7 @@ const ImagePicker = forwardRef<View, ImagePickerProps>(
       launcherType = 'default',
       value,
       onChange,
+      onBlur,
       errorMessage,
       options,
       style,
@@ -236,19 +229,9 @@ const ImagePicker = forwardRef<View, ImagePickerProps>(
   ) => {
     const [snapPosition, setSnapPosition] = useState<number>(1);
     const sheetRef = useRef<ScrollBottomSheet<PickerData>>(null);
-    const handleSheetChange = useCallback((index: number) => {
+    const handleSheetChange = (index: number) => {
       setSnapPosition(index);
-    }, []);
-    const getPickerData = useCallback<() => PickerData[]>(() => {
-      switch (launcherType) {
-        case 'camera':
-          return [CAMERA_KIND];
-        case 'image-library':
-          return [IMAGE_LIBRARY_KIND];
-        default:
-          return [CAMERA_KIND, IMAGE_LIBRARY_KIND];
-      }
-    }, [launcherType]);
+    };
     const mergedOptions = useMemo<ImagePickerOptions>(
       () =>
         deepmerge<ImagePickerOptions, ImagePickerOptions>(
@@ -263,8 +246,18 @@ const ImagePicker = forwardRef<View, ImagePickerProps>(
         ),
       [options]
     );
+    const getPickerData = () => {
+      switch (launcherType) {
+        case 'camera':
+          return [CAMERA_KIND];
+        case 'image-library':
+          return [IMAGE_LIBRARY_KIND];
+        default:
+          return [CAMERA_KIND, IMAGE_LIBRARY_KIND];
+      }
+    };
 
-    const pickImage = useCallback(async () => {
+    const pickImage = async () => {
       try {
         const mediaLibraryPermissionsResult =
           await requestMediaLibraryPermissionsAsync();
@@ -275,16 +268,16 @@ const ImagePicker = forwardRef<View, ImagePickerProps>(
           );
 
           if (!imagePickerResult.cancelled) {
-            onChange(imagePickerResult);
+            onChange && onChange(imagePickerResult);
             sheetRef.current?.snapTo(1);
           }
         }
       } catch (error) {
         console.log(error);
       }
-    }, [mergedOptions, onChange]);
+    };
 
-    const takeImage = useCallback(async () => {
+    const takeImage = async () => {
       try {
         const cameraPermissionsResult = await requestCameraPermissionsAsync();
 
@@ -299,30 +292,37 @@ const ImagePicker = forwardRef<View, ImagePickerProps>(
       } catch (error) {
         console.log(error);
       }
-    }, [mergedOptions, onChange]);
+    };
 
-    const triggerLaunch = useCallback<(type: LauncherTypeKind) => void>(
-      (type) => {
-        if (isPreview) return
+    const triggerLaunch = async (type: LauncherTypeKind) => {
+      if (isPreview) return;
 
-        switch (type) {
-          case 'camera':
-            takeImage();
-            break;
-          case 'image-library':
-            pickImage();
-            break;
-          default:
-            sheetRef.current?.snapTo(0);
-            break;
-        }
-      },
-      [pickImage, takeImage, isPreview]
-    );
+      switch (type) {
+        case 'camera':
+          await takeImage();
+          break;
+        case 'image-library':
+          await pickImage();
+          break;
+        default:
+          sheetRef.current?.snapTo(0);
+          break;
+      }
+    };
+
+    const handleBlur: (event: NativeSyntheticEvent<TargetedEvent>) => void = (
+      event
+    ) => {
+      onBlur && onBlur(event);
+    };
 
     return (
-      <>
-        <Pressable onPress={() => triggerLaunch(launcherType)} style={style}>
+      <View style={styleSheet.content}>
+        <TouchableOpacity
+          onPress={() => triggerLaunch(launcherType)}
+          style={style}
+          onBlur={handleBlur}
+        >
           {value ? (
             <ImagePickerImage
               {...props}
@@ -337,7 +337,7 @@ const ImagePicker = forwardRef<View, ImagePickerProps>(
               errorMessage={errorMessage}
             />
           )}
-        </Pressable>
+        </TouchableOpacity>
         {errorMessage ? (
           <ErrorMessage errorMessage={errorMessage} />
         ) : undefined}
@@ -347,7 +347,7 @@ const ImagePicker = forwardRef<View, ImagePickerProps>(
           triggerLaunch={triggerLaunch}
           handleSheetChange={handleSheetChange}
         />
-      </>
+      </View>
     );
   }
 );
