@@ -1478,7 +1478,7 @@
     chalk "^4.0.0"
 
 "@jitera/jitera-rn-ui-library@../":
-  version "0.0.17-alpha"
+  version "0.0.32-alpha"
   dependencies:
     "@expo/vector-icons" "^12.0.5"
     "@react-native-community/datetimepicker" "^5.1.0"

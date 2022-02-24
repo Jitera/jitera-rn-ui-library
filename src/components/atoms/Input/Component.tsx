@@ -8,6 +8,8 @@ import {
   TextStyle,
   TouchableOpacity,
   TextInputProps,
+  NativeSyntheticEvent,
+  TextInputEndEditingEventData,
 } from 'react-native';
 import View from '../View/Component';
 import type { PreviewProps, PropsWithRef } from '../../../type';
@@ -16,7 +18,7 @@ import { renderNode, patchWebProps } from '../../../theme/helpers';
 
 export type InputProps = PropsWithRef<
   PreviewProps &
-  Omit<TextInputProps, 'style' | 'multiline'> &
+  Omit<TextInputProps, 'style' | 'multiline' | 'onChange' | 'onBlur'> &
   {
     style?: StyleProp<ViewStyle>;
     disabled?: boolean;
@@ -26,10 +28,12 @@ export type InputProps = PropsWithRef<
     showClearText?: boolean;
     numberOfLines?: number;
     onClear?: () => void;
+    onChange?: (value: string) => void;
+    onBlur?: (event: NativeSyntheticEvent<TextInputEndEditingEventData>) => void
   }
 >;
 
-const Input: FunctionComponent<InputProps> = forwardRef<any, InputProps>(
+const Input: FunctionComponent<InputProps> = forwardRef<TextInput, InputProps>(
   (
     {
       style,
@@ -41,18 +45,29 @@ const Input: FunctionComponent<InputProps> = forwardRef<any, InputProps>(
       numberOfLines,
       onClear,
       isPreview,
+      onChange,
+      onBlur,
       ...attributes
     },
     ref
   ) => {
     const hideErrorMessage = !errorMessage;
 
+    const handleTextChange = (text: string) => {
+      onChange && onChange(text)
+    }
+
+    const handleEndEditing = (event: NativeSyntheticEvent<TextInputEndEditingEventData>) => {
+      onBlur && onBlur(event)
+    }
+
     return (
-      <View ref={ref} style={StyleSheet.flatten([styles.container, style])}>
+      <View style={StyleSheet.flatten([styles.container, style])}>
         {renderNode(Text, title)}
 
         <View style={styles.animatedContainer}>
           <TextInput
+            ref={ref}
             pointerEvents={isPreview ? 'none' : undefined}
             underlineColorAndroid="transparent"
             editable={!disabled}
@@ -73,6 +88,8 @@ const Input: FunctionComponent<InputProps> = forwardRef<any, InputProps>(
             ])}
             multiline={typeof numberOfLines === 'number' && numberOfLines > 2}
             numberOfLines={numberOfLines}
+            onChangeText={handleTextChange}
+            onEndEditing={handleEndEditing}
             {...patchWebProps(attributes)}
           />
           {showClearText ? (
