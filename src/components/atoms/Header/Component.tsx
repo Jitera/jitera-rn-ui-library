@@ -143,7 +143,7 @@ const Header: FunctionComponent<HeaderProps> = forwardRef<any, HeaderProps>(
       }
       return null;
     };
-
+  
     const renderInside = () => {
       const defaultHeight =
         height ||
@@ -198,11 +198,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   labelText: {
+    width: '100%',
     fontWeight: '600',
     fontSize: Platform.OS === 'web' ? 16 : defaultTheme.fontSizes.FONT_16,
   },
   rightWrapper: {
-    flex: 0.22,
+    flex: 0.2,
     alignItems: 'flex-end',
   },
 });
