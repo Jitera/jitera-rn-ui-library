@@ -169,6 +169,7 @@ const DateTimePicker: FunctionComponent<DateTimePickerProps> = forwardRef<
             hideErrorMessage && {
               height: 0,
               margin: 0,
+              marginTop: 0,
               padding: 0,
             },
           ])}
