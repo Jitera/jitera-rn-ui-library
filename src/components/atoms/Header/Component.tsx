@@ -33,7 +33,7 @@ export type HeaderProps = PropsWithRef<{
   rightIconSize?: number;
   rightIconColor?: string;
   onPressRightIcon?: () => void;
-  titleStyle: TextStyle;
+  titleStyle?: TextStyle;
   safeAreaTop?: number;
 }>;
 

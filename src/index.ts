@@ -14,11 +14,12 @@ import Carousel, { CarouselProps } from './components/molecules/Carousel';
 import DateTimePicker, {
   DateTimePickerProps, DateMode,
 } from './components/atoms/DateTimePicker';
-import CommonLoading, {
+import {
+  CommonLoading,
   CommonLoadingProps,
 } from './components/widgets/CommonLoading';
-import Modal, { ModalProps } from './components/widgets/Modal';
-import Toast, { ToastProps } from './components/widgets/Toast';
+import { Modal, ModalProps } from './components/widgets/Modal';
+import { Toast, ToastProps } from './components/widgets/Toast';
 import {
   colors,
   colorsDark,
