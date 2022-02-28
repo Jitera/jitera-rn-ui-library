@@ -55,7 +55,7 @@ const OTPInput: FunctionComponent<OTPInputProps> = forwardRef<
     ref
   ) => {
     return (
-      <View ref={ref} style={StyleSheet.flatten([styles.container, style])}>
+      <View ref={ref} style={style}>
         <CodeField
           autoFocus={autoFocus}
           value={value}
@@ -99,9 +99,6 @@ const OTPInput: FunctionComponent<OTPInputProps> = forwardRef<
 );
 
 const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-  },
   codeFiledRoot: {
     width: '100%',
     marginLeft: 'auto',
