@@ -62,7 +62,7 @@ const Input: FunctionComponent<InputProps> = forwardRef<TextInput, InputProps>(
     }
 
     return (
-      <View style={StyleSheet.flatten([styles.container, style])}>
+      <View style={style}>
         {renderNode(Text, title)}
 
         <View style={styles.animatedContainer}>
@@ -113,9 +113,6 @@ const Input: FunctionComponent<InputProps> = forwardRef<TextInput, InputProps>(
 );
 
 const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-  },
   disabledInput: {
     opacity: 0.5,
   },
