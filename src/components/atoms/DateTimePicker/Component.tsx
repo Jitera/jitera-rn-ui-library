@@ -213,9 +213,6 @@ const DateTimePicker: FunctionComponent<DateTimePickerProps> = forwardRef<
 );
 
 const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-  },
   iconStyle: {
     color: defaultTheme?.colors?.grey5,
   },
