@@ -12,6 +12,7 @@ import WebView from './components/atoms/WebView/Component';
 import ImagePicker from './components/atoms/ImagePicker/Component';
 import Carousel from './components/molecules/Carousel/Component';
 import DateTimePicker from './components/atoms/DateTimePicker/Component';
+import FlatList from './components/molecules/FlatList/Component';
 
 export default {
   Button,
@@ -28,4 +29,5 @@ export default {
   ImagePicker,
   Carousel,
   DateTimePicker,
+  FlatList
 };

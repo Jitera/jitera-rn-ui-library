@@ -53,6 +53,10 @@ const HomeView: React.FC = () => {
         title="DateTimePicker"
         onPress={() => navigation.navigate('DateTimePicker')}
       />
+      <ButtonView
+        title="FlatList"
+        onPress={() => navigation.navigate('FlatList')}
+      />
     </BaseLayout>
   );
 };
