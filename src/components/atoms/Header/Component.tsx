@@ -145,10 +145,7 @@ const Header: FunctionComponent<HeaderProps> = forwardRef<any, HeaderProps>(
     };
   
     const renderInside = () => {
-      const defaultHeight =
-        height ||
-        (Platform.OS === 'web' ? 45 : defaultTheme?.spacing?.SPACING_45);
-
+      const safeAreaSpace = (unsafe ? safeAreaTop : 0)
       return (
         <View
           ref={ref}
@@ -156,8 +153,7 @@ const Header: FunctionComponent<HeaderProps> = forwardRef<any, HeaderProps>(
             styles.wrapper,
             {
               backgroundColor,
-              height: defaultHeight,
-              paddingTop: unsafe ? safeAreaTop : 0,
+              paddingTop: Platform.OS === 'web' ? 8 : (defaultTheme?.spacing?.SPACING_8 + safeAreaSpace),
             },
             style,
           ]}
@@ -188,6 +184,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: 'rgba(0,0,0,0.1)',
     alignItems: 'center',
+    paddingBottom: Platform.OS === 'web' ? 8 : defaultTheme?.spacing?.SPACING_8
   },
   leftWrapper: {
     flex: 0.2,
