@@ -11,6 +11,7 @@ import Divider, { DividerProps } from './components/atoms/Divider';
 import WebView, { WebViewProps } from './components/atoms/WebView';
 import ImagePicker, { ImagePickerProps, LauncherTypeKind } from './components/atoms/ImagePicker';
 import Carousel, { CarouselProps } from './components/molecules/Carousel';
+import FlatList, { FlatListProps } from './components/molecules/FlatList';
 import DateTimePicker, {
   DateTimePickerProps, DateMode,
 } from './components/atoms/DateTimePicker';
@@ -76,6 +77,7 @@ export {
   ImagePicker,
   Carousel,
   DateTimePicker,
+  FlatList
 };
 
 // Atoms Components Props exports
@@ -97,6 +99,7 @@ export type {
   ImagePickerProps,
   CarouselProps,
   DateTimePickerProps,
+  FlatListProps
 };
 
 // Atoms Components Enum exports

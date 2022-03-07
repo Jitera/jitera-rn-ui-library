@@ -25,6 +25,8 @@ const OTPInputViews: React.FC = () => {
         value={value}
         onBlur={handleBlur as any}
         errorMessage={errorMessage}
+        enableMask={false}
+        otpInputType="box"
       />
       <Input />
     </BaseLayout>
