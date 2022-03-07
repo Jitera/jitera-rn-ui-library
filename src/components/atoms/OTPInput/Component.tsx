@@ -103,7 +103,7 @@ const OTPInput: FunctionComponent<OTPInputProps> = forwardRef<
           </Text>
         </View>
       )
-    }, [otpInputType, focusCellStyle, cellTextStyle])
+    }, [otpInputType, focusCellStyle, cellTextStyle, cellStyle])
 
     return (
       <View ref={ref} style={[styles.wrapperStyle, style]}>
@@ -131,7 +131,6 @@ const OTPInput: FunctionComponent<OTPInputProps> = forwardRef<
 
 const styles = StyleSheet.create({
   wrapperStyle: {
-    width: '100%',
     marginLeft: 'auto',
     marginRight: 'auto',
     minWidth: 250,
