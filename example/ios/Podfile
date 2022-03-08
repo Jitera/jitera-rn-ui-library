@@ -6,15 +6,32 @@ pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
 platform :ios, '12.0'
 
-target 'example' do
+target 'JiteraRNUILibraryExample' do
   use_expo_modules!
+
   post_integrate do |installer|
     begin
       expo_patch_react_imports!(installer)
     rescue => e
       Pod::UI.warn e
     end
+    begin
+      expo_patch_react_imports!(installer)
+    rescue => e
+      Pod::UI.warn e
+    end
+    begin
+      expo_patch_react_imports!(installer)
+    rescue => e
+      Pod::UI.warn e
+    end
+    begin
+      expo_patch_react_imports!(installer)
+    rescue => e
+      Pod::UI.warn e
+    end
   end
+
   config = use_native_modules!
 
   use_react_native!(
@@ -23,8 +40,7 @@ target 'example' do
     :hermes_enabled => false
   )
 
-
-  target 'exampleTests' do
+  target 'JiteraRNUILibraryExampleTests' do
     inherit! :complete
     # Pods for testing
   end
@@ -33,10 +49,10 @@ target 'example' do
   #
   # Note that if you have use_frameworks! enabled, Flipper will not work and
   # you should disable the next line.
-  # use_flipper!()
+  use_flipper!()
 
   post_install do |installer|
     react_native_post_install(installer)
-    # __apply_Xcode_12_5_M1_post_install_workaround(installer)
+    __apply_Xcode_12_5_M1_post_install_workaround(installer)
   end
 end
