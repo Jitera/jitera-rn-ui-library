@@ -1,4 +1,7 @@
 {
   "name": "JiteraRNUILibraryExample",
-  "displayName": "JiteraRNUILibraryExample"
+  "displayName": "JiteraRNUILibraryExample",
+  "expo": {
+    "scheme": "jiterarnuilibraryexample"
+  }
 }
