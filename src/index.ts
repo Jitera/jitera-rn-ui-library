@@ -9,11 +9,21 @@ import Header, { HeaderProps } from './components/atoms/Header';
 import OTPInput, { OTPInputProps } from './components/atoms/OTPInput';
 import Divider, { DividerProps } from './components/atoms/Divider';
 import WebView, { WebViewProps } from './components/atoms/WebView';
-import ImagePicker, { ImagePickerProps, LauncherTypeKind } from './components/atoms/ImagePicker';
+import ImagePicker, {
+  ImagePickerProps,
+  LauncherTypeKind,
+} from './components/atoms/ImagePicker';
+import ThirdPartyAuthButton, {
+  ThirdPartyAuthButtonProps,
+  ThirdPartyAuthProvider,
+  GoogleAuthResult,
+  FacebookAuthResult
+} from './components/atoms/ThirdPartyAuthButton';
 import Carousel, { CarouselProps } from './components/molecules/Carousel';
 import FlatList, { FlatListProps } from './components/molecules/FlatList';
 import DateTimePicker, {
-  DateTimePickerProps, DateMode,
+  DateTimePickerProps,
+  DateMode,
 } from './components/atoms/DateTimePicker';
 import {
   CommonLoading,
@@ -39,7 +49,7 @@ import {
   ReplaceTheme,
   Colors,
 } from './theme';
-import type { RneFunctionComponent } from './theme/helpers'
+import type { RneFunctionComponent } from './theme/helpers';
 import components from './previewComponents';
 
 // For theme
@@ -54,10 +64,17 @@ export {
   withTheme,
   useTheme,
   makeStyles,
-  
 };
 // For theme type
-export type { Theme, FullTheme, UpdateTheme, ReplaceTheme, ThemeProps, Colors, RneFunctionComponent };
+export type {
+  Theme,
+  FullTheme,
+  UpdateTheme,
+  ReplaceTheme,
+  ThemeProps,
+  Colors,
+  RneFunctionComponent,
+};
 // Components exports
 export {
   Button,
@@ -77,7 +94,8 @@ export {
   ImagePicker,
   Carousel,
   DateTimePicker,
-  FlatList
+  FlatList,
+  ThirdPartyAuthButton,
 };
 
 // Atoms Components Props exports
@@ -99,17 +117,15 @@ export type {
   ImagePickerProps,
   CarouselProps,
   DateTimePickerProps,
-  FlatListProps
+  FlatListProps,
+  ThirdPartyAuthButtonProps,
+  GoogleAuthResult,
+  FacebookAuthResult
 };
 
 // Atoms Components Enum exports
-export {
-  IconType,
-  LauncherTypeKind
-}
+export { IconType, LauncherTypeKind, ThirdPartyAuthProvider };
 
-export type {
-  DateMode
-}
+export type { DateMode };
 
 export default components;

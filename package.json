@@ -1,6 +1,6 @@
 {
   "name": "@jitera/jitera-rn-ui-library",
-  "version": "0.0.40-alpha",
+  "version": "0.0.41-alpha",
   "description": "atoms and component for rn template project and web",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -29,7 +29,7 @@
     "release": "release-it",
     "example": "yarn --cwd example",
     "pods": "cd example && pod-install --quiet",
-    "bootstrap": "yarn && yarn pods"
+    "bootstrap": "yarn"
   },
   "keywords": [
     "react-native",
@@ -164,9 +164,12 @@
     "@react-native-community/datetimepicker": "^5.1.0",
     "color": "^4.2.0",
     "deepmerge": "^4.2.2",
+    "expo-auth-session": "^3.5.0",
     "expo-font": "^10.0.3",
     "expo-image-picker": "^12.0.1",
+    "expo-random": "^12.1.2",
     "hoist-non-react-statics": "^3.3.2",
+    "jwt-decode": "^3.1.2",
     "react-native-confirmation-code-field": "^7.1.0",
     "react-native-fast-image": "^8.5.11",
     "react-native-gesture-handler": "^1.10.3",
@@ -174,6 +177,7 @@
     "react-native-safe-area-context": "^3.3.2",
     "react-native-scroll-bottom-sheet": "^0.7.0",
     "react-native-size-matters": "^0.4.0",
+    "react-native-svg": "^12.3.0",
     "react-native-vector-icons": "^9.0.0",
     "react-native-web-swiper": "^2.2.2"
   },
