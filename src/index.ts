@@ -10,6 +10,7 @@ import OTPInput, { OTPInputProps } from './components/atoms/OTPInput';
 import Divider, { DividerProps } from './components/atoms/Divider';
 import WebView, { WebViewProps } from './components/atoms/WebView';
 import ImagePicker, { ImagePickerProps, LauncherTypeKind } from './components/atoms/ImagePicker';
+import ThirdPartyAuthButton, { ThirdPartyAuthButtonProps, ThirdPartyAuthProvider } from './components/atoms/ThirdPartyAuthButton';
 import Carousel, { CarouselProps } from './components/molecules/Carousel';
 import FlatList, { FlatListProps } from './components/molecules/FlatList';
 import DateTimePicker, {
@@ -54,7 +55,6 @@ export {
   withTheme,
   useTheme,
   makeStyles,
-  
 };
 // For theme type
 export type { Theme, FullTheme, UpdateTheme, ReplaceTheme, ThemeProps, Colors, RneFunctionComponent };
@@ -77,7 +77,8 @@ export {
   ImagePicker,
   Carousel,
   DateTimePicker,
-  FlatList
+  FlatList,
+  ThirdPartyAuthButton
 };
 
 // Atoms Components Props exports
@@ -99,13 +100,15 @@ export type {
   ImagePickerProps,
   CarouselProps,
   DateTimePickerProps,
-  FlatListProps
+  FlatListProps,
+  ThirdPartyAuthButtonProps
 };
 
 // Atoms Components Enum exports
 export {
   IconType,
-  LauncherTypeKind
+  LauncherTypeKind,
+  ThirdPartyAuthProvider
 }
 
 export type {
