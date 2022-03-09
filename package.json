@@ -29,7 +29,7 @@
     "release": "release-it",
     "example": "yarn --cwd example",
     "pods": "cd example && pod-install --quiet",
-    "bootstrap": "yarn && yarn pods"
+    "bootstrap": "yarn"
   },
   "keywords": [
     "react-native",
@@ -177,6 +177,7 @@
     "react-native-safe-area-context": "^3.3.2",
     "react-native-scroll-bottom-sheet": "^0.7.0",
     "react-native-size-matters": "^0.4.0",
+    "react-native-svg": "^12.3.0",
     "react-native-vector-icons": "^9.0.0",
     "react-native-web-swiper": "^2.2.2"
   },
