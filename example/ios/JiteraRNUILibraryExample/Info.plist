@@ -87,13 +87,7 @@
 			<dict>
 				<key>CFBundleURLSchemes</key>
 				<array>
-					<string>https://auth.expo.io/@jefrydcojitera/jitera-rn-ui-library-example</string>
-				</array>
-			</dict>
-			<dict>
-				<key>CFBundleURLSchemes</key>
-				<array>
-					<string>com.jiterarnuilibraryexample</string>
+					<string>org.reactjs.native.example.JiteraRNUILibraryExample</string>
 				</array>
 			</dict>
 			<dict>
