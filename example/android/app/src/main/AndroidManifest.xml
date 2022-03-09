@@ -10,7 +10,8 @@
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
-        <data android:scheme="jiterarnuilibraryexample"/>
+        <data android:scheme="com.jiterarnuilibraryexample"/>
+        <data android:scheme="fb537504197710261"/>
       </intent-filter>
     </activity>
   </application>

@@ -84,6 +84,24 @@
 					<string>jiterarnuilibraryexample</string>
 				</array>
 			</dict>
+			<dict>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>https://auth.expo.io/@jefrydcojitera/jitera-rn-ui-library-example</string>
+				</array>
+			</dict>
+			<dict>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>com.jiterarnuilibraryexample</string>
+				</array>
+			</dict>
+			<dict>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>fb537504197710261</string>
+				</array>
+			</dict>
 		</array>
 	</dict>
 </plist>

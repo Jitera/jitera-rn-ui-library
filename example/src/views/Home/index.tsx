@@ -57,6 +57,10 @@ const HomeView: React.FC = () => {
         title="FlatList"
         onPress={() => navigation.navigate('FlatList')}
       />
+      <ButtonView
+        title="Third Party Auth Button"
+        onPress={() => navigation.navigate('ThirdPartyAuthButton')}
+      />
     </BaseLayout>
   );
 };

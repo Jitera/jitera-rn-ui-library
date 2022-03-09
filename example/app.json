@@ -2,6 +2,8 @@
   "name": "JiteraRNUILibraryExample",
   "displayName": "JiteraRNUILibraryExample",
   "expo": {
+    "name": "JiteraRNUILibraryExample",
+    "slug": "jitera-rn-ui-library-example",
     "scheme": "jiterarnuilibraryexample"
   }
 }

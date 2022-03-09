@@ -20,6 +20,7 @@ import ImagePickerViews from '~/views/ImagePicker';
 import CarouselViews from '~/views/Carousel';
 import DateTimePickerViews from '~/views/DateTimePicker';
 import FlatListViews from '~/views/FlatList';
+import ThirdPartyAuthenticationViews from '~/views/ThirdPartyAuthButton';
 
 const Stack = createNativeStackNavigator();
 
@@ -43,6 +44,7 @@ const App = () => {
         <Stack.Screen name="Carousel" component={CarouselViews} />
         <Stack.Screen name="DateTimePicker" component={DateTimePickerViews} />
         <Stack.Screen name="FlatList" component={FlatListViews} />
+        <Stack.Screen name="ThirdPartyAuthButton" component={ThirdPartyAuthenticationViews} />
       </Stack.Navigator>
     </NavigationContainer>
   );
