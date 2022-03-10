@@ -161,7 +161,7 @@ const useLoginText = () => {
     if (authResult?.type === 'success') {
       return 'Signed In';
     }
-    return `Login with ${authProvider}`;
+    return `Sign in with ${authProvider}`;
   };
   return {
     getLoginText,
