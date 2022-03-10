@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from 'react'
+
 import {
   StyleProp,
   StyleSheet,
@@ -17,14 +18,18 @@ import type {
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import * as Facebook from 'expo-auth-session/providers/facebook';
+import * as AppleAuthentication from 'expo-apple-authentication'
 
 import { Icon, IconType } from '../Icon';
 import Text from '../Text';
 import View from '../View';
 
+type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
+
 export enum ThirdPartyAuthProvider {
   GOOGLE = 'Google',
   FACEBOOK = 'Facebook',
+  APPLE = 'Apple'
 }
 
 export type AuthSessionResultComplete = {
@@ -39,7 +44,7 @@ export type AuthSessionResultComplete = {
 };
 
 export interface BaseAuthResult {
-  authentication: AuthSessionResult | null;
+  authentication: Partial<AuthSessionResult> | AppleAuthentication.AppleAuthenticationCredential | null;
 }
 
 export interface GoogleAuthResult extends BaseAuthResult {
@@ -50,14 +55,22 @@ export interface FacebookAuthResult extends BaseAuthResult {
   accessToken: string | undefined;
 }
 
-export interface ThirdPartyAuthButtonProps extends TouchableOpacityProps {
+export interface AppleAuthResult extends BaseAuthResult {
+  idToken: string | null;
+  uid: string | null
+}
+
+interface BaseThirdPartyAuthButtonProps {
+  errorMessage?: string;
+  value?: GoogleAuthResult | FacebookAuthResult | AppleAuthResult;
+  onChange?: (authResult: GoogleAuthResult | FacebookAuthResult | AppleAuthResult) => void;
+}
+
+export interface ThirdPartyAuthButtonProps extends Omit<TouchableOpacityProps, 'onPress'>, PartialBy<Omit<AppleAuthentication.AppleAuthenticationButtonProps, 'onPress' | 'style'>, 'buttonType' | 'buttonStyle'>, BaseThirdPartyAuthButtonProps {
   type: ThirdPartyAuthProvider;
-  config:
+  config?:
     | Partial<Google.GoogleAuthRequestConfig>
     | Partial<Facebook.FacebookAuthRequestConfig>;
-  errorMessage?: string;
-  value?: GoogleAuthResult | FacebookAuthResult;
-  onChange?: (authResult: GoogleAuthResult | FacebookAuthResult) => void;
 }
 
 export interface GoogleAuthButtonProps
@@ -65,6 +78,8 @@ export interface GoogleAuthButtonProps
 
 export interface FacebookAuthButtonProps
   extends Omit<ThirdPartyAuthButtonProps, 'type'> {}
+
+export interface AppleAuthButtonProps extends Omit<ThirdPartyAuthButtonProps, 'type' | 'config'> {}
 
 interface ErrorMessageProps {
   errorMessage?: string;
@@ -92,6 +107,7 @@ const baseAuthStylesheet = ScaledSheet.create({
   text: {
     textAlign: 'center',
     marginLeft: '8@s',
+    fontSize: '14@s'
   },
   errorMessage: {
     color: ERROR_COLOR,
@@ -140,12 +156,12 @@ const GoogleIcon: React.FC = () => (
 const useLoginText = () => {
   const getLoginText = (
     authProvider: ThirdPartyAuthProvider,
-    authResult: AuthSessionResult
+    authResult?: AuthSessionResult | null
   ) => {
     if (authResult?.type === 'success') {
       return 'Signed In';
     }
-    return `Login with ${authProvider}`;
+    return `Sign in with ${authProvider}`;
   };
   return {
     getLoginText,
@@ -156,11 +172,8 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({ errorMessage }) => (
   <Text style={baseAuthStylesheet.errorMessage}>{errorMessage}</Text>
 );
 
-const GoogleAuthButton = React.forwardRef<
-  TouchableOpacity,
-  GoogleAuthButtonProps
->(({ config, style, errorMessage, value, onChange }, ref) => {
-  const [_, response, promptAsync] = Google.useIdTokenAuthRequest(config);
+const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({ config, style, errorMessage, value, onChange }) => {
+  const [_, response, promptAsync] = Google.useIdTokenAuthRequest(config!);
   const { getLoginText } = useLoginText();
 
   useEffect(() => {
@@ -174,13 +187,9 @@ const GoogleAuthButton = React.forwardRef<
 
   return (
     <TouchableOpacity
-      ref={ref}
-      style={
-        StyleSheet.flatten([
-          errorMessage ? { borderColor: ERROR_COLOR } : undefined,
-          style,
-        ]) as StyleProp<ViewStyle>
-      }
+      style={StyleSheet.flatten([
+        style
+      ])}
       onPress={() => {
         promptAsync();
       }}
@@ -188,7 +197,7 @@ const GoogleAuthButton = React.forwardRef<
       <View
         style={StyleSheet.flatten([
           baseAuthStylesheet.container as StyleProp<ViewStyle>,
-          googleAuthStylesheet.container as StyleProp<ViewStyle>,
+          googleAuthStylesheet.container as StyleProp<ViewStyle>
         ])}
       >
         <GoogleIcon />
@@ -199,19 +208,16 @@ const GoogleAuthButton = React.forwardRef<
             ]) as StyleProp<ViewStyle>
           }
         >
-          {getLoginText(ThirdPartyAuthProvider.GOOGLE, value?.authentication)}
+          {getLoginText(ThirdPartyAuthProvider.GOOGLE, (value?.authentication as AuthSessionResult))}
         </Text>
       </View>
       {errorMessage && <ErrorMessage errorMessage={errorMessage} />}
     </TouchableOpacity>
   );
-});
+}
 
-const FacebookAuthButton = React.forwardRef<
-  TouchableOpacity,
-  FacebookAuthButtonProps
->(({ config, style, errorMessage, value, onChange }, ref) => {
-  const [_, response, promptAsync] = Facebook.useAuthRequest(config);
+const FacebookAuthButton: React.FC<FacebookAuthButtonProps> = ({ config, style, errorMessage, value, onChange }) => {
+  const [_, response, promptAsync] = Facebook.useAuthRequest(config!);
   const { getLoginText } = useLoginText();
 
   useEffect(() => {
@@ -225,13 +231,9 @@ const FacebookAuthButton = React.forwardRef<
 
   return (
     <TouchableOpacity
-      ref={ref}
-      style={
-        StyleSheet.flatten([
-          errorMessage ? { borderColor: ERROR_COLOR } : undefined,
-          style,
-        ]) as StyleProp<ViewStyle>
-      }
+      style={StyleSheet.flatten([
+        style
+      ])}
       onPress={() => {
         promptAsync();
       }}
@@ -239,7 +241,7 @@ const FacebookAuthButton = React.forwardRef<
       <View
         style={StyleSheet.flatten([
           baseAuthStylesheet.container as StyleProp<ViewStyle>,
-          facebookAuthStylesheet.container as StyleProp<ViewStyle>,
+          facebookAuthStylesheet.container as StyleProp<ViewStyle>
         ])}
       >
         <Icon type={IconType.AntDesign} name="facebook-square" color={'#fff'} />
@@ -251,24 +253,79 @@ const FacebookAuthButton = React.forwardRef<
             ]) as StyleProp<ViewStyle>
           }
         >
-          {getLoginText(ThirdPartyAuthProvider.FACEBOOK, value?.authentication)}
+          {getLoginText(ThirdPartyAuthProvider.FACEBOOK, (value?.authentication as AuthSessionResult))}
         </Text>
       </View>
       {errorMessage && <ErrorMessage errorMessage={errorMessage} />}
     </TouchableOpacity>
   );
-});
+}
+
+const AppleAuthButton: React.FC<AppleAuthButtonProps> = ({
+  errorMessage,
+  value,
+  onChange,
+  style,
+  buttonType = AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN,
+  buttonStyle = AppleAuthentication.AppleAuthenticationButtonStyle.BLACK,
+  cornerRadius = 5,
+  ...props
+}) => {
+
+  const handleLogin = async () => {
+    try {
+      const credential = await AppleAuthentication.signInAsync({
+        requestedScopes: [
+          AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+          AppleAuthentication.AppleAuthenticationScope.EMAIL,
+        ],
+      });
+      onChange && onChange({
+        idToken: credential.identityToken,
+        uid: credential.user,
+        authentication: credential
+      })
+      // signed in
+    } catch (e) {
+      if (e.code === 'ERR_CANCELED') {
+        onChange && onChange({
+          idToken: '',
+          uid: '',
+          authentication: { type: 'cancel' }
+        })
+      } else {
+        onChange && onChange({
+          idToken: '',
+          uid: '',
+          authentication: { type: 'error' }
+        })
+      }
+    }
+  }
+
+  return (
+    <TouchableOpacity>
+      <AppleAuthentication.AppleAuthenticationButton
+        {...props}
+        buttonType={buttonType}
+        buttonStyle={buttonStyle}
+        cornerRadius={cornerRadius}
+        style={StyleSheet.flatten([{ height: 44 }, style])}
+        onPress={handleLogin}
+      />
+      {errorMessage && <ErrorMessage errorMessage={errorMessage} />}
+    </TouchableOpacity>
+  )
+}
 
 const AuthButton = {
   [ThirdPartyAuthProvider.GOOGLE]: GoogleAuthButton,
   [ThirdPartyAuthProvider.FACEBOOK]: FacebookAuthButton,
+  [ThirdPartyAuthProvider.APPLE]: AppleAuthButton
 };
 
-const ThirdPartyAuthButton = React.forwardRef<
-  TouchableOpacity,
-  ThirdPartyAuthButtonProps
->(({ type, errorMessage, ...props }, ref) => {
-  React.useEffect(() => {
+const ThirdPartyAuthButton: React.FC<ThirdPartyAuthButtonProps> = ({ type, errorMessage, ...props }) => {
+  useEffect(() => {
     WebBrowser.warmUpAsync();
 
     return () => {
@@ -279,8 +336,8 @@ const ThirdPartyAuthButton = React.forwardRef<
   const Component = AuthButton?.[type];
 
   return Component ? (
-    <Component {...props} errorMessage={errorMessage} ref={ref} />
+    <Component {...props} errorMessage={errorMessage} />
   ) : null;
-});
+};
 
 export default ThirdPartyAuthButton;

@@ -17,7 +17,8 @@ import ThirdPartyAuthButton, {
   ThirdPartyAuthButtonProps,
   ThirdPartyAuthProvider,
   GoogleAuthResult,
-  FacebookAuthResult
+  FacebookAuthResult,
+  AppleAuthResult
 } from './components/atoms/ThirdPartyAuthButton';
 import Carousel, { CarouselProps } from './components/molecules/Carousel';
 import FlatList, { FlatListProps } from './components/molecules/FlatList';
@@ -120,7 +121,8 @@ export type {
   FlatListProps,
   ThirdPartyAuthButtonProps,
   GoogleAuthResult,
-  FacebookAuthResult
+  FacebookAuthResult,
+  AppleAuthResult
 };
 
 // Atoms Components Enum exports
