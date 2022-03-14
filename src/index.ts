@@ -4,6 +4,7 @@ import Input, { InputProps } from './components/atoms/Input';
 import Text, { TextProps } from './components/atoms/Text';
 import Page, { PageProps } from './components/atoms/Page';
 import View, { ViewProps } from './components/atoms/View';
+import ScrollView, { ScrollViewProps } from './components/atoms/ScrollView';
 import Icon, { IconProps, IconType } from './components/atoms/Icon';
 import Header, { HeaderProps } from './components/atoms/Header';
 import OTPInput, { OTPInputProps } from './components/atoms/OTPInput';
@@ -97,6 +98,7 @@ export {
   DateTimePicker,
   FlatList,
   ThirdPartyAuthButton,
+  ScrollView,
 };
 
 // Atoms Components Props exports
@@ -122,7 +124,8 @@ export type {
   ThirdPartyAuthButtonProps,
   GoogleAuthResult,
   FacebookAuthResult,
-  AppleAuthResult
+  AppleAuthResult,
+  ScrollViewProps
 };
 
 // Atoms Components Enum exports

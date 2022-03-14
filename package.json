@@ -1,6 +1,6 @@
 {
   "name": "@jitera/jitera-rn-ui-library",
-  "version": "0.0.43-alpha",
+  "version": "0.0.43-alpha-04",
   "description": "atoms and component for rn template project and web",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",

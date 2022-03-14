@@ -4,6 +4,7 @@ import Input from './components/atoms/Input/Component';
 import Text from './components/atoms/Text/Component';
 import Page from './components/atoms/Page/Component';
 import View from './components/atoms/View/Component';
+import ScrollView from './components/atoms/ScrollView/Component';
 import Icon from './components/atoms/Icon/Component';
 import Header from './components/atoms/Header/Component';
 import OTPInput from './components/atoms/OTPInput/Component';
@@ -21,6 +22,7 @@ export default {
   Text,
   Page,
   View,
+  ScrollView,
   Icon,
   Header,
   OTPInput,

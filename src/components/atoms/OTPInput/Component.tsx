@@ -116,14 +116,14 @@ const OTPInput: FunctionComponent<OTPInputProps> = forwardRef<
           keyboardType={keyboardType}
           renderCell={({ index, symbol, isFocused }) => renderOtpCell(index, symbol, isFocused)}
         />
-        <Text
+        {!!errorMessage && <Text
           {...errorProps}
           style={StyleSheet.flatten([
             errorStyle && errorStyle,
           ])}
         >
           {errorMessage}
-        </Text>
+        </Text>}
       </View>
     );
   }
@@ -131,8 +131,6 @@ const OTPInput: FunctionComponent<OTPInputProps> = forwardRef<
 
 const styles = StyleSheet.create({
   wrapperStyle: {
-    marginLeft: 'auto',
-    marginRight: 'auto',
     minWidth: 250,
   },
   cellRoot: {
