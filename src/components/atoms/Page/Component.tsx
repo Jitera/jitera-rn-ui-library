@@ -79,8 +79,7 @@ const Page: FunctionComponent<PageProps> = forwardRef(
       showsVerticalScrollIndicator = false,
       hidden = false,
       statusColor = undefined,
-      insetTop = false,
-      insetBottom = true,
+      safeArea = false,
       backgroundBottom = undefined,
       style = {},
       keyboardVerticalOffset = 0,
@@ -144,14 +143,14 @@ const Page: FunctionComponent<PageProps> = forwardRef(
           backgroundColor={statusColor}
           barStyle={statusBar || 'dark-content'}
         />
-        {insetTop ? (
+        {safeArea ? (
           <SafeAreaView
             edges={['top']}
             style={[styles.flex0, { backgroundColor: backgroundTop }]}
           />
         ) : null}
         {renderComponent()}
-        {insetBottom ? (
+        {safeArea ? (
           <SafeAreaView
             edges={['bottom']}
             style={[
