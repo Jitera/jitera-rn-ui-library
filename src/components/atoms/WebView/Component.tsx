@@ -1,17 +1,28 @@
 import React, { forwardRef } from 'react';
 
-import type { WebView as RNWebView } from 'react-native-webview';
-import type { WebViewProps as RNWebViewProps } from 'react-native-webview';
+import type { WebView as RNWebView, WebViewProps as RNWebViewProps } from 'react-native-webview';
+import type { WebViewSource } from 'react-native-webview/lib/WebViewTypes';
 import type { PropsWithRef } from '../../../type';
 
 export type WebViewProps = PropsWithRef<
   {
     Component: typeof RNWebView;
-  } & RNWebViewProps
+  } & Omit<RNWebViewProps, 'source'>
+  & {
+    source?: string | WebViewSource
+  }
 >;
 
 const WebView: React.FC<WebViewProps> = forwardRef<RNWebView, WebViewProps>(
-  ({ Component, ...props }, ref) => <Component ref={ref} {...props} />
+  ({ Component, source, ...props }, ref) => {
+  let newSource = source
+
+  if (typeof source === 'string') {
+    newSource = {uri: source} 
+  }
+
+  return <Component ref={ref} {...props} source={newSource as WebViewSource} />
+}
 );
 
 WebView.displayName = 'WebView';

@@ -14,13 +14,13 @@ import { defaultTheme } from '../../../theme';
 import { Text, Icon, IconType } from '../../../index';
 
 /**
- * DateTimePicker support date/time select on iOS and Android and built on top of react-native-datetimepicker
+ * DatePicker support date/time select on iOS and Android and built on top of react-native-datetimepicker
  * Reference: https://github.com/react-native-datetimepicker/datetimepicker
 **/
 
 export type DateMode = 'date' | 'time' | 'datetime'
 
-export type DateTimePickerProps = PropsWithRef<PreviewProps & {
+export type DatePickerProps = PropsWithRef<PreviewProps & {
   value?: Date;
   dateMode?: DateMode;
   confirmText?: string;
@@ -56,9 +56,9 @@ const formatDateTime = (date: Date, mode: DateMode) => {
   return `${DD}/${MO}/${date.getFullYear()} ${HH}:${MM}`;
 };
 
-const DateTimePicker: FunctionComponent<DateTimePickerProps> = forwardRef<
+const DatePicker: FunctionComponent<DatePickerProps> = forwardRef<
   any,
-  DateTimePickerProps
+  DatePickerProps
 >(
   (
     {
@@ -258,6 +258,6 @@ const styles = StyleSheet.create({
   },
 });
 
-DateTimePicker.displayName = 'DateTimePicker';
+DatePicker.displayName = 'DatePicker';
 
-export default DateTimePicker;
+export default DatePicker;

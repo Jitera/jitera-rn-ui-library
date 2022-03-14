@@ -4,6 +4,7 @@ import Input, { InputProps } from './components/atoms/Input';
 import Text, { TextProps } from './components/atoms/Text';
 import Page, { PageProps } from './components/atoms/Page';
 import View, { ViewProps } from './components/atoms/View';
+import ScrollView, { ScrollViewProps } from './components/atoms/ScrollView';
 import Icon, { IconProps, IconType } from './components/atoms/Icon';
 import Header, { HeaderProps } from './components/atoms/Header';
 import OTPInput, { OTPInputProps } from './components/atoms/OTPInput';
@@ -22,10 +23,10 @@ import ThirdPartyAuthButton, {
 } from './components/atoms/ThirdPartyAuthButton';
 import Carousel, { CarouselProps } from './components/molecules/Carousel';
 import FlatList, { FlatListProps } from './components/molecules/FlatList';
-import DateTimePicker, {
-  DateTimePickerProps,
+import DatePicker, {
+  DatePickerProps,
   DateMode,
-} from './components/atoms/DateTimePicker';
+} from './components/atoms/DatePicker';
 import {
   CommonLoading,
   CommonLoadingProps,
@@ -94,9 +95,10 @@ export {
   WebView,
   ImagePicker,
   Carousel,
-  DateTimePicker,
+  DatePicker,
   FlatList,
   ThirdPartyAuthButton,
+  ScrollView,
 };
 
 // Atoms Components Props exports
@@ -117,12 +119,13 @@ export type {
   WebViewProps,
   ImagePickerProps,
   CarouselProps,
-  DateTimePickerProps,
+  DatePickerProps,
   FlatListProps,
   ThirdPartyAuthButtonProps,
   GoogleAuthResult,
   FacebookAuthResult,
-  AppleAuthResult
+  AppleAuthResult,
+  ScrollViewProps
 };
 
 // Atoms Components Enum exports
