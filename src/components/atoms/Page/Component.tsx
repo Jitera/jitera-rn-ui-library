@@ -23,7 +23,7 @@ export type PageProps = View &
     unsafe?: boolean;
     hidden?: boolean;
     statusColor?: string;
-
+    safeArea?: boolean;
     /**
      * Enable to draw behind status bar android
      * @default false
