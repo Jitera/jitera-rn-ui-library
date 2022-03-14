@@ -23,10 +23,10 @@ import ThirdPartyAuthButton, {
 } from './components/atoms/ThirdPartyAuthButton';
 import Carousel, { CarouselProps } from './components/molecules/Carousel';
 import FlatList, { FlatListProps } from './components/molecules/FlatList';
-import DateTimePicker, {
-  DateTimePickerProps,
+import DatePicker, {
+  DatePickerProps,
   DateMode,
-} from './components/atoms/DateTimePicker';
+} from './components/atoms/DatePicker';
 import {
   CommonLoading,
   CommonLoadingProps,
@@ -95,7 +95,7 @@ export {
   WebView,
   ImagePicker,
   Carousel,
-  DateTimePicker,
+  DatePicker,
   FlatList,
   ThirdPartyAuthButton,
   ScrollView,
@@ -119,7 +119,7 @@ export type {
   WebViewProps,
   ImagePickerProps,
   CarouselProps,
-  DateTimePickerProps,
+  DatePickerProps,
   FlatListProps,
   ThirdPartyAuthButtonProps,
   GoogleAuthResult,

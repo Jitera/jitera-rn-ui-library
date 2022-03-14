@@ -12,7 +12,7 @@ import Divider from './components/atoms/Divider/Component';
 import WebView from './components/atoms/WebView/Component';
 import ImagePicker from './components/atoms/ImagePicker/Component';
 import Carousel from './components/molecules/Carousel/Component';
-import DateTimePicker from './components/atoms/DateTimePicker/Component';
+import DatePicker from './components/atoms/DatePicker/Component';
 import FlatList from './components/molecules/FlatList/Component';
 
 export default {
@@ -30,6 +30,6 @@ export default {
   WebView,
   ImagePicker,
   Carousel,
-  DateTimePicker,
+  DatePicker,
   FlatList
 };

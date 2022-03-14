@@ -4,7 +4,7 @@ import type { PropsWithRef } from '../../../type';
 
 export type ScrollViewProps = PropsWithRef<NativeScrollViewProps>;
 
-const ScrollView: FunctionComponent<ScrollViewProps> = forwardRef<any, ScrollViewProps>(
+const ScrollView: FunctionComponent<ScrollViewProps> = forwardRef<ScrollViewProps>(
   (props, ref: any) => {
     const { children = null, ...rest } = props;
     return (

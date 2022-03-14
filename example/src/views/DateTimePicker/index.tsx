@@ -1,5 +1,5 @@
 import React from 'react';
-import {DateTimePicker} from '@jitera/jitera-rn-ui-library';
+import {DatePicker} from '@jitera/jitera-rn-ui-library';
 
 import BaseLayout from '~/layouts/Base';
 
@@ -18,7 +18,7 @@ const DateTimePickerViews: React.FC = () => {
 
   return (
     <BaseLayout>
-      <DateTimePicker
+      <DatePicker
         value={value}
         dateMode="time"
         onChange={handleChange}
