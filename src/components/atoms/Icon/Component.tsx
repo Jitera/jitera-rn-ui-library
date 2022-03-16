@@ -1,4 +1,4 @@
-import React, { FunctionComponent, forwardRef, useMemo } from 'react';
+import React, { FunctionComponent, forwardRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 import type { IconProps as VectorIconProps } from 'react-native-vector-icons';
 import getIconType from './getIconType';
