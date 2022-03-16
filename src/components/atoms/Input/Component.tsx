@@ -68,9 +68,8 @@ const Input: FunctionComponent<InputProps> = forwardRef<TextInput, InputProps>(
         <View style={styles.animatedContainer}>
           <TextInput
             ref={ref}
-            pointerEvents={isPreview ? 'none' : undefined}
             underlineColorAndroid="transparent"
-            editable={!disabled}
+            editable={!disabled || !isPreview}
             style={StyleSheet.flatten([
               {
                 minHeight:

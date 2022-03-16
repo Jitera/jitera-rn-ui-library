@@ -1,5 +1,5 @@
 import React from 'react';
-import {Input, OTPInput} from '@jitera/jitera-rn-ui-library';
+import {OTPInput} from '@jitera/jitera-rn-ui-library';
 
 import BaseLayout from '~/layouts/Base';
 
@@ -27,8 +27,8 @@ const OTPInputViews: React.FC = () => {
         errorMessage={errorMessage}
         enableMask={false}
         otpInputType="box"
+        isPreview={true}
       />
-      <Input />
     </BaseLayout>
   );
 };

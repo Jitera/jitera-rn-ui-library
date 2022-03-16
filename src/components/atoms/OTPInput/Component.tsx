@@ -5,7 +5,7 @@ import {
   Cursor,
   CodeFieldProps,
 } from 'react-native-confirmation-code-field';
-import type { PropsWithRef } from '../../../type';
+import type { PreviewProps, PropsWithRef } from '../../../type';
 import Text from '../Text/ThemedComponent';
 import View from '../View/Component';
 
@@ -15,6 +15,7 @@ export enum OTPInputType {
 }
 
 export type OTPInputProps = PropsWithRef<
+  PreviewProps & 
   Omit<CodeFieldProps, 'renderCell'> & {
     style?: StyleProp<ViewStyle>;
     value?: string;
@@ -59,7 +60,8 @@ const OTPInput: FunctionComponent<OTPInputProps> = forwardRef<
       focusCellTextStyle,
       autoFocus,
       otpInputType = 'box',
-      enableMask = true
+      enableMask = true,
+      isPreview
     },
     ref
   ) => {
@@ -108,6 +110,7 @@ const OTPInput: FunctionComponent<OTPInputProps> = forwardRef<
     return (
       <View ref={ref} style={[styles.wrapperStyle, style]}>
         <CodeField
+          editable={!isPreview}
           autoFocus={autoFocus}
           value={value}
           onBlur={onBlur}
