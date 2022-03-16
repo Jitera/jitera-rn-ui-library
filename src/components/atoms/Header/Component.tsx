@@ -50,8 +50,8 @@ const Header: FunctionComponent<HeaderProps> = forwardRef<any, HeaderProps>(
       onBackPress,
       useDefaultBackButton = false,
       style,
-      leftIconName,
-      leftIconType,
+      leftIconName = 'chevron-left',
+      leftIconType = IconType.Feather,
       leftIconSize,
       leftIconColor,
       onPressLeftIcon,
@@ -92,8 +92,8 @@ const Header: FunctionComponent<HeaderProps> = forwardRef<any, HeaderProps>(
         style={styles.buttonBackContainer}
       >
         <Icon
-          type={IconType.Feather}
-          name="chevron-left"
+          type={leftIconType}
+          name={leftIconName}
           size={defaultLeftIconSize}
           color={leftIconColor}
         />
