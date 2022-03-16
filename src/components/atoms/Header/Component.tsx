@@ -10,7 +10,7 @@ import {
 import View from '../View/Component';
 import type { PropsWithRef } from '../../../type';
 import { defaultTheme } from '../../../theme';
-import { Text, Icon } from '../../../index';
+import { Text, Icon, IconType } from '../../../index';
 
 export type HeaderProps = PropsWithRef<{
   title?: string;
@@ -92,7 +92,7 @@ const Header: FunctionComponent<HeaderProps> = forwardRef<any, HeaderProps>(
         style={styles.buttonBackContainer}
       >
         <Icon
-          type="Feather"
+          type={IconType.Feather}
           name="chevron-left"
           size={defaultLeftIconSize}
           color={leftIconColor}
