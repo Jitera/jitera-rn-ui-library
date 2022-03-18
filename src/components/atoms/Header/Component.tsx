@@ -18,6 +18,8 @@ export type HeaderProps = PropsWithRef<{
   renderCenter?: () => JSX.Element;
   renderRight?: () => JSX.Element;
   backgroundColor?: string;
+  borderBottomWidth?: number;
+  borderBottomColor?: string
   height?: number;
   unsafe?: boolean;
   useDefaultBackButton?: boolean;
@@ -46,6 +48,8 @@ const Header: FunctionComponent<HeaderProps> = forwardRef<any, HeaderProps>(
       renderCenter,
       renderRight,
       backgroundColor,
+      borderBottomWidth,
+      borderBottomColor,
       unsafe = true,
       onBackPress,
       useDefaultBackButton = false,
@@ -152,6 +156,8 @@ const Header: FunctionComponent<HeaderProps> = forwardRef<any, HeaderProps>(
             styles.wrapper,
             {
               backgroundColor,
+              borderBottomWidth: borderBottomWidth ?? 1,
+              borderBottomColor: borderBottomColor ?? 'rgba(0,0,0,0.1)',
               height: height || (Platform.OS === 'web' ? 45 : defaultTheme?.spacing?.SPACING_45),
             },
             style,
@@ -180,7 +186,6 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     flexDirection: 'row',
-    borderBottomWidth: 1,
     borderColor: 'rgba(0,0,0,0.1)',
     alignItems: 'center',
   },
