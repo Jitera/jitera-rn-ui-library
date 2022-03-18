@@ -72,6 +72,11 @@ export class ToastComponent extends React.PureComponent<
         {
           key: 'default',
           color: theme?.colors?.white,
+          backgroundColor: theme?.colors?.primary,
+        },
+        {
+          key: 'success',
+          color: theme?.colors?.white,
           backgroundColor: theme?.colors?.success,
         },
         {

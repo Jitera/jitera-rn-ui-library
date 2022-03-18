@@ -27,7 +27,7 @@ export type OTPInputProps = PropsWithRef<
     cellTextStyle?: TextStyle;
     focusCellTextStyle?: TextStyle;
     otpInputType?: OTPInputType;
-    enableMask?: boolean;
+    isSecure?: boolean;
     onChange?: (code?: string) => void;
     onCodeChanged?: (code?: string) => void;
     onBlur?: (e: any) => void;
@@ -60,7 +60,7 @@ const OTPInput: FunctionComponent<OTPInputProps> = forwardRef<
       focusCellTextStyle,
       autoFocus,
       otpInputType = 'box',
-      enableMask = true,
+      isSecure = false,
       isPreview
     },
     ref
@@ -69,12 +69,12 @@ const OTPInput: FunctionComponent<OTPInputProps> = forwardRef<
     const renderSymbol = useCallback((symbol, isFocused) => {
       let textChild = null
       if (symbol) {
-        textChild = enableMask ? '•' : symbol;
+        textChild = isSecure ? '•' : symbol;
       } else if (isFocused) {
         textChild = <Cursor />;
       }
       return textChild
-    }, [enableMask])
+    }, [isSecure])
 
     const renderOtpCell = useCallback((index, symbol, isFocused) => {
       let wrapperStyle : ViewStyle = styles.cellRoot
