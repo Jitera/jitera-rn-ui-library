@@ -13,6 +13,7 @@ const InputViews: React.FC = () => {
         value={value}
         errorMessage={!(value?.length > 0) ? 'Lorem ipsum dolor sit amet amet.': undefined}
         maxLength={100}
+        numberOfLines={3}
         onChange={setValue}
         onBlur={() => {
           console.log('blur')
