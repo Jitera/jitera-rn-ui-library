@@ -1,19 +1,23 @@
 import React from 'react';
+import { StyleSheet } from 'react-native';
 import Input, { InputProps } from './Component';
 import type { RneFunctionComponent } from '../../../theme/helpers';
 
 const ThemedOTPInput: RneFunctionComponent<Omit<InputProps, 'ref'>> = (
   props
 ) => {
-  const { theme, inputStyle } = props;
+  const { theme, style } = props;
   return (
     <Input
       {...props}
-      inputStyle={
-        inputStyle || {
-          fontSize: theme?.fontSizes?.FONT_12,
-          color: theme?.colors?.error,
-        }
+      style={
+        StyleSheet.flatten([
+          style,
+          {
+            fontSize: theme?.fontSizes?.FONT_12,
+            color: theme?.colors?.error,
+          }
+        ])
       }
     />
   );
