@@ -1,4 +1,5 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useState } from 'react';
+import { useFirstMountState } from 'react-use'
 import {
   TextInput,
   ColorValue,
@@ -10,6 +11,7 @@ import {
   TextStyle,
   View,
   ViewStyle,
+  Platform,
 } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import { TapGestureHandler, State } from 'react-native-gesture-handler';
@@ -17,6 +19,7 @@ import { ScaledSheet } from 'react-native-size-matters';
 import { Text, TextProps } from '../Text';
 import { Icon, IconProps, IconType } from '../Icon';
 import type { ViewProps } from '../View';
+
 
 export interface InputProps
   extends Omit<
@@ -32,6 +35,7 @@ export interface InputProps
   isPreview?: boolean | undefined;
   counter?: boolean | undefined;
   maxLength?: number | undefined;
+  inputRef?: React.LegacyRef<TextInput> | undefined;
 
   placeholderFloating?: boolean | undefined;
   placeholderStyle?: StyleProp<TextStyle> | undefined;
@@ -164,6 +168,7 @@ const Input = React.forwardRef<View, InputProps>(
       editable,
       counter,
       maxLength,
+      inputRef,
 
       placeholderFloating,
       placeholderStyle,
@@ -185,7 +190,8 @@ const Input = React.forwardRef<View, InputProps>(
     },
     ref
   ) => {
-    const [isFocus, setFocus] = useState(false);
+    const isFirstMount = useFirstMountState()
+    const [contentSizeHeight, setContentSizeHeight] = useState(0);
     const hasValue = useMemo(() => (value as string)?.length > 0, [value]);
     const isCounterVisible = useMemo(() => {
       if (counter !== undefined) {
@@ -196,7 +202,12 @@ const Input = React.forwardRef<View, InputProps>(
       }
       return false;
     }, [counter, maxLength]);
-    const textInputRef = useRef<TextInput>(null);
+    const minHeight = useMemo(() => {
+      if (Platform.OS === 'ios' && numberOfLines! > 1) {
+        return numberOfLines * contentSizeHeight + 28
+      }
+      return undefined
+    }, [contentSizeHeight, numberOfLines])
 
     return (
       <View ref={ref} style={styleSheet.container}>
@@ -218,12 +229,14 @@ const Input = React.forwardRef<View, InputProps>(
           <View style={styleSheet.containerClearIconTextInput}>
             <TextInput
               {...props}
-              ref={textInputRef}
+              ref={inputRef}
               editable={editable || !isPreview}
               style={StyleSheet.flatten([
                 styleSheet.textInput,
                 style,
                 { textAlignVertical: numberOfLines! > 1 ? 'top' : 'center' },
+                { paddingTop: 14, paddingBottom: 14 },
+                { minHeight },
                 {
                   borderColor: !!errorMessage
                     ? 'red'
@@ -241,11 +254,10 @@ const Input = React.forwardRef<View, InputProps>(
               onEndEditing={(event) => {
                 onBlur && onBlur(event);
               }}
-              onFocus={() => {
-                setFocus(true);
-              }}
-              onBlur={() => {
-                setFocus(false);
+              onContentSizeChange={(e) => {
+                if (Platform.OS === 'ios' && isFirstMount) {
+                  setContentSizeHeight(e.nativeEvent.contentSize.height)
+                }
               }}
             />
             {hasValue && (
@@ -307,7 +319,8 @@ const styleSheet = ScaledSheet.create({
     borderWidth: 1,
     borderColor: 'blue',
     borderRadius: 5,
-    paddingHorizontal: 10,
+    paddingLeft: '10@s',
+    paddingRight: '10@s',
     backgroundColor: 'pink',
   },
   clearIconContainer: {
