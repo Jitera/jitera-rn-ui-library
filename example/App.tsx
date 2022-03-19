@@ -2,7 +2,10 @@ import 'react-native-gesture-handler';
 
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
+
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { enableFreeze } from 'react-native-screens'
 
 import HomeView from '~/views/Home';
 import ButtonViews from '~/views/Button';
@@ -23,32 +26,35 @@ import DateTimePickerViews from '~/views/DateTimePicker';
 import FlatListViews from '~/views/FlatList';
 import ThirdPartyAuthenticationViews from '~/views/ThirdPartyAuthButton';
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
+enableFreeze(true)
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeView} />
-        <Stack.Screen name="Button" component={ButtonViews} />
-        <Stack.Screen name="Divider" component={DividerViews} />
-        <Stack.Screen name="Header" component={HeaderViews} />
-        <Stack.Screen name="Icon" component={IconViews} />
-        <Stack.Screen name="Image" component={ImageViews} />
-        <Stack.Screen name="Input" component={InputViews} />
-        <Stack.Screen name="OTPInput" component={OTPInputViews} />
-        <Stack.Screen name="Page" component={PageViews} />
-        <Stack.Screen name="Text" component={TextViews} />
-        <Stack.Screen name="View" component={ViewViews} />
-        <Stack.Screen name="ScrollView" component={ScrollViews} />
-        <Stack.Screen name="WebView" component={WebViewViews} />
-        <Stack.Screen name="ImagePicker" component={ImagePickerViews} />
-        <Stack.Screen name="Carousel" component={CarouselViews} />
-        <Stack.Screen name="DateTimePicker" component={DateTimePickerViews} />
-        <Stack.Screen name="FlatList" component={FlatListViews} />
-        <Stack.Screen name="ThirdPartyAuthButton" component={ThirdPartyAuthenticationViews} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <GestureHandlerRootView style={{flex: 1}}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Home" component={HomeView} />
+          <Stack.Screen name="Button" component={ButtonViews} />
+          <Stack.Screen name="Divider" component={DividerViews} />
+          <Stack.Screen name="Header" component={HeaderViews} />
+          <Stack.Screen name="Icon" component={IconViews} />
+          <Stack.Screen name="Image" component={ImageViews} />
+          <Stack.Screen name="Input" component={InputViews} />
+          <Stack.Screen name="OTPInput" component={OTPInputViews} />
+          <Stack.Screen name="Page" component={PageViews} />
+          <Stack.Screen name="Text" component={TextViews} />
+          <Stack.Screen name="View" component={ViewViews} />
+          <Stack.Screen name="ScrollView" component={ScrollViews} />
+          <Stack.Screen name="WebView" component={WebViewViews} />
+          <Stack.Screen name="ImagePicker" component={ImagePickerViews} />
+          <Stack.Screen name="Carousel" component={CarouselViews} />
+          <Stack.Screen name="DateTimePicker" component={DateTimePickerViews} />
+          <Stack.Screen name="FlatList" component={FlatListViews} />
+          <Stack.Screen name="ThirdPartyAuthButton" component={ThirdPartyAuthenticationViews} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </GestureHandlerRootView>
   );
 };
 
