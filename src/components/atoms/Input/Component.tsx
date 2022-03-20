@@ -14,7 +14,6 @@ import {
   Platform,
 } from 'react-native';
 import { TapGestureHandler, State } from 'react-native-gesture-handler';
-import { ScaledSheet } from 'react-native-size-matters';
 import { Text, TextProps } from '../Text';
 import { Icon, IconProps, IconType } from '../Icon';
 import type { ViewProps } from '../View';
@@ -99,7 +98,7 @@ const ClearIcon: React.FC<ClearIconProps> = ({ color, onClear, ...props }) => {
           }
         }}
       >
-        <View>
+        <View style={styleSheet.clearIconInnerContainer}>
           <Icon
             {...props}
             type={IconType.AntDesign}
@@ -205,7 +204,7 @@ const Input = React.forwardRef<View, InputProps>(
     return (
       <View ref={ref} style={StyleSheet.flatten([styleSheet.container, style])}>
         <View style={styleSheet.containerPlaceholderTextInput}>
-          {title && (
+          {title !== undefined && (
             <Placeholder
               {...placeholderProps}
               style={StyleSheet.flatten([
@@ -279,7 +278,7 @@ const Input = React.forwardRef<View, InputProps>(
           </View>
         </View>
         <View style={styleSheet.containerErrorMessageCharacterCounter}>
-          {errorMessage && (
+          {errorMessage !== undefined && (
             <ErrorMessage
               {...errorMessageProps}
               style={errorMessageStyle}
@@ -300,7 +299,7 @@ const Input = React.forwardRef<View, InputProps>(
   }
 );
 
-const styleSheet = ScaledSheet.create({
+const styleSheet = StyleSheet.create({
   container: {
     backgroundColor: 'transparent',
   },
@@ -309,13 +308,13 @@ const styleSheet = ScaledSheet.create({
     flexDirection: 'column',
   },
   placeholderContainer: {
-    marginBottom: '5@s',
+    marginBottom: 5,
   },
   containerClearIconTextInput: {
     position: 'relative',
   },
   containerErrorMessageCharacterCounter: {
-    marginTop: '3@s',
+    marginTop: 3,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -324,18 +323,19 @@ const styleSheet = ScaledSheet.create({
     borderWidth: 1,
     borderColor: 'blue',
     borderRadius: 5,
-    paddingLeft: '10@s',
-    paddingRight: '10@s',
-    color: 'black'
+    paddingLeft: 10,
+    paddingRight: 10
   },
   clearIconContainer: {
     position: 'absolute',
     top: 0,
     right: 0,
     bottom: 0,
-    marginTop: '10@s',
-    marginRight: '10@s',
     zIndex: 2,
+  },
+  clearIconInnerContainer: {
+    marginTop: 10,
+    marginRight: 10
   },
   errorMessage: {
     color: 'red',
