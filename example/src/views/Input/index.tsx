@@ -1,14 +1,23 @@
 import { Input } from '@jitera/jitera-rn-ui-library';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { TextInput } from 'react-native';
 import BaseLayout from '~/layouts/Base';
 
 const InputViews: React.FC = () => {
   const [value, setValue] = useState<string>('Address')
+  const inputRef = useRef<TextInput>(null)
+
+  useEffect(() => {
+    setTimeout(() => {
+      inputRef.current?.focus()
+    }, 3000);
+  }, [])
 
   return (
     <BaseLayout>
       <Input
-        label="Address"
+        title="Address"
+        inputRef={inputRef}
         isPreview={false}
         value={value}
         errorMessage={!(value?.length > 0) ? 'Lorem ipsum dolor sit amet amet.': undefined}
