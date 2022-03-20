@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from 'react';
-import { useFirstMountState } from 'react-use'
+import React, { useMemo, useRef, useState } from 'react';
+import { useFirstMountState } from 'react-use';
 import {
   TextInput,
   ColorValue,
@@ -13,20 +13,20 @@ import {
   ViewStyle,
   Platform,
 } from 'react-native';
-import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import { TapGestureHandler, State } from 'react-native-gesture-handler';
 import { ScaledSheet } from 'react-native-size-matters';
 import { Text, TextProps } from '../Text';
 import { Icon, IconProps, IconType } from '../Icon';
 import type { ViewProps } from '../View';
 
-
 export interface InputProps
   extends Omit<
     TextInputProps,
-    'onChangeText' | 'onChange' | 'onBlur' | 'multiline'
+    'onChangeText' | 'onChange' | 'onBlur' | 'multiline' | 'style'
   > {
-  label?: string | undefined;
+  title?: string | undefined;
+  style?: StyleProp<ViewStyle> | undefined;
+
   onChange?: ((text: string) => void) | undefined;
   onBlur?:
     | ((e: NativeSyntheticEvent<TextInputEndEditingEventData>) => void)
@@ -35,12 +35,14 @@ export interface InputProps
   isPreview?: boolean | undefined;
   counter?: boolean | undefined;
   maxLength?: number | undefined;
-  inputRef?: React.LegacyRef<TextInput> | undefined;
+  inputRef?: React.MutableRefObject<TextInput | null> | undefined;
+  inputStyle?: StyleProp<TextStyle> | undefined;
 
   placeholderFloating?: boolean | undefined;
   placeholderStyle?: StyleProp<TextStyle> | undefined;
   placeholderProps?: Omit<TextProps, 'style'> | undefined;
 
+  showClearText?: boolean | undefined;
   clearIconColor?: ColorValue | undefined;
   clearIconProps?: Omit<ViewProps, 'style'> | undefined;
 
@@ -79,25 +81,17 @@ const Placeholder: React.FC<PlaceholderProps> = ({
   ...props
 }) => {
   return (
-    <Animated.View
-      style={styleSheet.placeholderContainer}
-      entering={FadeIn}
-      exiting={FadeOut}
-    >
+    <View style={styleSheet.placeholderContainer}>
       <Text {...props} style={style}>
         {text}
       </Text>
-    </Animated.View>
+    </View>
   );
 };
 
 const ClearIcon: React.FC<ClearIconProps> = ({ color, onClear, ...props }) => {
   return (
-    <Animated.View
-      entering={FadeIn}
-      exiting={FadeOut}
-      style={styleSheet.clearIconContainer}
-    >
+    <View style={styleSheet.clearIconContainer}>
       <TapGestureHandler
         onHandlerStateChange={(e) => {
           if (e.nativeEvent.state === State.BEGAN) {
@@ -105,16 +99,16 @@ const ClearIcon: React.FC<ClearIconProps> = ({ color, onClear, ...props }) => {
           }
         }}
       >
-        <Animated.View>
+        <View>
           <Icon
             {...props}
             type={IconType.AntDesign}
             name="closecircleo"
             color={color}
           />
-        </Animated.View>
+        </View>
       </TapGestureHandler>
-    </Animated.View>
+    </View>
   );
 };
 
@@ -124,15 +118,11 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({
   ...props
 }) => {
   return (
-    <Animated.View
-      style={styleSheet.errorMessageContainer}
-      entering={FadeIn}
-      exiting={FadeOut}
-    >
+    <View style={styleSheet.errorMessageContainer}>
       <Text {...props} style={styleSheet.errorMessage}>
         {errorMessage}
       </Text>
-    </Animated.View>
+    </View>
   );
 };
 
@@ -143,15 +133,11 @@ const CharacterCounter: React.FC<CharacterCounterProps> = ({
   ...props
 }) => {
   return (
-    <Animated.View
-      style={styleSheet.characterCounterContainer}
-      entering={FadeIn}
-      exiting={FadeOut}
-    >
+    <View style={styleSheet.characterCounterContainer}>
       <Text {...props} style={style}>
         {text?.length} / {maxLength}
       </Text>
-    </Animated.View>
+    </View>
   );
 };
 
@@ -159,7 +145,7 @@ const Input = React.forwardRef<View, InputProps>(
   (
     {
       value,
-      label,
+      title,
       errorMessage,
       placeholder,
       style,
@@ -169,11 +155,13 @@ const Input = React.forwardRef<View, InputProps>(
       counter,
       maxLength,
       inputRef,
+      inputStyle,
 
       placeholderFloating,
       placeholderStyle,
       placeholderProps,
 
+      showClearText,
       clearIconColor,
       clearIconProps,
 
@@ -186,13 +174,18 @@ const Input = React.forwardRef<View, InputProps>(
       onChange,
       onBlur,
       onClear,
+      onFocus,
       ...props
     },
     ref
   ) => {
-    const isFirstMount = useFirstMountState()
+    const internalInputRef = useRef<TextInput>(null);
+    const isFirstMount = useFirstMountState();
     const [contentSizeHeight, setContentSizeHeight] = useState(0);
-    const hasValue = useMemo(() => (value as string)?.length > 0, [value]);
+    const isClearIconVisible = useMemo(
+      () => (value as string)?.length > 0 || showClearText,
+      [value, showClearText]
+    );
     const isCounterVisible = useMemo(() => {
       if (counter !== undefined) {
         return counter;
@@ -204,15 +197,15 @@ const Input = React.forwardRef<View, InputProps>(
     }, [counter, maxLength]);
     const minHeight = useMemo(() => {
       if (Platform.OS === 'ios' && numberOfLines! > 1) {
-        return numberOfLines * contentSizeHeight + 28
+        return numberOfLines * contentSizeHeight + 28;
       }
-      return undefined
-    }, [contentSizeHeight, numberOfLines])
+      return undefined;
+    }, [contentSizeHeight, numberOfLines]);
 
     return (
-      <View ref={ref} style={styleSheet.container}>
+      <View ref={ref} style={StyleSheet.flatten([styleSheet.container, style])}>
         <View style={styleSheet.containerPlaceholderTextInput}>
-          {label && (
+          {title && (
             <Placeholder
               {...placeholderProps}
               style={StyleSheet.flatten([
@@ -223,26 +216,31 @@ const Input = React.forwardRef<View, InputProps>(
                     : (placeholderStyle as TextStyle)?.color,
                 },
               ])}
-              text={label}
+              text={title}
             />
           )}
           <View style={styleSheet.containerClearIconTextInput}>
             <TextInput
               {...props}
-              ref={inputRef}
+              ref={(ref) => {
+                if (inputRef) {
+                  inputRef.current = ref;
+                }
+                internalInputRef.current = ref;
+              }}
               editable={editable || !isPreview}
               style={StyleSheet.flatten([
                 styleSheet.textInput,
-                style,
                 { textAlignVertical: numberOfLines! > 1 ? 'top' : 'center' },
                 { paddingTop: 14, paddingBottom: 14 },
                 { minHeight },
                 {
                   borderColor: !!errorMessage
                     ? 'red'
-                    : (style as ViewStyle)?.borderColor,
+                    : (inputStyle as ViewStyle)?.borderColor,
                 },
-                { paddingRight: hasValue ? 44 : undefined },
+                { paddingRight: isClearIconVisible ? 44 : undefined },
+                inputStyle,
               ])}
               value={value}
               placeholder={placeholder}
@@ -250,17 +248,24 @@ const Input = React.forwardRef<View, InputProps>(
               multiline={numberOfLines! > 1}
               numberOfLines={numberOfLines}
               underlineColorAndroid="transparent"
+              onFocus={(event) => {
+                if (!isPreview) {
+                  onFocus && onFocus(event);
+                  return;
+                }
+                internalInputRef.current?.blur();
+              }}
               onChangeText={onChange}
               onEndEditing={(event) => {
                 onBlur && onBlur(event);
               }}
               onContentSizeChange={(e) => {
                 if (Platform.OS === 'ios' && isFirstMount) {
-                  setContentSizeHeight(e.nativeEvent.contentSize.height)
+                  setContentSizeHeight(e.nativeEvent.contentSize.height);
                 }
               }}
             />
-            {hasValue && (
+            {isClearIconVisible && (
               <ClearIcon
                 {...clearIconProps}
                 color={!!errorMessage ? 'red' : clearIconColor}
@@ -321,7 +326,7 @@ const styleSheet = ScaledSheet.create({
     borderRadius: 5,
     paddingLeft: '10@s',
     paddingRight: '10@s',
-    backgroundColor: 'pink',
+    color: 'black'
   },
   clearIconContainer: {
     position: 'absolute',
