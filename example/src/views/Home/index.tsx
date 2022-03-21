@@ -14,7 +14,7 @@ const HomeView: React.FC = () => {
   const navigation = useNavigation();
 
   return (
-    <BaseLayout>
+    <BaseLayout scrollable>
       <ButtonView
         title="Button"
         onPress={() => navigation.navigate('Button')}
