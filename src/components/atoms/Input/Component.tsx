@@ -32,7 +32,7 @@ export interface InputProps
     | undefined;
   errorMessage?: string | undefined;
   isPreview?: boolean | undefined;
-  counter?: boolean | undefined;
+  showCharacterCounter?: boolean | undefined;
   maxLength?: number | undefined;
   inputRef?: React.MutableRefObject<TextInput | null> | undefined;
   inputStyle?: StyleProp<TextStyle> | undefined;
@@ -150,7 +150,7 @@ const Input = React.forwardRef<View, InputProps>(
       numberOfLines = 1,
       isPreview,
       editable,
-      counter,
+      showCharacterCounter,
       maxLength,
       inputRef,
       inputStyle,
@@ -219,15 +219,15 @@ const Input = React.forwardRef<View, InputProps>(
       return undefined
     }, [])
 
-    const isCounterVisible = useMemo(() => {
-      if (counter !== undefined) {
-        return counter;
+    const isCharacterCounterVisible = useMemo(() => {
+      if (showCharacterCounter) {
+        return showCharacterCounter;
       }
       if (maxLength !== undefined && maxLength > 0) {
         return true;
       }
       return false;
-    }, [counter, maxLength]);
+    }, [showCharacterCounter, maxLength]);
 
     const minHeight = useMemo(() => {
       if (Platform.OS === 'ios' && isMultiline) {
@@ -359,7 +359,7 @@ const Input = React.forwardRef<View, InputProps>(
               errorMessage={errorMessage}
             />
           )}
-          {isCounterVisible && (
+          {isCharacterCounterVisible && (
             <CharacterCounter
               {...characterCounterProps}
               style={characterCounterStyle}
