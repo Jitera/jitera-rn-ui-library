@@ -37,9 +37,8 @@ export interface InputProps
   inputRef?: React.MutableRefObject<TextInput | null> | undefined;
   inputStyle?: StyleProp<TextStyle> | undefined;
 
-  placeholderFloating?: boolean | undefined;
-  placeholderStyle?: StyleProp<TextStyle> | undefined;
-  placeholderProps?: Omit<TextProps, 'style'> | undefined;
+  labelStyle?: StyleProp<TextStyle> | undefined;
+  labelProps?: Omit<TextProps, 'style'> | undefined;
 
   showClearText?: boolean | undefined;
   clearIconColor?: ColorValue | undefined;
@@ -58,7 +57,7 @@ export interface InputProps
   onClear?: (() => void) | undefined;
 }
 
-export interface PlaceholderProps extends TextProps {
+export interface LabelProps extends TextProps {
   text?: string | undefined;
   onTap?: (() => void) | undefined;
 }
@@ -78,7 +77,7 @@ export interface CharacterCounterProps extends TextProps {
   maxLength?: number | undefined;
 }
 
-const Placeholder: React.FC<PlaceholderProps> = ({
+const Label: React.FC<LabelProps> = ({
   style,
   text,
   onTap,
@@ -157,9 +156,8 @@ const Input = React.forwardRef<View, InputProps>(
       inputStyle,
       secureTextEntry,
 
-      placeholderFloating,
-      placeholderStyle,
-      placeholderProps,
+      labelStyle,
+      labelProps,
 
       showClearText,
       clearIconColor,
@@ -240,16 +238,16 @@ const Input = React.forwardRef<View, InputProps>(
 
     return (
       <View ref={ref} style={StyleSheet.flatten([styleSheet.container, style])}>
-        <View style={styleSheet.containerPlaceholderTextInput}>
+        <View style={styleSheet.containerLabelTextInput}>
           {title !== undefined && (
-            <Placeholder
-              {...placeholderProps}
+            <Label
+              {...labelProps}
               style={StyleSheet.flatten([
-                placeholderStyle,
+                labelStyle,
                 {
                   color: !!errorMessage
                     ? 'red'
-                    : (placeholderStyle as TextStyle)?.color,
+                    : (labelStyle as TextStyle)?.color,
                 },
               ])}
               text={title}
@@ -379,7 +377,7 @@ const styleSheet = StyleSheet.create({
   container: {
     backgroundColor: 'transparent',
   },
-  containerPlaceholderTextInput: {
+  containerLabelTextInput: {
     display: 'flex',
     flexDirection: 'column',
   },
