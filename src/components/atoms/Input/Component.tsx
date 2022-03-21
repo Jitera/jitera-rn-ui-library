@@ -43,7 +43,11 @@ export interface InputProps
 
   showClearText?: boolean | undefined;
   clearIconColor?: ColorValue | undefined;
-  clearIconProps?: Omit<ViewProps, 'style'> | undefined;
+  clearIconProps?: IconProps | undefined;
+
+  showSecureEye?: boolean | undefined;
+  secureEyeIconColor?: ColorValue | undefined;
+  secureEyeIconProps?: IconProps | undefined
 
   errorMessageStyle?: StyleProp<TextStyle> | undefined;
   errorMessageProps?: Omit<TextProps, 'style'> | undefined;
@@ -59,9 +63,10 @@ export interface PlaceholderProps extends TextProps {
   onTap?: (() => void) | undefined;
 }
 
-export interface ClearIconProps extends IconProps {
-  color?: ColorValue | undefined;
-  onClear?: (() => void) | undefined;
+export interface FloatingIconProps extends ViewProps {
+  containerStyle?: StyleProp<ViewStyle>;
+  icon?: React.ReactElement;
+  onTap?: (() => void) | undefined;
 }
 
 export interface ErrorMessageProps extends TextProps {
@@ -88,28 +93,23 @@ const Placeholder: React.FC<PlaceholderProps> = ({
   );
 };
 
-const ClearIcon: React.FC<ClearIconProps> = ({ color, onClear, ...props }) => {
+const FloatingIcon: React.FC<FloatingIconProps> = (({ icon, style, containerStyle, onTap, ...props }) => {
   return (
-    <View style={styleSheet.clearIconContainer}>
+    <View style={StyleSheet.flatten([styleSheet.floatingIconContainer, containerStyle])}>
       <TapGestureHandler
         onHandlerStateChange={(e) => {
           if (e.nativeEvent.state === State.BEGAN) {
-            onClear && onClear();
+            onTap && onTap();
           }
         }}
       >
-        <View style={styleSheet.clearIconInnerContainer}>
-          <Icon
-            {...props}
-            type={IconType.AntDesign}
-            name="closecircleo"
-            color={color}
-          />
+        <View {...props} style={style}>
+          {icon}
         </View>
       </TapGestureHandler>
     </View>
-  );
-};
+  )
+})
 
 const ErrorMessage: React.FC<ErrorMessageProps> = ({
   style,
@@ -117,7 +117,7 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({
   ...props
 }) => {
   return (
-    <View style={styleSheet.errorMessageContainer}>
+    <View>
       <Text {...props} style={styleSheet.errorMessage}>
         {errorMessage}
       </Text>
@@ -155,6 +155,7 @@ const Input = React.forwardRef<View, InputProps>(
       maxLength,
       inputRef,
       inputStyle,
+      secureTextEntry,
 
       placeholderFloating,
       placeholderStyle,
@@ -163,6 +164,10 @@ const Input = React.forwardRef<View, InputProps>(
       showClearText,
       clearIconColor,
       clearIconProps,
+
+      showSecureEye,
+      secureEyeIconColor,
+      secureEyeIconProps,
 
       errorMessageStyle,
       errorMessageProps,
@@ -181,10 +186,41 @@ const Input = React.forwardRef<View, InputProps>(
     const internalInputRef = useRef<TextInput>(null);
     const isFirstMount = useFirstMountState();
     const [contentSizeHeight, setContentSizeHeight] = useState(0);
+    const isMultiline = useMemo(() => {
+      if (secureTextEntry && numberOfLines! > 1) {
+        return false
+      }
+      return numberOfLines! > 1
+    }, [secureTextEntry, numberOfLines])
+
     const isClearIconVisible = useMemo(
-      () => (value as string)?.length > 0 || showClearText,
+      () => {
+        if (showClearText !== undefined) {
+          return showClearText
+        }
+        return (value as string)?.length > 0
+      },
       [value, showClearText]
     );
+
+    const [secured, setSecured] = useState(true)
+    const isSecureEyeIconVisible = useMemo(() => {
+      if (showSecureEye !== undefined) {
+        return showSecureEye
+      }
+      return secureTextEntry
+    }, [secureTextEntry, showSecureEye])
+
+    const paddingRight = useMemo(() => {
+      if (isClearIconVisible && isSecureEyeIconVisible) {
+        return 74
+      }
+      if (isClearIconVisible || isSecureEyeIconVisible) {
+        return 44
+      }
+      return undefined
+    }, [])
+
     const isCounterVisible = useMemo(() => {
       if (counter !== undefined) {
         return counter;
@@ -194,12 +230,13 @@ const Input = React.forwardRef<View, InputProps>(
       }
       return false;
     }, [counter, maxLength]);
+
     const minHeight = useMemo(() => {
-      if (Platform.OS === 'ios' && numberOfLines! > 1) {
+      if (Platform.OS === 'ios' && isMultiline) {
         return numberOfLines * contentSizeHeight + 28;
       }
       return undefined;
-    }, [contentSizeHeight, numberOfLines]);
+    }, [contentSizeHeight, numberOfLines, isMultiline]);
 
     return (
       <View ref={ref} style={StyleSheet.flatten([styleSheet.container, style])}>
@@ -230,7 +267,7 @@ const Input = React.forwardRef<View, InputProps>(
               editable={editable || !isPreview}
               style={StyleSheet.flatten([
                 styleSheet.textInput,
-                { textAlignVertical: numberOfLines! > 1 ? 'top' : 'center' },
+                { textAlignVertical: isMultiline ? 'top' : 'center' },
                 { paddingTop: 14, paddingBottom: 14 },
                 { minHeight },
                 {
@@ -238,14 +275,15 @@ const Input = React.forwardRef<View, InputProps>(
                     ? 'red'
                     : (inputStyle as ViewStyle)?.borderColor,
                 },
-                { paddingRight: isClearIconVisible ? 44 : undefined },
+                { paddingRight },
                 inputStyle,
               ])}
               value={value}
               placeholder={placeholder}
               maxLength={maxLength}
-              multiline={numberOfLines! > 1}
-              numberOfLines={numberOfLines}
+              multiline={isMultiline}
+              numberOfLines={secureTextEntry ? undefined : numberOfLines}
+              secureTextEntry={secured}
               underlineColorAndroid="transparent"
               onFocus={(event) => {
                 if (!isPreview) {
@@ -265,12 +303,50 @@ const Input = React.forwardRef<View, InputProps>(
               }}
             />
             {isClearIconVisible && (
-              <ClearIcon
-                {...clearIconProps}
-                color={!!errorMessage ? 'red' : clearIconColor}
-                onClear={() => {
+              <FloatingIcon
+                containerStyle={{
+                  display: isMultiline ? undefined : 'flex',
+                  justifyContent: isMultiline ? undefined : 'center',
+                }}
+                style={{
+                  marginTop: isMultiline ? 10 : undefined,
+                  marginRight: isSecureEyeIconVisible ? 40 : 10
+                }}
+                icon={
+                  <Icon
+                    {...clearIconProps}
+                    type={IconType.Ionicons}
+                    name="close-circle"
+                    color={!!errorMessage ? 'red' : clearIconColor}
+                  />
+                }
+                onTap={() => {
                   if (!isPreview) {
-                    onClear && onClear();
+                    onClear && onClear()
+                  }
+                }}
+              />
+            )}
+            {isSecureEyeIconVisible && (
+              <FloatingIcon
+                containerStyle={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+                style={{
+                  marginRight: 10
+                }}
+                icon={
+                  <Icon
+                    {...secureEyeIconProps}
+                    type={IconType.Ionicons}
+                    name={secured ? 'eye' : 'eye-off'}
+                    color={!!errorMessage ? 'red' : secureEyeIconColor}
+                  />
+                }
+                onTap={() => {
+                  if (!isPreview) {
+                    setSecured((oldSecured) => !oldSecured)
                   }
                 }}
               />
@@ -326,24 +402,19 @@ const styleSheet = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10
   },
-  clearIconContainer: {
+  floatingIconContainer: {
     position: 'absolute',
     top: 0,
     right: 0,
     bottom: 0,
     zIndex: 2,
   },
-  clearIconInnerContainer: {
-    marginTop: 10,
-    marginRight: 10
-  },
   errorMessage: {
     color: 'red',
   },
-  errorMessageContainer: {},
   characterCounterContainer: {
     marginLeft: 'auto',
   },
 });
 
-export default Input;
+export default Input
