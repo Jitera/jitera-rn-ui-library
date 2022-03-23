@@ -25,6 +25,7 @@ import CarouselViews from '~/views/Carousel';
 import DateTimePickerViews from '~/views/DateTimePicker';
 import FlatListViews from '~/views/FlatList';
 import ThirdPartyAuthenticationViews from '~/views/ThirdPartyAuthButton';
+import TouchableOpacityViews from '~/views/TouchableOpacity';
 
 const Stack = createStackNavigator();
 enableFreeze(true)
@@ -52,6 +53,7 @@ const App = () => {
           <Stack.Screen name="DateTimePicker" component={DateTimePickerViews} />
           <Stack.Screen name="FlatList" component={FlatListViews} />
           <Stack.Screen name="ThirdPartyAuthButton" component={ThirdPartyAuthenticationViews} />
+          <Stack.Screen name="TouchableOpacity" component={TouchableOpacityViews} />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>
