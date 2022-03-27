@@ -201,7 +201,7 @@ const Input = React.forwardRef<View, InputProps>(
       [value, showClearText]
     );
 
-    const [secured, setSecured] = useState(true)
+    const [secured, setSecured] = useState(secureTextEntry)
     const isSecureEyeIconVisible = useMemo(() => {
       if (showSecureEye !== undefined) {
         return showSecureEye
