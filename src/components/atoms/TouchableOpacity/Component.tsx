@@ -1,13 +1,12 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
 import {
   TouchableOpacity as RNTouchableOpacity,
   TouchableOpacityProps as RNTouchableOpacityProps,
 } from 'react-native';
-import type { PropsWithRef } from '../../../type';
 
-export type TouchableOpacityProps = PropsWithRef<RNTouchableOpacityProps>;
+export interface TouchableOpacityProps extends RNTouchableOpacityProps {};
 
-const TouchableOpacity: React.FC<TouchableOpacityProps> = forwardRef<
+const TouchableOpacity = React.forwardRef<
   RNTouchableOpacity,
   TouchableOpacityProps
 >((props, ref) => {

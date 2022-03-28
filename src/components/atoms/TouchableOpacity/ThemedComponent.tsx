@@ -1,12 +1,19 @@
 import React from 'react';
-import type { RneFunctionComponent } from '../../../theme/helpers';
-import TouchableOpacity, { TouchableOpacityProps } from './Component';
 
-const ThemedView: RneFunctionComponent<Omit<TouchableOpacityProps, 'ref'>> = ({
-  children,
-  ...props
-}) => {
-  return <TouchableOpacity {...props}>{children}</TouchableOpacity>;
-};
+import type { TouchableOpacity as RNTouchableOpacity } from 'react-native';
+
+import TouchableOpacity, { TouchableOpacityProps } from './Component';
+import type { ThemeProps } from '../../../theme';
+
+const ThemedView = React.forwardRef<
+  RNTouchableOpacity,
+  TouchableOpacityProps & Partial<ThemeProps<TouchableOpacityProps>>
+>(({ children, ...props }, ref) => {
+  return (
+    <TouchableOpacity {...props} ref={ref}>
+      {children}
+    </TouchableOpacity>
+  );
+});
 
 export default ThemedView;
