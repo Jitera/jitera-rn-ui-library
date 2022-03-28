@@ -9,7 +9,7 @@ export type ImageProps = PropsWithRef<
   }
 >;
 
-const Image = React.forwardRef<any, ImageProps>(
+const Image = React.forwardRef<RnImage, ImageProps>(
   ({ style, resizeMode, uri, ...props }, ref) => {
     return (
       <RnImage

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, StyleProp, ViewStyle } from 'react-native';
+import { View as RNView, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import View from '../View/Component';
 import Text from '../Text/Component';
 
@@ -14,7 +14,7 @@ export interface DividerProps extends ViewProps {
   containerStyles?: StyleProp<ViewStyle>;
 }
 
-const Divider = React.forwardRef<any, DividerProps>(
+const Divider = React.forwardRef<RNView, DividerProps>(
   (
     {
       style,
