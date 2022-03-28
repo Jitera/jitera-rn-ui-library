@@ -1,16 +1,21 @@
 import React from 'react';
-import type { RneFunctionComponent } from '../../../theme/helpers';
+
+import type { Text as RNText } from 'react-native';
+
 import Text, { TextProps } from './Component';
+import type { ThemeProps } from '../../../theme';
 
 /** Text displays words and characters at various sizes. */
-const ThemedText: RneFunctionComponent<TextProps> = (props) => {
-  const { theme, children } = props;
+const ThemedText = React.forwardRef<
+  RNText,
+  TextProps & Partial<ThemeProps<TextProps>>
+>(({ children, theme, ...props }) => {
   return (
     <Text {...props} textColor={theme?.colors?.text}>
       {children}
     </Text>
   );
-};
+});
 
 Text.displayName = 'Text';
 

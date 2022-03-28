@@ -1,11 +1,13 @@
 import React from 'react';
-import OTPInput, { OTPInputProps } from './Component';
-import type { RneFunctionComponent } from '../../../theme/helpers';
+import type { View } from 'react-native';
 
-const ThemedOTPInput: RneFunctionComponent<Omit<OTPInputProps, 'ref'>> = (
-  props
-) => {
-  const { theme, errorStyle } = props;
+import OTPInput, { OTPInputProps } from './Component';
+import type { ThemeProps } from '../../../theme';
+
+const ThemedOTPInput = React.forwardRef<
+  View,
+  OTPInputProps & Partial<ThemeProps<OTPInputProps>>
+>(({ theme, errorStyle, ...props }) => {
   return (
     <OTPInput
       {...props}
@@ -18,6 +20,6 @@ const ThemedOTPInput: RneFunctionComponent<Omit<OTPInputProps, 'ref'>> = (
       }
     />
   );
-};
+});
 
 export default ThemedOTPInput;

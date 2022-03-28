@@ -1,20 +1,20 @@
-import React, { FunctionComponent, forwardRef } from 'react';
+import React from 'react';
 import { StyleSheet, StyleProp, ViewStyle } from 'react-native';
-import type { PropsWithRef } from '../../../type';
 import View from '../View/Component';
 import Text from '../Text/Component';
 
-export type DividerProps = PropsWithRef<{
-  style?: StyleProp<ViewStyle>;
+import type { ViewProps } from 'react-native';
+
+export interface DividerProps extends ViewProps {
   color?: string;
   size?: number;
   content?: string | (() => JSX.Element);
   contentPosition?: 'left' | 'center' | 'right';
   contentStyles?: StyleProp<ViewStyle>;
   containerStyles?: StyleProp<ViewStyle>;
-}>;
+}
 
-const Divider: FunctionComponent<DividerProps> = forwardRef<any, DividerProps>(
+const Divider = React.forwardRef<any, DividerProps>(
   (
     {
       style,

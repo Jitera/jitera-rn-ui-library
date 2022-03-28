@@ -1,24 +1,22 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
 import type { StyleProp, ViewStyle } from 'react-native';
-import type {
-  WebView as RNWebViewType,
+import {
+  WebView as RNWebView,
   WebViewProps as RNWebViewProps,
 } from 'react-native-webview';
-import { WebView as RNWebView } from 'react-native-webview';
+
 import type { WebViewSource } from 'react-native-webview/lib/WebViewTypes';
-import type { PropsWithRef } from '../../../type';
+import type { PreviewProps } from '../../../type';
 
-export type WebViewProps = PropsWithRef<
-  {
-    Component: typeof RNWebViewType;
-  } & Omit<RNWebViewProps, 'source'> & {
-      style?: StyleProp<ViewStyle>;
-      isPreview?: boolean;
-      source?: string | WebViewSource;
-    }
->;
+export interface WebViewProps
+  extends PreviewProps,
+    Omit<RNWebViewProps, 'source'> {
+  Component: typeof RNWebView;
+  style?: StyleProp<ViewStyle>;
+  source?: string | WebViewSource;
+}
 
-const WebView: React.FC<WebViewProps> = forwardRef<any, WebViewProps>(
+const WebView = React.forwardRef<RNWebView, WebViewProps>(
   ({ Component, style, source, isPreview = false, ...props }, ref) => {
     let newSource = source;
 

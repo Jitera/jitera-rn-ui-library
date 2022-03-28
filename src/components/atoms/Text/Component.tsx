@@ -1,20 +1,20 @@
-import React, { forwardRef, FunctionComponent } from 'react';
+import React from 'react';
 import {
   Text as NativeText,
   StyleSheet,
-  TextProps as TextProperties,
+  TextProps as RNTextProps,
   TextStyle,
   StyleProp,
 } from 'react-native';
 import { patchWebProps } from '../../../theme/helpers';
 
-export type TextProps = TextProperties & {
+export interface TextProps extends RNTextProps {
   style?: StyleProp<TextStyle>;
   textColor?: string;
-};
+}
 
 /** Text displays words and characters at various sizes. */
-const Text: FunctionComponent<TextProps> = forwardRef<any, TextProps>(
+const Text = React.forwardRef<NativeText, TextProps>(
   ({ style = {}, children = '', textColor, ...rest }, ref) => {
     return (
       <NativeText

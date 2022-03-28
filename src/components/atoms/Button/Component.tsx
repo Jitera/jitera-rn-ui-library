@@ -1,28 +1,23 @@
-import React, { forwardRef, FC } from 'react';
+import React from 'react';
+import type { TouchableOpacityProps } from 'react-native';
 import {
   Text,
-  Pressable,
   StyleSheet,
   ActivityIndicator,
   StyleProp,
-  ViewStyle,
   TextStyle,
+  TouchableOpacity,
   GestureResponderEvent,
-  View,
 } from 'react-native';
-import type { PropsWithRef } from '../../../type';
 import { Color } from '../../../theme/helpers';
 
-export type ButtonProps = PropsWithRef<{
-  style?: StyleProp<ViewStyle>;
+export interface ButtonProps extends TouchableOpacityProps {
   title?: string;
   titleStyle?: StyleProp<TextStyle>;
-  disabled?: boolean;
   loading?: boolean;
-  onPress?: (event: GestureResponderEvent) => void;
-}>;
+}
 
-const Button: FC<ButtonProps> = forwardRef<any, ButtonProps>(
+const Button = React.forwardRef<TouchableOpacity, ButtonProps>(
   (
     {
       style,
@@ -59,13 +54,13 @@ const Button: FC<ButtonProps> = forwardRef<any, ButtonProps>(
     };
 
     return (
-      <Pressable ref={ref} style={containerStyle} onPress={handlePress}>
+      <TouchableOpacity ref={ref} style={containerStyle} onPress={handlePress}>
         <>
           {loading && <ActivityIndicator style={styles.loading} size="small" />}
           {title && <Text style={titleStyle}>{title}</Text>}
           {children}
         </>
-      </Pressable>
+      </TouchableOpacity>
     );
   }
 );

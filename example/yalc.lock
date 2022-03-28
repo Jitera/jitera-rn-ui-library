@@ -2,8 +2,7 @@
   "version": "v1",
   "packages": {
     "@jitera/jitera-rn-ui-library": {
-      "version": "0.0.43-alpha-04",
-      "signature": "6fd5a4451da468a00ddffae14941fe9f",
+      "signature": "8b0d0dae9fbc94899988fcb31f9284e6",
       "file": true,
       "replaced": "../"
     }

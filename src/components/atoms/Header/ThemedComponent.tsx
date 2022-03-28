@@ -1,17 +1,19 @@
 import React from 'react';
 import Header, { HeaderProps } from './Component';
-import type { RneFunctionComponent } from '../../../theme/helpers';
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
+import type { View } from 'react-native';
+import type { ThemeProps } from '../../../theme';
 
-const ThemedHeader: RneFunctionComponent<Omit<HeaderProps, 'ref'>> = (
-  props
-) => {
-  const { theme, children, backgroundColor } = props;
+const ThemedHeader = React.forwardRef<
+  View,
+  HeaderProps & Partial<ThemeProps<HeaderProps>>
+>(({ theme, children, backgroundColor, ...props }, ref) => {
   return (
     <SafeAreaInsetsContext.Consumer>
       {(insets) => (
         <Header
           {...props}
+          ref={ref}
           backgroundColor={backgroundColor || theme?.colors?.header}
           safeAreaTop={insets.top}
         >
@@ -20,7 +22,7 @@ const ThemedHeader: RneFunctionComponent<Omit<HeaderProps, 'ref'>> = (
       )}
     </SafeAreaInsetsContext.Consumer>
   );
-};
+});
 
 Header.displayName = 'Header';
 

@@ -1,4 +1,4 @@
-import React, { FC, forwardRef } from 'react';
+import React from 'react';
 import { Image as RnImage, ImageProps as RnImageProps } from 'react-native';
 import type { PropsWithRef } from '../../../type';
 
@@ -9,7 +9,7 @@ export type ImageProps = PropsWithRef<
   }
 >;
 
-const Image: FC<ImageProps> = forwardRef<any, ImageProps>(
+const Image = React.forwardRef<any, ImageProps>(
   ({ style, resizeMode, uri, ...props }, ref) => {
     return (
       <RnImage
