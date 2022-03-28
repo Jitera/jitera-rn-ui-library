@@ -1,6 +1,6 @@
 {
   "name": "@jitera/jitera-rn-ui-library",
-  "version": "0.0.51-alpha",
+  "version": "0.0.55-alpha",
   "description": "atoms and component for rn template project and web",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -181,8 +181,7 @@
     "react-native-svg": "~12.3.0",
     "react-native-vector-icons": "~9.1.0",
     "react-native-web-swiper": "~2.2.3",
-    "react-native-webview": "~11.17.2",
-    "react-use": "~17.3.2"
+    "react-native-webview": "~11.17.2"
   },
   "directories": {
     "example": "example",

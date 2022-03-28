@@ -62,6 +62,10 @@ const HomeView: React.FC = () => {
         title="Third Party Auth Button"
         onPress={() => navigation.navigate('ThirdPartyAuthButton')}
       />
+      <ButtonView
+        title="Touchable Opacity"
+        onPress={() => navigation.navigate('TouchableOpacity')}
+      />
     </BaseLayout>
   );
 };

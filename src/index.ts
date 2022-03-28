@@ -10,6 +10,7 @@ import Header, { HeaderProps } from './components/atoms/Header';
 import OTPInput, { OTPInputProps } from './components/atoms/OTPInput';
 import Divider, { DividerProps } from './components/atoms/Divider';
 import WebView, { WebViewProps } from './components/atoms/WebView';
+import TouchableOpacity, { TouchableOpacityProps } from './components/atoms/TouchableOpacity';
 import ImagePicker, {
   ImagePickerProps,
   LauncherTypeKind,
@@ -99,6 +100,7 @@ export {
   FlatList,
   ThirdPartyAuthButton,
   ScrollView,
+  TouchableOpacity
 };
 
 // Atoms Components Props exports
@@ -125,7 +127,8 @@ export type {
   GoogleAuthResult,
   FacebookAuthResult,
   AppleAuthResult,
-  ScrollViewProps
+  ScrollViewProps,
+  TouchableOpacityProps
 };
 
 // Atoms Components Enum exports

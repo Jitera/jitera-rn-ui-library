@@ -14,6 +14,7 @@ import ImagePicker from './components/atoms/ImagePicker/Component';
 import Carousel from './components/molecules/Carousel/Component';
 import DatePicker from './components/atoms/DatePicker/Component';
 import FlatList from './components/molecules/FlatList/Component';
+import TouchableOpacity from './components/atoms/TouchableOpacity/Component';
 
 export default {
   Button,
@@ -31,5 +32,6 @@ export default {
   ImagePicker,
   Carousel,
   DatePicker,
-  FlatList
+  FlatList,
+  TouchableOpacity
 };

@@ -1,5 +1,4 @@
 import React, { useMemo, useRef, useState } from 'react';
-import { useFirstMountState } from 'react-use';
 import {
   TextInput,
   ColorValue,
@@ -16,6 +15,7 @@ import {
 import { TapGestureHandler, State } from 'react-native-gesture-handler';
 import { Text, TextProps } from '../Text';
 import { Icon, IconProps, IconType } from '../Icon';
+import { useFirstMountState } from '../../../hooks/useFirstMountState';
 import type { ViewProps } from '../View';
 
 export interface InputProps
@@ -201,7 +201,7 @@ const Input = React.forwardRef<View, InputProps>(
       [value, showClearText]
     );
 
-    const [secured, setSecured] = useState(true)
+    const [secured, setSecured] = useState(secureTextEntry)
     const isSecureEyeIconVisible = useMemo(() => {
       if (showSecureEye !== undefined) {
         return showSecureEye
