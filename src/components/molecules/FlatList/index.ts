@@ -1,6 +1,7 @@
 import FlatList from './ThemedComponent';
 import { withTheme } from '../../../theme';
-import type { JiteraFlatListProps as FlatListProps } from './Component';
+
+import type { FlatListProps } from './Component';
 
 export { FlatList };
 export type { FlatListProps };
