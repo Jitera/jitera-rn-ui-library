@@ -19,7 +19,7 @@ import type { SafeAreaView } from 'react-native-safe-area-context'
 export interface PageProps extends ViewProps, KeyboardAvoidingViewProps {
   scrollEnabled?: boolean;
   children?: React.ReactNode;
-  SafeAreaView: typeof SafeAreaView;
+  SafeAreaView?: typeof SafeAreaView;
   style?: StyleProp<ViewStyle>;
   backgroundColor?: string;
   statusBar?: 'light-content' | 'dark-content';

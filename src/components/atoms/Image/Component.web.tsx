@@ -3,7 +3,7 @@ import { Image as RnImage, ImageProps as RnImageProps } from 'react-native';
 import type { PropsWithRef } from '../../../type';
 
 export type ImageProps = PropsWithRef<
-  RnImageProps & {
+  Omit<RnImageProps, 'source'> & {
     fastImage?: boolean;
     uri?: string;
   }

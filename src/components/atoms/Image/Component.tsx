@@ -7,13 +7,14 @@ export type ImageProps = PropsWithRef<
   Partial<RnImageProps> &
     Omit<Partial<FastImageProps>, 'children'> & {
       fastImage?: boolean;
+      uri?: string;
     }
 >;
 
 const Image = React.forwardRef<RnImage, ImageProps>(
   ({ style, resizeMode = 'cover', fastImage, source, ...props }, ref) => {
     let Component = fastImage ? FastImage : RnImage;
-    
+
     const newSource = useMemo(() => {
       if (typeof source === 'string') {
         return {
