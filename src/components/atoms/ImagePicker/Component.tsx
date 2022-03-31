@@ -1,5 +1,4 @@
 import React, {
-  forwardRef,
   useState,
   useRef,
   useMemo,
@@ -129,7 +128,7 @@ const styleSheet = StyleSheet.create({
   },
 });
 
-const ImagePickerPlaceholder = forwardRef<View, ImagePickerPlaceholderProps>(
+const ImagePickerPlaceholder = React.forwardRef<View, ImagePickerPlaceholderProps>(
   ({ errorMessage, ...props }, ref) => (
     <View
       {...props}
@@ -150,7 +149,7 @@ const ImagePickerPlaceholder = forwardRef<View, ImagePickerPlaceholderProps>(
   )
 );
 
-const ImagePickerImage = forwardRef<View, ImagePickerImageProps>(
+const ImagePickerImage = React.forwardRef<View, ImagePickerImageProps>(
   ({ uri, errorMessage, ...props }, ref) => (
     <View
       {...props}
@@ -217,7 +216,7 @@ export interface ImagePickerProps extends ViewProps {
   isPreview?: boolean;
 }
 
-const ImagePicker = forwardRef<View, ImagePickerProps>(
+const ImagePicker = React.forwardRef<View, ImagePickerProps>(
   (
     {
       launcherType = LauncherTypeKind.DEFAULT,

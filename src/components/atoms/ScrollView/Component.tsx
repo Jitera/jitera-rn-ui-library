@@ -1,14 +1,16 @@
-import React, { forwardRef, FunctionComponent } from 'react';
-import { ScrollView as NativeScrollView, ScrollViewProps as NativeScrollViewProps } from 'react-native';
+import React from 'react';
+import {
+  ScrollView as NativeScrollView,
+  ScrollViewProps as NativeScrollViewProps,
+} from 'react-native';
 import type { PropsWithRef } from '../../../type';
 
-export type ScrollViewProps = PropsWithRef<NativeScrollViewProps>;
+export interface ScrollViewProps extends NativeScrollViewProps {}
 
-const ScrollView: FunctionComponent<ScrollViewProps> = forwardRef<ScrollViewProps>(
-  (props, ref: any) => {
-    const { children = null, ...rest } = props;
+const ScrollView = React.forwardRef<NativeScrollView, ScrollViewProps>(
+  ({ children, ...props }, ref) => {
     return (
-      <NativeScrollView ref={ref} {...rest}>
+      <NativeScrollView ref={ref} {...props}>
         {children}
       </NativeScrollView>
     );

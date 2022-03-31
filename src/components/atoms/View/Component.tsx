@@ -1,14 +1,13 @@
-import React, { forwardRef, FunctionComponent } from 'react';
+import React from 'react';
 import { View as NativeView, ViewProps as NativeViewProps } from 'react-native';
 import type { PropsWithRef } from '../../../type';
 
-export type ViewProps = PropsWithRef<NativeViewProps>;
+export interface ViewProps extends NativeViewProps {}
 
-const View: FunctionComponent<ViewProps> = forwardRef<any, ViewProps>(
-  (props, ref: any) => {
-    const { children = null, ...rest } = props;
+const View = React.forwardRef<NativeView, ViewProps>(
+  ({ children = null, ...props }, ref) => {
     return (
-      <NativeView ref={ref} {...rest}>
+      <NativeView ref={ref} {...props}>
         {children}
       </NativeView>
     );

@@ -1,4 +1,4 @@
-import React, { useMemo, forwardRef, FC } from 'react';
+import React, { useMemo } from 'react';
 import {
   View,
   Image,
@@ -7,19 +7,16 @@ import {
   StyleProp,
   ImageResizeMode,
 } from 'react-native';
-import type { PropsWithRef } from '../../../type';
 
 import Swiper, { SwiperProps } from 'react-native-web-swiper';
 
-export type CarouselProps = PropsWithRef<
-  SwiperProps & {
-    data: string[];
-    resizeMode?: ImageResizeMode;
-    style?: StyleProp<ViewStyle>;
-  }
->;
+export interface CarouselProps extends SwiperProps {
+  data: string[];
+  resizeMode?: ImageResizeMode;
+  style?: StyleProp<ViewStyle>;
+}
 
-const Carousel: FC<CarouselProps> = forwardRef<any, CarouselProps>(
+const Carousel = React.forwardRef<View, CarouselProps>(
   (
     { data, resizeMode = 'stretch', style = {}, loop = true, ...props },
     ref

@@ -1,5 +1,5 @@
-import React, { FunctionComponent, forwardRef, useMemo, useCallback } from 'react';
-import { ViewStyle, StyleProp, TextStyle, StyleSheet } from 'react-native';
+import React, { useCallback } from 'react';
+import { View as RNView, ViewStyle, StyleProp, TextStyle, StyleSheet } from 'react-native';
 import {
   CodeField,
   Cursor,
@@ -14,33 +14,29 @@ export enum OTPInputType {
   Underline = 'underline'
 }
 
-export type OTPInputProps = PropsWithRef<
-  PreviewProps & 
-  Omit<CodeFieldProps, 'renderCell'> & {
-    style?: StyleProp<ViewStyle>;
-    value?: string;
-    pinCount?: number;
-    autoFocus?: boolean;
-    textContentType?: string;
-    cellStyle?: ViewStyle;
-    focusCellStyle?: ViewStyle;
-    cellTextStyle?: TextStyle;
-    focusCellTextStyle?: TextStyle;
-    otpInputType?: OTPInputType;
-    isSecure?: boolean;
-    onChange?: (code?: string) => void;
-    onCodeChanged?: (code?: string) => void;
-    onBlur?: (e: any) => void;
-    renderCell?: any;
-    errorMessage?: string;
-    errorProps?: any;
-    renderErrorMessage?: boolean;
-    errorStyle?: StyleProp<TextStyle>;
-  }
->;
+export interface OTPInputProps extends PreviewProps, Omit<CodeFieldProps, 'renderCell' | 'onChange'> {
+  style?: StyleProp<ViewStyle>;
+  value?: string;
+  pinCount?: number;
+  autoFocus?: boolean;
+  cellStyle?: ViewStyle;
+  focusCellStyle?: ViewStyle;
+  cellTextStyle?: TextStyle;
+  focusCellTextStyle?: TextStyle;
+  otpInputType?: OTPInputType;
+  isSecure?: boolean;
+  onChange?: (code?: string) => void;
+  onCodeChanged?: (code?: string) => void;
+  onBlur?: (e: any) => void;
+  renderCell?: any;
+  errorMessage?: string;
+  errorProps?: any;
+  renderErrorMessage?: boolean;
+  errorStyle?: StyleProp<TextStyle>;
+}
 
-const OTPInput: FunctionComponent<OTPInputProps> = forwardRef<
-  any,
+const OTPInput = React.forwardRef<
+  RNView,
   OTPInputProps
 >(
   (

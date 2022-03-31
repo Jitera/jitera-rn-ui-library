@@ -1,4 +1,4 @@
-import React, { FC, forwardRef, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { Image as RnImage, ImageProps as RnImageProps } from 'react-native';
 import FastImage, { FastImageProps } from 'react-native-fast-image';
 import type { PropsWithRef } from '../../../type';
@@ -7,13 +7,14 @@ export type ImageProps = PropsWithRef<
   Partial<RnImageProps> &
     Omit<Partial<FastImageProps>, 'children'> & {
       fastImage?: boolean;
+      uri?: string;
     }
 >;
 
-const Image: FC<ImageProps> = forwardRef<any, ImageProps>(
+const Image = React.forwardRef<RnImage, ImageProps>(
   ({ style, resizeMode = 'cover', fastImage, source, ...props }, ref) => {
     let Component = fastImage ? FastImage : RnImage;
-    
+
     const newSource = useMemo(() => {
       if (typeof source === 'string') {
         return {

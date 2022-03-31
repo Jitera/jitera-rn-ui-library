@@ -1,9 +1,12 @@
-import React, { FunctionComponent, forwardRef } from 'react';
-import { StyleSheet, View } from 'react-native';
-import type { IconProps as VectorIconProps } from 'react-native-vector-icons';
+import React from 'react';
+import { StyleSheet, View as RNView } from 'react-native';
+
+import type { IconProps as RNVIIconProps } from 'react-native-vector-icons/Icon';
+
+import View from '../View/Component';
+
 import getIconType from './getIconType';
 import getIconStyle from './getIconStyle';
-import type { PropsWithRef } from 'src/type';
 
 export enum IconType {
   Zocial = 'Zocial',
@@ -22,16 +25,14 @@ export enum IconType {
   Fontisto = 'Fontisto',
 }
 
-export type IconProps = PropsWithRef<
-  VectorIconProps & {
-    /** Type of icon set. [Supported sets here](#available-icon-sets). */
-    type?: IconType;
-  }
->;
+export interface IconProps extends RNVIIconProps {
+  /** Type of icon set. [Supported sets here](#available-icon-sets). */
+  type?: IconType;
+}
 
 /** Icons are visual indicators usually used to describe action or intent.
  * They are also used for displaying information. */
-const Icon: FunctionComponent<IconProps> = forwardRef<any, IconProps>(
+const Icon = React.forwardRef<RNView, IconProps>(
   (
     { type = IconType.MaterialIcons, name, size = 24, color, style, ...props },
     ref

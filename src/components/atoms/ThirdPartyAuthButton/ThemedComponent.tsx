@@ -2,10 +2,10 @@ import React from 'react';
 import ThirdPartyAuthButton from './Component';
 
 import type { ThirdPartyAuthButtonProps } from './Component';
-import type { RneFunctionComponent } from '../../../theme/helpers';
+import type { ThemeProps } from '../../../theme';
 
-const ThemedWebView: RneFunctionComponent<
-  Omit<ThirdPartyAuthButtonProps, 'ref'>
+const ThemedWebView: React.FC<
+  ThirdPartyAuthButtonProps & Partial<ThemeProps<ThirdPartyAuthButtonProps>>
 > = (props) => <ThirdPartyAuthButton {...props} />;
 
 ThemedWebView.displayName = 'ThirdPartyAuthButton';

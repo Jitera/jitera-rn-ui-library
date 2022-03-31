@@ -1,13 +1,13 @@
-import React, { forwardRef, FC } from 'react';
+import React from 'react';
 import {
   View,
   StyleSheet,
-  FlatList,
+  FlatList as RNFlatList,
   Text,
-  FlatListProps,
+  FlatListProps as RNFlatListProps,
   ViewStyle
 } from 'react-native';
-import type { PropsWithRef } from '../../../type';
+import type { PreviewProps, PropsWithRef } from '../../../type';
 
 // TODO: find a solution to add molecule component instead of mock component
 const Item = ({ title }: { title: string }) => (
@@ -24,21 +24,16 @@ const Item = ({ title }: { title: string }) => (
   </View>
 )
 
-export type JiteraFlatListProps = PropsWithRef<
-  FlatListProps<any> & {
-    style?: ViewStyle
-    isPreview?: false
-  }
->;
+export interface FlatListProps extends PreviewProps, RNFlatListProps<unknown> {}
 
-const JiteraFlatList: FC<JiteraFlatListProps> = forwardRef<any, JiteraFlatListProps>(
+const FlatList = React.forwardRef<RNFlatList<unknown> | View, FlatListProps>(
   (
     { style, isPreview, ...props },
     ref
   ) => {
     if (isPreview) {
       return (
-        <View {...props} ref={ref}>
+        <View {...props} ref={ref as React.ForwardedRef<View>}>
           <Item title="List 1" />
           <Item title="List 2" />
           <Item title="List 3" />
@@ -47,8 +42,9 @@ const JiteraFlatList: FC<JiteraFlatListProps> = forwardRef<any, JiteraFlatListPr
     }
   
     return (
-      <FlatList
+      <RNFlatList
         style={[styles.container, style]}
+        ref={ref as React.ForwardedRef<RNFlatList<unknown>>}
         {...props}
       />
     )
@@ -61,6 +57,6 @@ const styles = StyleSheet.create({
   }
 });
 
-JiteraFlatList.displayName = 'FlatList';
+FlatList.displayName = 'FlatList';
 
-export default JiteraFlatList;
+export default FlatList;

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, forwardRef } from 'react';
+import React from 'react';
 import {
   View,
   Platform,
@@ -10,68 +10,71 @@ import {
   ScrollView,
   TouchableOpacity,
   KeyboardAvoidingView,
+  KeyboardAvoidingViewProps,
+  ViewProps,
 } from 'react-native';
 
-export type PageProps = View &
-  KeyboardAvoidingView & {
-    scrollEnabled?: boolean;
-    children?: React.ReactNode;
-    SafeAreaView: any;
-    style?: StyleProp<ViewStyle>;
-    backgroundColor?: string;
-    statusBar?: 'light-content' | 'dark-content';
-    unsafe?: boolean;
-    hidden?: boolean;
-    statusColor?: string;
-    safeArea?: boolean;
-    /**
-     * Enable to draw behind status bar android
-     * @default false
-     */
-    draw?: boolean;
+import type { Edge } from 'react-native-safe-area-context';
 
-    /**
-     * Enable to custom background color of inset bottom on Iphone
-     * @default false
-     */
-    insetTop?: boolean;
+export interface PageProps extends ViewProps, KeyboardAvoidingViewProps {
+  scrollEnabled?: boolean;
+  children?: React.ReactNode;
+  SafeAreaView?: React.ComponentType<ViewProps & { edges: readonly Edge[] }>;
+  style?: StyleProp<ViewStyle>;
+  backgroundColor?: string;
+  statusBar?: 'light-content' | 'dark-content';
+  unsafe?: boolean;
+  hidden?: boolean;
+  statusColor?: string;
+  safeArea?: boolean;
+  /**
+   * Enable to draw behind status bar android
+   * @default false
+   */
+  draw?: boolean;
 
-    /**
-     * Enable to custom background color of inset bottom on Iphone
-     * @default false
-     */
-    insetBottom?: boolean;
+  /**
+   * Enable to custom background color of inset bottom on Iphone
+   * @default false
+   */
+  insetTop?: boolean;
 
-    /**
-     * Color of inset top when customInsetBottom set to true
-     * @default #ffffff
-     */
-    backgroundTop?: string;
+  /**
+   * Enable to custom background color of inset bottom on Iphone
+   * @default false
+   */
+  insetBottom?: boolean;
 
-    /**
-     * Color of inset bottom IPhone when customInsetBottom set to true
-     * @default #ffffff
-     */
-    backgroundBottom?: string;
+  /**
+   * Color of inset top when customInsetBottom set to true
+   * @default #ffffff
+   */
+  backgroundTop?: string;
 
-    showsVerticalScrollIndicator?: boolean;
-    showsHorizontalScrollIndicator?: boolean;
-    keyboardVerticalOffset?: number;
+  /**
+   * Color of inset bottom IPhone when customInsetBottom set to true
+   * @default #ffffff
+   */
+  backgroundBottom?: string;
 
-    /**
-     * Keyboard will hide when tap outside
-     * @default 0
-     */
-    hideKeyboardHandled?: boolean;
+  showsVerticalScrollIndicator?: boolean;
+  showsHorizontalScrollIndicator?: boolean;
+  keyboardVerticalOffset?: number;
 
-    /**
-     * keyboardShouldPersistTaps for scrollview
-     * @default 0
-     */
-    keyboardShouldPersistTaps?: boolean | 'always' | 'never' | 'handled';
-  };
+  /**
+   * Keyboard will hide when tap outside
+   * @default 0
+   */
+  hideKeyboardHandled?: boolean;
 
-const Page: FunctionComponent<PageProps> = forwardRef(
+  /**
+   * keyboardShouldPersistTaps for scrollview
+   * @default 0
+   */
+  keyboardShouldPersistTaps?: boolean | 'always' | 'never' | 'handled';
+}
+
+const Page = React.forwardRef<View | KeyboardAvoidingView, PageProps>(
   (
     {
       scrollEnabled = false,
@@ -91,7 +94,7 @@ const Page: FunctionComponent<PageProps> = forwardRef(
       hideKeyboardHandled = false,
       keyboardShouldPersistTaps = 'handled',
     },
-    ref: any
+    ref
   ) => {
     const renderComponent = () => {
       if (scrollEnabled) {

@@ -1,10 +1,19 @@
 import React from 'react';
-import type { RneFunctionComponent } from '../../../theme/helpers';
-import View, { ViewProps } from './Component';
 
-const ThemedView: RneFunctionComponent<Omit<ViewProps, 'ref'>> = (props) => {
-  const { children } = props;
-  return <View {...props}>{children}</View>;
-};
+import type { View as RNView } from 'react-native';
+
+import View, { ViewProps } from './Component';
+import type { ThemeProps } from '../../../theme';
+
+const ThemedView = React.forwardRef<
+  RNView,
+  ViewProps & Partial<ThemeProps<ViewProps>>
+>(({ children, ...props }, ref) => {
+  return (
+    <View {...props} ref={ref}>
+      {children}
+    </View>
+  );
+});
 
 export default ThemedView;

@@ -1,13 +1,18 @@
 import React from 'react';
-import Page, { PageProps } from './Component';
-import type { RneFunctionComponent } from '../../../theme/helpers';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const ThemedPage: RneFunctionComponent<PageProps> = (props) => {
-  const { theme, children, backgroundColor, backgroundTop } = props;
+import type { View } from 'react-native';
+
+import Page, { PageProps } from './Component';
+import type { ThemeProps } from '../../../theme';
+
+const ThemedPage = React.forwardRef<
+  View,
+  PageProps & Partial<ThemeProps<PageProps>>
+>(({ theme, children, backgroundColor, backgroundTop, ...props }, ref) => {
   return (
     <Page
-      {...props}
+      ref={ref}
       backgroundColor={backgroundColor || theme?.colors?.background}
       backgroundTop={backgroundTop || theme?.colors?.header}
       SafeAreaView={SafeAreaView}
@@ -15,7 +20,7 @@ const ThemedPage: RneFunctionComponent<PageProps> = (props) => {
       {children}
     </Page>
   );
-};
+});
 
 Page.displayName = 'Page';
 

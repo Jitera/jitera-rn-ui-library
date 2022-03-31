@@ -1,4 +1,4 @@
-import React, { FunctionComponent, forwardRef } from 'react';
+import React from 'react';
 import {
   TouchableOpacity,
   StyleSheet,
@@ -6,13 +6,14 @@ import {
   StyleProp,
   TextStyle,
   Platform,
+  View as RNView
 } from 'react-native';
 import View from '../View/Component';
-import type { PropsWithRef } from '../../../type';
 import { defaultTheme } from '../../../theme';
 import { Text, Icon, IconType } from '../../../index';
+import type { ViewProps } from 'react-native';
 
-export type HeaderProps = PropsWithRef<{
+export interface HeaderProps extends ViewProps {
   title?: string;
   renderLeft?: () => JSX.Element;
   renderCenter?: () => JSX.Element;
@@ -26,20 +27,20 @@ export type HeaderProps = PropsWithRef<{
   onBackPress?: () => void;
   style?: StyleProp<ViewStyle>;
   leftIconName?: string;
-  leftIconType?: string;
+  leftIconType?: IconType;
   leftIconSize?: number;
   leftIconColor?: string;
   onPressLeftIcon?: () => void;
   rightIconName?: string;
-  rightIconType?: string;
+  rightIconType?: IconType;
   rightIconSize?: number;
   rightIconColor?: string;
   onPressRightIcon?: () => void;
   titleStyle?: TextStyle;
   safeAreaTop?: number;
-}>;
+}
 
-const Header: FunctionComponent<HeaderProps> = forwardRef<any, HeaderProps>(
+const Header = React.forwardRef<RNView, HeaderProps>(
   (
     {
       title,
@@ -65,7 +66,6 @@ const Header: FunctionComponent<HeaderProps> = forwardRef<any, HeaderProps>(
       rightIconColor,
       onPressRightIcon,
       titleStyle,
-      safeAreaTop,
     },
     ref
   ) => {

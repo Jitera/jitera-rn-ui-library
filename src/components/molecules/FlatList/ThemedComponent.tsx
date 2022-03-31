@@ -1,14 +1,18 @@
 import React from 'react';
-import type { RneFunctionComponent } from '../../../theme/helpers';
-import JiteraFlatList, { JiteraFlatListProps } from './Component';
+
+import type { FlatList as RNFlatList } from 'react-native';
+
+import FlatList, { FlatListProps } from './Component';
+import type { ThemeProps } from '../../../theme';
 
 /** Text displays words and characters at various sizes. */
-const ThemedFlatList: RneFunctionComponent<Omit<JiteraFlatListProps, 'ref'>> = (
-  props
-) => {
-  return <JiteraFlatList {...props} />;
-};
+const ThemedFlatList = React.forwardRef<
+  RNFlatList,
+  FlatListProps & Partial<ThemeProps<FlatListProps>>
+>((props) => {
+  return <FlatList {...props} />;
+});
 
-JiteraFlatList.displayName = 'FlatList';
+FlatList.displayName = 'FlatList';
 
 export default ThemedFlatList;

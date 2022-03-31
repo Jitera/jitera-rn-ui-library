@@ -1,12 +1,14 @@
 import React from 'react';
-import WebView from './Component';
 
-import type { WebViewProps } from './Component';
-import type { RneFunctionComponent } from '../../../theme/helpers';
+import type { WebView as RNWebView } from 'react-native-webview';
 
-const ThemedWebView: RneFunctionComponent<Omit<WebViewProps, 'ref'>> = (
-  props
-) => <WebView {...props} />;
+import WebView, { WebViewProps } from './Component';
+import type { ThemeProps } from '../../../theme';
+
+const ThemedWebView = React.forwardRef<
+  RNWebView,
+  WebViewProps & Partial<ThemeProps<WebViewProps>>
+>((props) => <WebView {...props} />);
 
 ThemedWebView.displayName = 'WebView';
 

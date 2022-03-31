@@ -1,4 +1,4 @@
-import React, { FunctionComponent, forwardRef, useState } from 'react';
+import React, { useState } from 'react';
 import {
   TouchableOpacity,
   StyleSheet,
@@ -20,7 +20,7 @@ import { Text, Icon, IconType } from '../../../index';
 
 export type DateMode = 'date' | 'time' | 'datetime'
 
-export type DatePickerProps = PropsWithRef<PreviewProps & {
+export interface DatePickerProps extends PreviewProps {
   value?: Date;
   dateMode?: DateMode;
   confirmText?: string;
@@ -34,7 +34,7 @@ export type DatePickerProps = PropsWithRef<PreviewProps & {
   display?: 'default' | 'compact' | 'inline' | 'spinner' | 'clock' | 'calendar';
   errorStyle?: StyleProp<TextStyle>;
   errorMessage?: string;
-}>;
+}
 
 const formatDateTime = (date: Date, mode: DateMode) => {
   const hour = date.getHours()
@@ -56,8 +56,8 @@ const formatDateTime = (date: Date, mode: DateMode) => {
   return `${DD}/${MO}/${date.getFullYear()} ${HH}:${MM}`;
 };
 
-const DatePicker: FunctionComponent<DatePickerProps> = forwardRef<
-  any,
+const DatePicker = React.forwardRef<
+  TouchableOpacity,
   DatePickerProps
 >(
   (

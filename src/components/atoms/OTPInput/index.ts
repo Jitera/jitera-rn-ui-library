@@ -1,6 +1,7 @@
 import OTPInput from './ThemedComponent';
-import type { OTPInputProps, OTPInputType } from './Component';
 import { withTheme } from '../../../theme';
+
+import type { OTPInputProps, OTPInputType } from './Component';
 
 export { OTPInput };
 export type { OTPInputProps, OTPInputType };

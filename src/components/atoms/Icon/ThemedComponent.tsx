@@ -1,10 +1,15 @@
 import React from 'react';
-import Icon, { IconProps } from './Component';
-import type { RneFunctionComponent } from '../../../theme/helpers';
+import type { Text as RNText } from 'react-native';
 
-const ThemedIcon: RneFunctionComponent<Omit<IconProps, 'ref'>> = (props) => {
-  return <Icon {...props} />;
-};
+import Icon, { IconProps } from './Component';
+import type { ThemeProps } from '../../../theme';
+
+const ThemedIcon = React.forwardRef<
+  RNText,
+  IconProps & Partial<ThemeProps<IconProps>>
+>((props, ref) => {
+  return <Icon {...props} ref={ref} />;
+});
 
 ThemedIcon.displayName = 'Icon';
 
