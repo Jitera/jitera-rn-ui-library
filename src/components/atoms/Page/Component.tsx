@@ -14,12 +14,12 @@ import {
   ViewProps,
 } from 'react-native';
 
-import type { SafeAreaView } from 'react-native-safe-area-context'
+import type { Edge } from 'react-native-safe-area-context';
 
 export interface PageProps extends ViewProps, KeyboardAvoidingViewProps {
   scrollEnabled?: boolean;
   children?: React.ReactNode;
-  SafeAreaView?: typeof SafeAreaView;
+  SafeAreaView?: React.ComponentType<ViewProps & { edges: readonly Edge[] }>;
   style?: StyleProp<ViewStyle>;
   backgroundColor?: string;
   statusBar?: 'light-content' | 'dark-content';
@@ -73,7 +73,6 @@ export interface PageProps extends ViewProps, KeyboardAvoidingViewProps {
    */
   keyboardShouldPersistTaps?: boolean | 'always' | 'never' | 'handled';
 }
-
 
 const Page = React.forwardRef<View | KeyboardAvoidingView, PageProps>(
   (
