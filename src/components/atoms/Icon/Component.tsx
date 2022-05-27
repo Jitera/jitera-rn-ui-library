@@ -41,10 +41,17 @@ const Icon = React.forwardRef<RNView, IconProps>(
     const iconSpecificStyle = getIconStyle(type, {});
 
     return (
-      <View ref={ref} style={StyleSheet.flatten([style, styles.container, {
-        width: size,
-        height: size,
-      }])}>
+      <View
+        ref={ref}
+        style={StyleSheet.flatten([
+          style,
+          styles.container,
+          {
+            width: size,
+            height: size,
+          },
+        ])}
+      >
         <IconComponent
           testID="iconIcon"
           style={StyleSheet.flatten([styles.icon])}
@@ -63,7 +70,7 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   icon: { backgroundColor: 'transparent' },
 });
