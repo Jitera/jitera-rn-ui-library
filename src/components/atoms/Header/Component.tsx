@@ -6,7 +6,7 @@ import {
   StyleProp,
   TextStyle,
   Platform,
-  View as RNView
+  View as RNView,
 } from 'react-native';
 import View from '../View/Component';
 import { defaultTheme } from '../../../theme';
@@ -20,7 +20,7 @@ export interface HeaderProps extends ViewProps {
   renderRight?: () => JSX.Element;
   backgroundColor?: string;
   borderBottomWidth?: number;
-  borderBottomColor?: string
+  borderBottomColor?: string;
   height?: number;
   unsafe?: boolean;
   useDefaultBackButton?: boolean;
@@ -96,10 +96,10 @@ const Header = React.forwardRef<RNView, HeaderProps>(
         style={styles.buttonBackContainer}
       >
         <Icon
-          type={leftIconType}
-          name={leftIconName}
+          type={IconType.Feather}
+          name="chevron-left"
           size={defaultLeftIconSize}
-          color={leftIconColor}
+          color="#000"
         />
       </TouchableOpacity>
     );
@@ -147,7 +147,7 @@ const Header = React.forwardRef<RNView, HeaderProps>(
       }
       return null;
     };
-  
+
     const renderInside = () => {
       return (
         <View
@@ -158,7 +158,11 @@ const Header = React.forwardRef<RNView, HeaderProps>(
               backgroundColor,
               borderBottomWidth: borderBottomWidth ?? 1,
               borderBottomColor: borderBottomColor ?? 'rgba(0,0,0,0.1)',
-              height: height || (Platform.OS === 'web' ? 45 : defaultTheme?.spacing?.SPACING_45),
+              height:
+                height ||
+                (Platform.OS === 'web'
+                  ? 45
+                  : defaultTheme?.spacing?.SPACING_45),
             },
             style,
           ]}
@@ -201,7 +205,7 @@ const styles = StyleSheet.create({
     width: '100%',
     fontWeight: '600',
     fontSize: Platform.OS === 'web' ? 16 : defaultTheme.fontSizes.FONT_16,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   rightWrapper: {
     flex: 0.2,
