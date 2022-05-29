@@ -129,12 +129,13 @@ const styleSheet = StyleSheet.create({
 });
 
 const ImagePickerPlaceholder = React.forwardRef<View, ImagePickerPlaceholderProps>(
-  ({ errorMessage, ...props }, ref) => (
+  ({ errorMessage, style, ...props }, ref) => (
     <View
       {...props}
       ref={ref}
       style={StyleSheet.flatten([
         styleSheet.placeholder,
+        style,
         errorMessage ? { borderColor: ERROR_COLOR } : undefined,
       ])}
     >
@@ -150,12 +151,13 @@ const ImagePickerPlaceholder = React.forwardRef<View, ImagePickerPlaceholderProp
 );
 
 const ImagePickerImage = React.forwardRef<View, ImagePickerImageProps>(
-  ({ uri, errorMessage, ...props }, ref) => (
+  ({ uri, errorMessage, style, ...props }, ref) => (
     <View
       {...props}
       ref={ref}
       style={StyleSheet.flatten([
         styleSheet.imageWrapper,
+        style,
         errorMessage ? { borderColor: ERROR_COLOR } : undefined,
       ])}
     >
@@ -324,13 +326,13 @@ const ImagePicker = React.forwardRef<View, ImagePickerProps>(
       <View style={styleSheet.content}>
         <TouchableOpacity
           onPress={() => triggerLaunch(launcherType)}
-          style={style}
           onBlur={handleBlur}
         >
           {value ? (
             <ImagePickerImage
               {...props}
               ref={ref}
+              style={style}
               uri={typeof value === 'string' ? value : (value as ImageInfo).uri}
               errorMessage={errorMessage}
             />
@@ -338,6 +340,7 @@ const ImagePicker = React.forwardRef<View, ImagePickerProps>(
             <ImagePickerPlaceholder
               {...props}
               ref={ref}
+              style={style}
               errorMessage={errorMessage}
             />
           )}
