@@ -239,7 +239,7 @@ const Input = React.forwardRef<View, InputProps>(
     return (
       <View ref={ref} style={StyleSheet.flatten([styleSheet.container, style])}>
         <View style={styleSheet.containerLabelTextInput}>
-          {title !== undefined && (
+          {title && (
             <Label
               {...labelProps}
               style={StyleSheet.flatten([
@@ -351,23 +351,25 @@ const Input = React.forwardRef<View, InputProps>(
             )}
           </View>
         </View>
-        <View style={styleSheet.containerErrorMessageCharacterCounter}>
-          {errorMessage !== undefined && (
-            <ErrorMessage
-              {...errorMessageProps}
-              style={errorMessageStyle}
-              errorMessage={errorMessage}
-            />
-          )}
-          {isCharacterCounterVisible && (
-            <CharacterCounter
-              {...characterCounterProps}
-              style={characterCounterStyle}
-              text={value}
-              maxLength={maxLength}
-            />
-          )}
-        </View>
+        {(errorMessage || isCharacterCounterVisible) && (
+          <View style={styleSheet.containerErrorMessageCharacterCounter}>
+            {errorMessage && (
+              <ErrorMessage
+                {...errorMessageProps}
+                style={errorMessageStyle}
+                errorMessage={errorMessage}
+              />
+            )}
+            {isCharacterCounterVisible && (
+              <CharacterCounter
+                {...characterCounterProps}
+                style={characterCounterStyle}
+                text={value}
+                maxLength={maxLength}
+              />
+            )}
+          </View>
+        )}
       </View>
     );
   }
