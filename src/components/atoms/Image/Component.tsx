@@ -8,6 +8,9 @@ export type ImageProps = PropsWithRef<
     Omit<Partial<FastImageProps>, 'children'> & {
       fastImage?: boolean;
       uri?: string;
+    } & 
+    {
+      source: RnImageProps['source'] | string
     }
 >;
 

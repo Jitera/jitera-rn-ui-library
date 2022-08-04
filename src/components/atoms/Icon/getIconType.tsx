@@ -6,7 +6,7 @@ export const registerCustomIconType = (id: string, customIcon: any) => {
   customIcons[id] = customIcon;
 };
 
-export default (type: IconType): any => {
+export default (type: `${IconType}`): any => {
   switch (type) {
     case IconType.Zocial:
       // eslint-disable-next-line @typescript-eslint/no-var-requires

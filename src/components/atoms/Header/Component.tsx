@@ -11,9 +11,8 @@ import {
 import View from '../View/Component';
 import { defaultTheme } from '../../../theme';
 import { Text, Icon, IconType } from '../../../index';
-import type { ViewProps } from 'react-native';
 
-export interface HeaderProps extends ViewProps {
+export interface HeaderProps {
   title?: string;
   renderLeft?: () => JSX.Element;
   renderCenter?: () => JSX.Element;

@@ -27,7 +27,7 @@ export enum IconType {
 
 export interface IconProps extends RNVIIconProps {
   /** Type of icon set. [Supported sets here](#available-icon-sets). */
-  type?: IconType;
+  type?: `${IconType}`;
 }
 
 /** Icons are visual indicators usually used to describe action or intent.

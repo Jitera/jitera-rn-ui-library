@@ -151,6 +151,7 @@ class ThemeInner extends React.Component<ThemeInnerProps, ThemeInnerState> {
 type ThemeProviderProps = {
   useDark?: boolean;
   safeArea?: boolean;
+  children?: React.ReactNode;
 };
 
 const ThemeProvider: RneFunctionComponent<ThemeProviderProps> = ({
