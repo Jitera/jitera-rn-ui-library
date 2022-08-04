@@ -8,6 +8,8 @@ import {
   Platform,
   View as RNView,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 import View from '../View/Component';
 import { defaultTheme } from '../../../theme';
 import { Text, Icon, IconType } from '../../../index';
@@ -21,22 +23,21 @@ export interface HeaderProps {
   borderBottomWidth?: number;
   borderBottomColor?: string;
   height?: number;
-  unsafe?: boolean;
   useDefaultBackButton?: boolean;
   onBackPress?: () => void;
   style?: StyleProp<ViewStyle>;
   leftIconName?: string;
-  leftIconType?: IconType;
+  leftIconType?: `${IconType}`;
   leftIconSize?: number;
   leftIconColor?: string;
   onPressLeftIcon?: () => void;
   rightIconName?: string;
-  rightIconType?: IconType;
+  rightIconType?: `${IconType}`;
   rightIconSize?: number;
   rightIconColor?: string;
   onPressRightIcon?: () => void;
   titleStyle?: TextStyle;
-  safeAreaTop?: number;
+  safeAreaTop?: boolean;
 }
 
 const Header = React.forwardRef<RNView, HeaderProps>(
@@ -50,7 +51,6 @@ const Header = React.forwardRef<RNView, HeaderProps>(
       backgroundColor,
       borderBottomWidth,
       borderBottomColor,
-      unsafe = true,
       onBackPress,
       useDefaultBackButton = false,
       style,
@@ -65,6 +65,7 @@ const Header = React.forwardRef<RNView, HeaderProps>(
       rightIconColor,
       onPressRightIcon,
       titleStyle,
+      safeAreaTop
     },
     ref
   ) => {
@@ -149,27 +150,36 @@ const Header = React.forwardRef<RNView, HeaderProps>(
 
     const renderInside = () => {
       return (
-        <View
-          ref={ref}
-          style={[
-            styles.wrapper,
-            {
-              backgroundColor,
-              borderBottomWidth: borderBottomWidth ?? 1,
-              borderBottomColor: borderBottomColor ?? 'rgba(0,0,0,0.1)',
-              height:
-                height ||
-                (Platform.OS === 'web'
-                  ? 45
-                  : defaultTheme?.spacing?.SPACING_45),
-            },
-            style,
-          ]}
-        >
-          <View style={styles.leftWrapper}>{renderLeftComponents()}</View>
-          <View style={styles.centerWrapper}>{renderCenterComponent()}</View>
-          <View style={styles.rightWrapper}>{renderRightComponents()}</View>
-        </View>
+        <>
+          {safeAreaTop
+          ? (
+              <SafeAreaView
+              edges={['top']}
+              style={{ backgroundColor }}
+            />)
+          : undefined}
+          <View
+            ref={ref}
+            style={[
+              styles.wrapper,
+              {
+                backgroundColor,
+                borderBottomWidth: borderBottomWidth ?? 1,
+                borderBottomColor: borderBottomColor ?? 'rgba(0,0,0,0.1)',
+                height:
+                  height ||
+                  (Platform.OS === 'web'
+                    ? 45
+                    : defaultTheme?.spacing?.SPACING_45),
+              },
+              style,
+            ]}
+          >
+            <View style={styles.leftWrapper}>{renderLeftComponents()}</View>
+            <View style={styles.centerWrapper}>{renderCenterComponent()}</View>
+            <View style={styles.rightWrapper}>{renderRightComponents()}</View>
+          </View>
+        </>
       );
     };
     return renderInside();
