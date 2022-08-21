@@ -1,44 +1,36 @@
-import React, { useMemo } from 'react';
-import { Image as RnImage, ImageProps as RnImageProps } from 'react-native';
-import FastImage, { FastImageProps } from 'react-native-fast-image';
-import type { PropsWithRef } from '../../../type';
+import React, { useMemo } from "react";
+import { Image as RnImage, ImageProps as RnImageProps } from "react-native";
+import type { PropsWithRef } from "../../../type";
 
 export type ImageProps = PropsWithRef<
-  Partial<RnImageProps> &
-    Omit<Partial<FastImageProps>, 'children'> & {
-      fastImage?: boolean;
+  Partial<RnImageProps> & {
+      ImageComponent?: React.ElementType<RnImageProps | any>;
       uri?: string;
-    } & 
-    {
-      source: RnImageProps['source'] | string
+    } & {
+      source: RnImageProps["source"] | string;
     }
 >;
 
 const Image = React.forwardRef<RnImage, ImageProps>(
-  ({ style, resizeMode = 'cover', fastImage, source, ...props }, ref) => {
-    let Component = fastImage ? FastImage : RnImage;
-
+  ({ resizeMode = "cover", source, ImageComponent = RnImage, uri, ...props }, ref) => {
     const newSource = useMemo(() => {
-      if (typeof source === 'string') {
-        return {
-          uri: source
-        }
+      if (uri) {
+        return { uri }
       }
-      return source
-    }, [source])
+      if (typeof source === "string") {
+        return {
+          uri: source,
+        };
+      }
+      return source;
+    }, [uri, source]);
 
     return (
-      <Component
-        ref={ref}
-        style={style}
-        source={newSource}
-        resizeMode={resizeMode}
-        {...props}
-      />
+      <ImageComponent ref={ref} source={newSource} resizeMode={resizeMode} {...props} />
     );
   }
 );
 
-Image.displayName = 'Image';
+Image.displayName = "Image";
 
 export default Image;

@@ -1,8 +1,8 @@
-import React from 'react';
-import Divider, { DividerProps } from './Component';
+import React from "react";
+import Divider, { DividerProps } from "./Component";
 
-import type { TouchableOpacity } from 'react-native';
-import type { ThemeProps } from '../../../theme';
+import type { TouchableOpacity } from "react-native";
+import type { ThemeProps } from "../../../theme";
 
 const ThemedDivider = React.forwardRef<
   TouchableOpacity,

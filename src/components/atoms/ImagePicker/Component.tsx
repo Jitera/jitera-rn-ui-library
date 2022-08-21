@@ -1,17 +1,7 @@
-import React, {
-  useState,
-  useRef,
-  useMemo,
-} from 'react';
-import {
-  StyleSheet,
-  View,
-  ViewProps,
-  NativeSyntheticEvent,
-  TargetedEvent,
-} from 'react-native';
-import deepmerge from 'deepmerge';
-import { Icon, IconType, Image, Text } from '../../../index';
+import React, { useState, useRef, useMemo } from "react";
+import { StyleSheet, View, ViewProps, NativeSyntheticEvent, TargetedEvent } from "react-native";
+import deepmerge from "deepmerge";
+import { Icon, IconType, Image, Text } from "../../../index";
 import {
   ImageInfo,
   ImagePickerOptions,
@@ -21,15 +11,15 @@ import {
   MediaTypeOptions,
   requestCameraPermissionsAsync,
   requestMediaLibraryPermissionsAsync,
-} from 'expo-image-picker';
-import ScrollBottomSheet from 'react-native-scroll-bottom-sheet';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+} from "expo-image-picker";
+import ScrollBottomSheet from "react-native-scroll-bottom-sheet";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 // type LauncherTypeKind = 'default' | 'camera' | 'image-library';
 export enum LauncherTypeKind {
-  DEFAULT = 'default',
-  CAMERA = 'camera',
-  IMAGE_LIBRARY = 'image-library'
+  DEFAULT = "default",
+  CAMERA = "camera",
+  IMAGE_LIBRARY = "image-library",
 }
 
 interface PickerData {
@@ -58,28 +48,28 @@ interface BottomSheetProps extends SheetRefProps {
   handleSheetChange: (index: number) => void;
 }
 
-const ERROR_COLOR = '#dc2626';
+const ERROR_COLOR = "#dc2626";
 
 const CAMERA_KIND: PickerData = {
   kind: LauncherTypeKind.CAMERA,
-  icon: 'camera',
-  label: 'Open Camera',
+  icon: "camera",
+  label: "Open Camera",
 };
 const IMAGE_LIBRARY_KIND: PickerData = {
   kind: LauncherTypeKind.IMAGE_LIBRARY,
-  icon: 'image-search',
-  label: 'Select from Gallery',
+  icon: "image-search",
+  label: "Select from Gallery",
 };
 
 const sharedStyleSheet = StyleSheet.create({
   size: {
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
   },
   appearance: {
-    backgroundColor: '#e2e8f0',
+    backgroundColor: "#e2e8f0",
     borderWidth: 3,
-    borderColor: '#94a3b8',
+    borderColor: "#94a3b8",
   },
 });
 
@@ -87,28 +77,28 @@ const styleSheet = StyleSheet.create({
   placeholder: StyleSheet.flatten([
     sharedStyleSheet.size,
     sharedStyleSheet.appearance,
-    { justifyContent: 'center' },
+    { justifyContent: "center" },
   ]),
   placeholderIcon: {
-    alignSelf: 'center',
+    alignSelf: "center",
   },
   imageWrapper: StyleSheet.flatten([sharedStyleSheet.appearance]),
-  image: StyleSheet.flatten([sharedStyleSheet.size, { resizeMode: 'contain' }]),
+  image: StyleSheet.flatten([sharedStyleSheet.size, { resizeMode: "contain" }]),
   bottomSheetItem: {
     paddingLeft: 24,
     paddingRight: 24,
     paddingTop: 12,
     paddingBottom: 12,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
   },
   bottomSheetItemText: {
     marginLeft: 24,
   },
   header: {
-    alignItems: 'center',
-    backgroundColor: 'white',
+    alignItems: "center",
+    backgroundColor: "white",
     paddingVertical: 20,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
@@ -116,11 +106,11 @@ const styleSheet = StyleSheet.create({
   panelHandle: {
     width: 40,
     height: 2,
-    backgroundColor: 'rgba(0,0,0,0.3)',
+    backgroundColor: "rgba(0,0,0,0.3)",
     borderRadius: 4,
   },
   content: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   errorMessage: {
     color: ERROR_COLOR,
@@ -195,7 +185,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
     <ScrollBottomSheet
       ref={sheetRef}
       componentType="FlatList"
-      snapPoints={['70%', '100%']}
+      snapPoints={["70%", "100%"]}
       data={pickerData}
       scrollEnabled={false}
       initialSnapIndex={1}
@@ -240,23 +230,20 @@ const ImagePicker = React.forwardRef<View, ImagePickerProps>(
     };
     const mergedOptions = useMemo<ImagePickerOptions>(
       () =>
-        deepmerge<ImagePickerOptions, ImagePickerOptions>(
-          options || ({} as ImagePickerOptions),
-          {
-            mediaTypes: MediaTypeOptions.Images,
-            allowsEditing: true,
-            aspect: [4, 3],
-            quality: 1,
-            base64: true,
-          } as ImagePickerOptions
-        ),
+        deepmerge<ImagePickerOptions, ImagePickerOptions>(options || ({} as ImagePickerOptions), {
+          mediaTypes: MediaTypeOptions.Images,
+          allowsEditing: true,
+          aspect: [4, 3],
+          quality: 1,
+          base64: true,
+        } as ImagePickerOptions),
       [options]
     );
     const getPickerData = () => {
       switch (launcherType) {
-        case 'camera':
+        case "camera":
           return [CAMERA_KIND];
-        case 'image-library':
+        case "image-library":
           return [IMAGE_LIBRARY_KIND];
         default:
           return [CAMERA_KIND, IMAGE_LIBRARY_KIND];
@@ -265,13 +252,10 @@ const ImagePicker = React.forwardRef<View, ImagePickerProps>(
 
     const pickImage = async () => {
       try {
-        const mediaLibraryPermissionsResult =
-          await requestMediaLibraryPermissionsAsync();
+        const mediaLibraryPermissionsResult = await requestMediaLibraryPermissionsAsync();
 
         if (mediaLibraryPermissionsResult.granted) {
-          const imagePickerResult = await launchImageLibraryAsync(
-            mergedOptions
-          );
+          const imagePickerResult = await launchImageLibraryAsync(mergedOptions);
 
           if (!imagePickerResult.cancelled) {
             onChange && onChange(imagePickerResult);
@@ -316,24 +300,19 @@ const ImagePicker = React.forwardRef<View, ImagePickerProps>(
       }
     };
 
-    const handleBlur: (event: NativeSyntheticEvent<TargetedEvent>) => void = (
-      event
-    ) => {
+    const handleBlur: (event: NativeSyntheticEvent<TargetedEvent>) => void = (event) => {
       onBlur && onBlur(event);
     };
 
     return (
       <View style={styleSheet.content}>
-        <TouchableOpacity
-          onPress={() => triggerLaunch(launcherType)}
-          onBlur={handleBlur}
-        >
+        <TouchableOpacity onPress={() => triggerLaunch(launcherType)} onBlur={handleBlur}>
           {value ? (
             <ImagePickerImage
               {...props}
               ref={ref}
               style={style}
-              uri={typeof value === 'string' ? value : (value as ImageInfo).uri}
+              uri={typeof value === "string" ? value : (value as ImageInfo).uri}
               errorMessage={errorMessage}
             />
           ) : (
@@ -345,9 +324,7 @@ const ImagePicker = React.forwardRef<View, ImagePickerProps>(
             />
           )}
         </TouchableOpacity>
-        {errorMessage ? (
-          <ErrorMessage errorMessage={errorMessage} />
-        ) : undefined}
+        {errorMessage ? <ErrorMessage errorMessage={errorMessage} /> : undefined}
         <BottomSheet
           sheetRef={sheetRef}
           pickerData={getPickerData()}

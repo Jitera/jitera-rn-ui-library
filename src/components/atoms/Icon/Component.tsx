@@ -1,28 +1,28 @@
-import React from 'react';
-import { StyleSheet, View as RNView } from 'react-native';
+import React from "react";
+import { StyleSheet, View as RNView } from "react-native";
 
-import type { IconProps as RNVIIconProps } from 'react-native-vector-icons/Icon';
+import type { IconProps as RNVIIconProps } from "react-native-vector-icons/Icon";
 
-import View from '../View/Component';
+import View from "../View/Component";
 
-import getIconType from './getIconType';
-import getIconStyle from './getIconStyle';
+import getIconType from "./getIconType";
+import getIconStyle from "./getIconStyle";
 
 export enum IconType {
-  Zocial = 'Zocial',
-  Octicons = 'Octicons',
-  MaterialIcons = 'MaterialIcons',
-  MaterialCommunityIcons = 'MaterialCommunityIcons',
-  Ionicons = 'Ionicons',
-  Foundation = 'Foundation',
-  EvilIcons = 'EvilIcons',
-  Entypo = 'Entypo',
-  FontAwesome = 'FontAwesome',
-  FontAwesome5 = 'FontAwesome5',
-  SimpleLineIcons = 'SimpleLineIcons',
-  Feather = 'Feather',
-  AntDesign = 'AntDesign',
-  Fontisto = 'Fontisto',
+  Zocial = "Zocial",
+  Octicons = "Octicons",
+  MaterialIcons = "MaterialIcons",
+  MaterialCommunityIcons = "MaterialCommunityIcons",
+  Ionicons = "Ionicons",
+  Foundation = "Foundation",
+  EvilIcons = "EvilIcons",
+  Entypo = "Entypo",
+  FontAwesome = "FontAwesome",
+  FontAwesome5 = "FontAwesome5",
+  SimpleLineIcons = "SimpleLineIcons",
+  Feather = "Feather",
+  AntDesign = "AntDesign",
+  Fontisto = "Fontisto",
 }
 
 export interface IconProps extends RNVIIconProps {
@@ -33,10 +33,7 @@ export interface IconProps extends RNVIIconProps {
 /** Icons are visual indicators usually used to describe action or intent.
  * They are also used for displaying information. */
 const Icon = React.forwardRef<RNView, IconProps>(
-  (
-    { type = IconType.MaterialIcons, name, size = 24, color, style, ...props },
-    ref
-  ) => {
+  ({ type = IconType.MaterialIcons, name, size = 24, color, style, ...props }, ref) => {
     const IconComponent = getIconType(type);
     const iconSpecificStyle = getIconStyle(type, {});
 
@@ -68,13 +65,13 @@ const Icon = React.forwardRef<RNView, IconProps>(
 
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
-  icon: { backgroundColor: 'transparent' },
+  icon: { backgroundColor: "transparent" },
 });
 
-Icon.displayName = 'Icon';
+Icon.displayName = "Icon";
 
 export default Icon;

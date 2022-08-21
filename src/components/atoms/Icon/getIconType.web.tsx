@@ -1,4 +1,4 @@
-import { IconType } from './Component';
+import { IconType } from "./Component";
 import {
   Zocial,
   Entypo,
@@ -14,7 +14,7 @@ import {
   FontAwesome5,
   SimpleLineIcons,
   MaterialCommunityIcons,
-} from '@expo/vector-icons';
+} from "@expo/vector-icons";
 
 const customIcons: any = {};
 

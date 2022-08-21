@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   TouchableOpacity,
   StyleSheet,
@@ -7,12 +7,12 @@ import {
   TextStyle,
   Platform,
   View as RNView,
-} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-import View from '../View/Component';
-import { defaultTheme } from '../../../theme';
-import { Text, Icon, IconType } from '../../../index';
+import View from "../View/Component";
+import { defaultTheme } from "../../../theme";
+import { Text, Icon, IconType } from "../../../index";
 
 export interface HeaderProps {
   title?: string;
@@ -54,7 +54,7 @@ const Header = React.forwardRef<RNView, HeaderProps>(
       onBackPress,
       useDefaultBackButton = false,
       style,
-      leftIconName = 'chevron-left',
+      leftIconName = "chevron-left",
       leftIconType = IconType.Feather,
       leftIconSize,
       leftIconColor,
@@ -65,17 +65,15 @@ const Header = React.forwardRef<RNView, HeaderProps>(
       rightIconColor,
       onPressRightIcon,
       titleStyle,
-      safeAreaTop
+      safeAreaTop,
     },
     ref
   ) => {
     const defaultLeftIconSize =
-      leftIconSize ||
-      (Platform.OS === 'web' ? 24 : defaultTheme.fontSizes.FONT_24);
+      leftIconSize || (Platform.OS === "web" ? 24 : defaultTheme.fontSizes.FONT_24);
 
     const defaultRightIconSize =
-      rightIconSize ||
-      (Platform.OS === 'web' ? 24 : defaultTheme.fontSizes.FONT_24);
+      rightIconSize || (Platform.OS === "web" ? 24 : defaultTheme.fontSizes.FONT_24);
 
     const onPressBack = () => {
       if (onBackPress) {
@@ -91,16 +89,8 @@ const Header = React.forwardRef<RNView, HeaderProps>(
 
     // Render the default left button
     const renderDefaultLeftButton = () => (
-      <TouchableOpacity
-        onPress={onPressBack}
-        style={styles.buttonBackContainer}
-      >
-        <Icon
-          type={IconType.Feather}
-          name="chevron-left"
-          size={defaultLeftIconSize}
-          color="#000"
-        />
+      <TouchableOpacity onPress={onPressBack} style={styles.buttonBackContainer}>
+        <Icon type={IconType.Feather} name="chevron-left" size={defaultLeftIconSize} color="#000" />
       </TouchableOpacity>
     );
 
@@ -111,10 +101,7 @@ const Header = React.forwardRef<RNView, HeaderProps>(
         return renderLeft();
       } else if (leftIconName) {
         return (
-          <TouchableOpacity
-            onPress={onPressLeftIcon}
-            style={styles.buttonBackContainer}
-          >
+          <TouchableOpacity onPress={onPressLeftIcon} style={styles.buttonBackContainer}>
             <Icon
               type={leftIconType}
               name={leftIconName}
@@ -132,10 +119,7 @@ const Header = React.forwardRef<RNView, HeaderProps>(
         return renderRight();
       } else if (rightIconName) {
         return (
-          <TouchableOpacity
-            onPress={onPressRightIcon}
-            style={styles.rightButtonContainer}
-          >
+          <TouchableOpacity onPress={onPressRightIcon} style={styles.rightButtonContainer}>
             <Icon
               type={rightIconType}
               name={rightIconName}
@@ -151,13 +135,7 @@ const Header = React.forwardRef<RNView, HeaderProps>(
     const renderInside = () => {
       return (
         <>
-          {safeAreaTop
-          ? (
-              <SafeAreaView
-              edges={['top']}
-              style={{ backgroundColor }}
-            />)
-          : undefined}
+          {safeAreaTop ? <SafeAreaView edges={["top"]} style={{ backgroundColor }} /> : undefined}
           <View
             ref={ref}
             style={[
@@ -165,12 +143,8 @@ const Header = React.forwardRef<RNView, HeaderProps>(
               {
                 backgroundColor,
                 borderBottomWidth: borderBottomWidth ?? 1,
-                borderBottomColor: borderBottomColor ?? 'rgba(0,0,0,0.1)',
-                height:
-                  height ||
-                  (Platform.OS === 'web'
-                    ? 45
-                    : defaultTheme?.spacing?.SPACING_45),
+                borderBottomColor: borderBottomColor ?? "rgba(0,0,0,0.1)",
+                height: height || (Platform.OS === "web" ? 45 : defaultTheme?.spacing?.SPACING_45),
               },
               style,
             ]}
@@ -188,40 +162,40 @@ const Header = React.forwardRef<RNView, HeaderProps>(
 
 const styles = StyleSheet.create({
   buttonBackContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingLeft: Platform.OS === 'web' ? 10 : defaultTheme.spacing.SPACING_10,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingLeft: Platform.OS === "web" ? 10 : defaultTheme.spacing.SPACING_10,
   },
   rightButtonContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingRight: Platform.OS === 'web' ? 10 : defaultTheme.spacing.SPACING_10,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingRight: Platform.OS === "web" ? 10 : defaultTheme.spacing.SPACING_10,
   },
   wrapper: {
-    flexDirection: 'row',
-    borderColor: 'rgba(0,0,0,0.1)',
-    alignItems: 'center',
+    flexDirection: "row",
+    borderColor: "rgba(0,0,0,0.1)",
+    alignItems: "center",
   },
   leftWrapper: {
     flex: 0.2,
   },
   centerWrapper: {
     flex: 0.6,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   labelText: {
-    width: '100%',
-    fontWeight: '600',
-    fontSize: Platform.OS === 'web' ? 16 : defaultTheme.fontSizes.FONT_16,
-    textAlign: 'center',
+    width: "100%",
+    fontWeight: "600",
+    fontSize: Platform.OS === "web" ? 16 : defaultTheme.fontSizes.FONT_16,
+    textAlign: "center",
   },
   rightWrapper: {
     flex: 0.2,
-    alignItems: 'flex-end',
+    alignItems: "flex-end",
   },
 });
 
-Header.displayName = 'Header';
+Header.displayName = "Header";
 
 export default Header;

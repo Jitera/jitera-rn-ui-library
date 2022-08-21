@@ -1,7 +1,7 @@
-import { withTheme } from '../../../theme';
-import Icon, { IconProps, IconType } from './Component';
+import { withTheme } from "../../../theme";
+import Icon, { IconProps, IconType } from "./Component";
 
 export { Icon, IconType };
 export type { IconProps };
 
-export default withTheme(Icon, 'Icon');
+export default withTheme(Icon, "Icon");

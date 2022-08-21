@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   TouchableOpacity,
   StyleSheet,
@@ -7,18 +7,18 @@ import {
   ViewStyle,
   TextStyle,
   Modal,
-} from 'react-native';
-import RNDateTimePicker from '@react-native-community/datetimepicker';
-import type { PropsWithRef, PreviewProps } from '../../../type';
-import { defaultTheme } from '../../../theme';
-import { Text, Icon, IconType } from '../../../index';
+} from "react-native";
+import RNDateTimePicker from "@react-native-community/datetimepicker";
+import type { PropsWithRef, PreviewProps } from "../../../type";
+import { defaultTheme } from "../../../theme";
+import { Text, Icon, IconType } from "../../../index";
 
 /**
  * DatePicker support date/time select on iOS and Android and built on top of react-native-datetimepicker
  * Reference: https://github.com/react-native-datetimepicker/datetimepicker
-**/
+ **/
 
-export type DateMode = 'date' | 'time' | 'datetime'
+export type DateMode = "date" | "time" | "datetime";
 
 export interface DatePickerProps extends PreviewProps {
   value?: Date;
@@ -31,35 +31,32 @@ export interface DatePickerProps extends PreviewProps {
   disabled?: boolean;
   cancelButtonStyle?: TextStyle;
   confirmButtonStyle?: TextStyle;
-  display?: 'default' | 'compact' | 'inline' | 'spinner' | 'clock' | 'calendar';
+  display?: "default" | "compact" | "inline" | "spinner" | "clock" | "calendar";
   errorStyle?: StyleProp<TextStyle>;
   errorMessage?: string;
 }
 
 const formatDateTime = (date: Date, mode: DateMode) => {
-  const hour = date.getHours()
-  const HH = hour < 10 ? `0${hour}` : hour
-  const minute = date.getMinutes()
-  const MM = minute < 10 ? `0${minute}` : minute
-  const day = date.getDate()
-  const DD = day < 10 ? `0${day}` : day
-  const month = date.getMonth() + 1
-  const MO = month < 10 ? `0${month}` : month
+  const hour = date.getHours();
+  const HH = hour < 10 ? `0${hour}` : hour;
+  const minute = date.getMinutes();
+  const MM = minute < 10 ? `0${minute}` : minute;
+  const day = date.getDate();
+  const DD = day < 10 ? `0${day}` : day;
+  const month = date.getMonth() + 1;
+  const MO = month < 10 ? `0${month}` : month;
 
-  if (mode === 'date') {
+  if (mode === "date") {
     return `${DD}/${MO}/${date.getFullYear()}`;
   }
-  
-  if (mode === 'time') {
+
+  if (mode === "time") {
     return `${HH}:${MM}`;
   }
   return `${DD}/${MO}/${date.getFullYear()} ${HH}:${MM}`;
 };
 
-const DatePicker = React.forwardRef<
-  TouchableOpacity,
-  DatePickerProps
->(
+const DatePicker = React.forwardRef<TouchableOpacity, DatePickerProps>(
   (
     {
       value,
@@ -84,14 +81,13 @@ const DatePicker = React.forwardRef<
     const [date, setDate] = useState<Date>(value ? value : new Date());
     const [step, setStep] = useState<number>(1);
 
-    const selectedMode: any =
-      dateMode === 'datetime' ? (step === 1 ? 'date' : 'time') : dateMode;
+    const selectedMode: any = dateMode === "datetime" ? (step === 1 ? "date" : "time") : dateMode;
 
     const handleConfirm = () => {
       if (!onChange) {
         return;
       }
-      if (dateMode !== 'datetime') {
+      if (dateMode !== "datetime") {
         onChange(date);
         setShow(false);
         setDate(date);
@@ -105,7 +101,7 @@ const DatePicker = React.forwardRef<
         setShow(false);
       }
 
-      if (typeof onBlur === 'function') {
+      if (typeof onBlur === "function") {
         onBlur();
       }
     };
@@ -113,26 +109,26 @@ const DatePicker = React.forwardRef<
     const handleCancel = () => {
       setShow(false);
       setStep(1);
-      if (typeof onBlur === 'function') {
+      if (typeof onBlur === "function") {
         onBlur();
       }
     };
 
     const handleChange = (e: any, newDate: any) => {
-      if (dateMode !== 'datetime' || step === 1) {
+      if (dateMode !== "datetime" || step === 1) {
         setDate(newDate);
       } else {
         const lastDate = date;
         lastDate?.setHours(newDate?.getHours() || 0);
         lastDate?.setMinutes(newDate?.getMinutes() || 0);
         lastDate?.setSeconds(newDate?.getSeconds() || 0);
-        setDate(lastDate)
+        setDate(lastDate);
       }
     };
 
     const handleOpenPicker = () => {
       if (isPreview) {
-        return
+        return;
       }
       setShow(true);
     };
@@ -148,14 +144,10 @@ const DatePicker = React.forwardRef<
           ref={ref}
         >
           <Text style={[styles.placeholderText]}>
-            {value ? formatDateTime(value, dateMode) : '--'}
+            {value ? formatDateTime(value, dateMode) : "--"}
           </Text>
           <View style={styles.iconContainer}>
-            <Icon
-              color={defaultTheme?.colors?.grey3}
-              name="calendar"
-              type={IconType.AntDesign}
-            />
+            <Icon color={defaultTheme?.colors?.grey3} name="calendar" type={IconType.AntDesign} />
           </View>
         </TouchableOpacity>
         <Text
@@ -187,14 +179,10 @@ const DatePicker = React.forwardRef<
           <View style={styles.modalContainer}>
             <View style={styles.modalActionContainer}>
               <TouchableOpacity onPress={handleCancel}>
-                <Text style={[styles.cancelButton, cancelButtonStyle]}>
-                  {cancelText}
-                </Text>
+                <Text style={[styles.cancelButton, cancelButtonStyle]}>{cancelText}</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={handleConfirm}>
-                <Text style={[styles.confirmButton, confirmButtonStyle]}>
-                  {confirmText}
-                </Text>
+                <Text style={[styles.confirmButton, confirmButtonStyle]}>{confirmText}</Text>
               </TouchableOpacity>
             </View>
             <RNDateTimePicker
@@ -217,15 +205,15 @@ const styles = StyleSheet.create({
     color: defaultTheme?.colors?.grey5,
   },
   iconContainer: {
-    position: 'absolute',
+    position: "absolute",
     right: 10,
   },
   dateInput: {
     borderRadius: 5,
     fontSize: 18,
-    width: '100%',
+    width: "100%",
     borderWidth: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
     borderColor: defaultTheme?.colors?.grey5,
     minHeight: 50,
     paddingHorizontal: 10,
@@ -235,8 +223,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   modalContainer: {
-    position: 'absolute',
-    width: '100%',
+    position: "absolute",
+    width: "100%",
     bottom: 0,
     backgroundColor: defaultTheme?.colors?.white,
     borderTopLeftRadius: 8,
@@ -245,9 +233,9 @@ const styles = StyleSheet.create({
   modalActionContainer: {
     paddingVertical: 8,
     paddingHorizontal: 8,
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   cancelButton: {
     fontSize: 15,
@@ -258,6 +246,6 @@ const styles = StyleSheet.create({
   },
 });
 
-DatePicker.displayName = 'DatePicker';
+DatePicker.displayName = "DatePicker";
 
 export default DatePicker;

@@ -1,8 +1,8 @@
-import React from 'react';
-import Button, { ButtonProps } from './Component';
+import React from "react";
+import Button, { ButtonProps } from "./Component";
 
-import type { TouchableOpacity } from 'react-native';
-import type { ThemeProps } from '../../../theme';
+import type { TouchableOpacity } from "react-native";
+import type { ThemeProps } from "../../../theme";
 
 const ThemedButton = React.forwardRef<
   TouchableOpacity,

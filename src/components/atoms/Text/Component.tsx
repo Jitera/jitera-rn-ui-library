@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 import {
   Text as NativeText,
   StyleSheet,
   TextProps as RNTextProps,
   TextStyle,
   StyleProp,
-} from 'react-native';
-import { patchWebProps } from '../../../theme/helpers';
+} from "react-native";
+import { patchWebProps } from "../../../theme/helpers";
 
 export interface TextProps extends RNTextProps {
   style?: StyleProp<TextStyle>;
@@ -15,7 +15,7 @@ export interface TextProps extends RNTextProps {
 
 /** Text displays words and characters at various sizes. */
 const Text = React.forwardRef<NativeText, TextProps>(
-  ({ style = {}, children = '', textColor, ...rest }, ref) => {
+  ({ style = {}, children = "", textColor, ...rest }, ref) => {
     return (
       <NativeText
         ref={ref}
@@ -33,6 +33,6 @@ const Text = React.forwardRef<NativeText, TextProps>(
   }
 );
 
-Text.displayName = 'Text';
+Text.displayName = "Text";
 
 export default Text;

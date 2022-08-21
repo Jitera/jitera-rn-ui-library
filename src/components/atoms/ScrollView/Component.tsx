@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 import {
   ScrollView as NativeScrollView,
   ScrollViewProps as NativeScrollViewProps,
-} from 'react-native';
-import type { PropsWithRef } from '../../../type';
+} from "react-native";
+import type { PropsWithRef } from "../../../type";
 
 export interface ScrollViewProps extends NativeScrollViewProps {}
 
@@ -17,6 +17,6 @@ const ScrollView = React.forwardRef<NativeScrollView, ScrollViewProps>(
   }
 );
 
-ScrollView.displayName = 'ScrollView';
+ScrollView.displayName = "ScrollView";
 
 export default ScrollView;

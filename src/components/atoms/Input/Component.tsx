@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from "react";
 import {
   TextInput,
   ColorValue,
@@ -11,25 +11,20 @@ import {
   View,
   ViewStyle,
   Platform,
-} from 'react-native';
-import { TapGestureHandler, State } from 'react-native-gesture-handler';
-import { Text, TextProps } from '../Text';
-import { Icon, IconProps, IconType } from '../Icon';
-import { useFirstMountState } from '../../../hooks/useFirstMountState';
-import type { ViewProps } from '../View';
+} from "react-native";
+import { TapGestureHandler, State } from "react-native-gesture-handler";
+import { Text, TextProps } from "../Text";
+import { Icon, IconProps, IconType } from "../Icon";
+import { useFirstMountState } from "../../../hooks/useFirstMountState";
+import type { ViewProps } from "../View";
 
 export interface InputProps
-  extends Omit<
-    TextInputProps,
-    'onChangeText' | 'onChange' | 'onBlur' | 'multiline' | 'style'
-  > {
+  extends Omit<TextInputProps, "onChangeText" | "onChange" | "onBlur" | "multiline" | "style"> {
   title?: string | undefined;
   style?: StyleProp<ViewStyle> | undefined;
 
   onChange?: ((text: string) => void) | undefined;
-  onBlur?:
-    | ((e: NativeSyntheticEvent<TextInputEndEditingEventData>) => void)
-    | undefined;
+  onBlur?: ((e: NativeSyntheticEvent<TextInputEndEditingEventData>) => void) | undefined;
   errorMessage?: string | undefined;
   isPreview?: boolean | undefined;
   showCharacterCounter?: boolean | undefined;
@@ -38,7 +33,7 @@ export interface InputProps
   inputStyle?: StyleProp<TextStyle> | undefined;
 
   labelStyle?: StyleProp<TextStyle> | undefined;
-  labelProps?: Omit<TextProps, 'style'> | undefined;
+  labelProps?: Omit<TextProps, "style"> | undefined;
 
   showClearText?: boolean | undefined;
   clearIconColor?: ColorValue | undefined;
@@ -46,13 +41,13 @@ export interface InputProps
 
   showSecureEye?: boolean | undefined;
   secureEyeIconColor?: ColorValue | undefined;
-  secureEyeIconProps?: IconProps | undefined
+  secureEyeIconProps?: IconProps | undefined;
 
   errorMessageStyle?: StyleProp<TextStyle> | undefined;
-  errorMessageProps?: Omit<TextProps, 'style'> | undefined;
+  errorMessageProps?: Omit<TextProps, "style"> | undefined;
 
   characterCounterStyle?: StyleProp<TextStyle> | undefined;
-  characterCounterProps?: Omit<TextProps, 'style'> | undefined;
+  characterCounterProps?: Omit<TextProps, "style"> | undefined;
 
   onClear?: (() => void) | undefined;
 }
@@ -77,12 +72,7 @@ export interface CharacterCounterProps extends TextProps {
   maxLength?: number | undefined;
 }
 
-const Label: React.FC<LabelProps> = ({
-  style,
-  text,
-  onTap,
-  ...props
-}) => {
+const Label: React.FC<LabelProps> = ({ style, text, onTap, ...props }) => {
   return (
     <View style={styleSheet.placeholderContainer}>
       <Text {...props} style={style}>
@@ -92,7 +82,13 @@ const Label: React.FC<LabelProps> = ({
   );
 };
 
-const FloatingIcon: React.FC<FloatingIconProps> = (({ icon, style, containerStyle, onTap, ...props }) => {
+const FloatingIcon: React.FC<FloatingIconProps> = ({
+  icon,
+  style,
+  containerStyle,
+  onTap,
+  ...props
+}) => {
   return (
     <View style={StyleSheet.flatten([styleSheet.floatingIconContainer, containerStyle])}>
       <TapGestureHandler
@@ -107,14 +103,10 @@ const FloatingIcon: React.FC<FloatingIconProps> = (({ icon, style, containerStyl
         </View>
       </TapGestureHandler>
     </View>
-  )
-})
+  );
+};
 
-const ErrorMessage: React.FC<ErrorMessageProps> = ({
-  style,
-  errorMessage,
-  ...props
-}) => {
+const ErrorMessage: React.FC<ErrorMessageProps> = ({ style, errorMessage, ...props }) => {
   return (
     <View>
       <Text {...props} style={styleSheet.errorMessage}>
@@ -125,7 +117,7 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({
 };
 
 const CharacterCounter: React.FC<CharacterCounterProps> = ({
-  text = '',
+  text = "",
   maxLength = 0,
   style,
   ...props
@@ -186,38 +178,35 @@ const Input = React.forwardRef<View, InputProps>(
     const [contentSizeHeight, setContentSizeHeight] = useState(0);
     const isMultiline = useMemo(() => {
       if (secureTextEntry && numberOfLines! > 1) {
-        return false
+        return false;
       }
-      return numberOfLines! > 1
-    }, [secureTextEntry, numberOfLines])
+      return numberOfLines! > 1;
+    }, [secureTextEntry, numberOfLines]);
 
-    const isClearIconVisible = useMemo(
-      () => {
-        if (showClearText !== undefined) {
-          return showClearText
-        }
-        return (value as string)?.length > 0
-      },
-      [value, showClearText]
-    );
+    const isClearIconVisible = useMemo(() => {
+      if (showClearText !== undefined) {
+        return showClearText;
+      }
+      return (value as string)?.length > 0;
+    }, [value, showClearText]);
 
-    const [secured, setSecured] = useState(secureTextEntry)
+    const [secured, setSecured] = useState(secureTextEntry);
     const isSecureEyeIconVisible = useMemo(() => {
       if (showSecureEye !== undefined) {
-        return showSecureEye
+        return showSecureEye;
       }
-      return secureTextEntry
-    }, [secureTextEntry, showSecureEye])
+      return secureTextEntry;
+    }, [secureTextEntry, showSecureEye]);
 
     const paddingRight = useMemo(() => {
       if (isClearIconVisible && isSecureEyeIconVisible) {
-        return 74
+        return 74;
       }
       if (isClearIconVisible || isSecureEyeIconVisible) {
-        return 44
+        return 44;
       }
-      return undefined
-    }, [])
+      return undefined;
+    }, []);
 
     const isCharacterCounterVisible = useMemo(() => {
       if (showCharacterCounter) {
@@ -230,7 +219,7 @@ const Input = React.forwardRef<View, InputProps>(
     }, [showCharacterCounter, maxLength]);
 
     const minHeight = useMemo(() => {
-      if (Platform.OS === 'ios' && isMultiline) {
+      if (Platform.OS === "ios" && isMultiline) {
         return numberOfLines * contentSizeHeight + 28;
       }
       return undefined;
@@ -245,9 +234,7 @@ const Input = React.forwardRef<View, InputProps>(
               style={StyleSheet.flatten([
                 labelStyle,
                 {
-                  color: !!errorMessage
-                    ? 'red'
-                    : (labelStyle as TextStyle)?.color,
+                  color: !!errorMessage ? "red" : (labelStyle as TextStyle)?.color,
                 },
               ])}
               text={title}
@@ -265,13 +252,11 @@ const Input = React.forwardRef<View, InputProps>(
               editable={editable || !isPreview}
               style={StyleSheet.flatten([
                 styleSheet.textInput,
-                { textAlignVertical: isMultiline ? 'top' : 'center' },
+                { textAlignVertical: isMultiline ? "top" : "center" },
                 { paddingTop: 14, paddingBottom: 14 },
                 { minHeight },
                 {
-                  borderColor: !!errorMessage
-                    ? 'red'
-                    : (inputStyle as ViewStyle)?.borderColor,
+                  borderColor: !!errorMessage ? "red" : (inputStyle as ViewStyle)?.borderColor,
                 },
                 { paddingRight },
                 inputStyle,
@@ -295,7 +280,7 @@ const Input = React.forwardRef<View, InputProps>(
                 onBlur && onBlur(event);
               }}
               onContentSizeChange={(e) => {
-                if (Platform.OS === 'ios' && isFirstMount) {
+                if (Platform.OS === "ios" && isFirstMount) {
                   setContentSizeHeight(e.nativeEvent.contentSize.height);
                 }
               }}
@@ -303,24 +288,24 @@ const Input = React.forwardRef<View, InputProps>(
             {isClearIconVisible && (
               <FloatingIcon
                 containerStyle={{
-                  display: isMultiline ? undefined : 'flex',
-                  justifyContent: isMultiline ? undefined : 'center',
+                  display: isMultiline ? undefined : "flex",
+                  justifyContent: isMultiline ? undefined : "center",
                 }}
                 style={{
                   marginTop: isMultiline ? 10 : undefined,
-                  marginRight: isSecureEyeIconVisible ? 40 : 10
+                  marginRight: isSecureEyeIconVisible ? 40 : 10,
                 }}
                 icon={
                   <Icon
                     {...clearIconProps}
                     type={IconType.Ionicons}
                     name="close-circle"
-                    color={!!errorMessage ? 'red' : clearIconColor}
+                    color={!!errorMessage ? "red" : clearIconColor}
                   />
                 }
                 onTap={() => {
                   if (!isPreview) {
-                    onClear && onClear()
+                    onClear && onClear();
                   }
                 }}
               />
@@ -328,23 +313,23 @@ const Input = React.forwardRef<View, InputProps>(
             {isSecureEyeIconVisible && (
               <FloatingIcon
                 containerStyle={{
-                  display: 'flex',
-                  justifyContent: 'center',
+                  display: "flex",
+                  justifyContent: "center",
                 }}
                 style={{
-                  marginRight: 10
+                  marginRight: 10,
                 }}
                 icon={
                   <Icon
                     {...secureEyeIconProps}
                     type={IconType.Ionicons}
-                    name={secured ? 'eye' : 'eye-off'}
-                    color={!!errorMessage ? 'red' : secureEyeIconColor}
+                    name={secured ? "eye" : "eye-off"}
+                    color={!!errorMessage ? "red" : secureEyeIconColor}
                   />
                 }
                 onTap={() => {
                   if (!isPreview) {
-                    setSecured((oldSecured) => !oldSecured)
+                    setSecured((oldSecured) => !oldSecured);
                   }
                 }}
               />
@@ -377,44 +362,44 @@ const Input = React.forwardRef<View, InputProps>(
 
 const styleSheet = StyleSheet.create({
   container: {
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
   },
   containerLabelTextInput: {
-    display: 'flex',
-    flexDirection: 'column',
+    display: "flex",
+    flexDirection: "column",
   },
   placeholderContainer: {
     marginBottom: 5,
   },
   containerClearIconTextInput: {
-    position: 'relative',
+    position: "relative",
   },
   containerErrorMessageCharacterCounter: {
     marginTop: 3,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   textInput: {
     borderWidth: 1,
-    borderColor: 'blue',
+    borderColor: "blue",
     borderRadius: 5,
     paddingLeft: 10,
-    paddingRight: 10
+    paddingRight: 10,
   },
   floatingIconContainer: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     right: 0,
     bottom: 0,
     zIndex: 2,
   },
   errorMessage: {
-    color: 'red',
+    color: "red",
   },
   characterCounterContainer: {
-    marginLeft: 'auto',
+    marginLeft: "auto",
   },
 });
 
-export default Input
+export default Input;

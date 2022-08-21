@@ -1,4 +1,4 @@
-import { IconType } from './Component';
+import { IconType } from "./Component";
 
 export default (type: `${IconType}`, extraProps: { solid?: boolean; brand?: boolean }) => {
   switch (type) {

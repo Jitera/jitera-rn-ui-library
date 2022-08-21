@@ -1,8 +1,8 @@
-import React from 'react';
-import DatePicker, { DatePickerProps } from './Component';
+import React from "react";
+import DatePicker, { DatePickerProps } from "./Component";
 
-import type { TouchableOpacity } from 'react-native';
-import type { ThemeProps } from '../../../theme';
+import type { TouchableOpacity } from "react-native";
+import type { ThemeProps } from "../../../theme";
 
 const ThemedDatePicker = React.forwardRef<
   TouchableOpacity,

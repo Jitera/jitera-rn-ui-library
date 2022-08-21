@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import type { ScrollView as RNScrollView } from 'react-native';
+import type { ScrollView as RNScrollView } from "react-native";
 
-import ScrollView, { ScrollViewProps } from './Component';
-import type { ThemeProps } from '../../../theme';
+import ScrollView, { ScrollViewProps } from "./Component";
+import type { ThemeProps } from "../../../theme";
 
 const ThemedScrollView = React.forwardRef<
   RNScrollView,

@@ -1,8 +1,8 @@
-import Divider from './ThemedComponent';
-import { withTheme } from '../../../theme';
+import Divider from "./ThemedComponent";
+import { withTheme } from "../../../theme";
 
-import type { DividerProps } from './Component';
+import type { DividerProps } from "./Component";
 
 export { Divider };
 export type { DividerProps };
-export default withTheme(Divider, 'Divider');
+export default withTheme(Divider, "Divider");

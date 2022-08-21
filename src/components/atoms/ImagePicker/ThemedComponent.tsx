@@ -1,8 +1,8 @@
-import React from 'react';
-import ImagePicker, { ImagePickerProps } from './Component';
+import React from "react";
+import ImagePicker, { ImagePickerProps } from "./Component";
 
-import type { TouchableOpacity } from 'react-native';
-import type { ThemeProps } from '../../../theme';
+import type { TouchableOpacity } from "react-native";
+import type { ThemeProps } from "../../../theme";
 
 const ThemedImagePicker = React.forwardRef<
   TouchableOpacity,

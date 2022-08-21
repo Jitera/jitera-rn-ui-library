@@ -1,20 +1,18 @@
-import React, { useCallback } from 'react';
-import { View as RNView, ViewStyle, StyleProp, TextStyle, StyleSheet } from 'react-native';
-import {
-  CodeField,
-  Cursor,
-  CodeFieldProps,
-} from 'react-native-confirmation-code-field';
-import type { PreviewProps, PropsWithRef } from '../../../type';
-import Text from '../Text/ThemedComponent';
-import View from '../View/Component';
+import React, { useCallback } from "react";
+import { View as RNView, ViewStyle, StyleProp, TextStyle, StyleSheet } from "react-native";
+import { CodeField, Cursor, CodeFieldProps } from "react-native-confirmation-code-field";
+import type { PreviewProps, PropsWithRef } from "../../../type";
+import Text from "../Text/ThemedComponent";
+import View from "../View/Component";
 
 export enum OTPInputType {
-  Box = 'box',
-  Underline = 'underline'
+  Box = "box",
+  Underline = "underline",
 }
 
-export interface OTPInputProps extends PreviewProps, Omit<CodeFieldProps, 'renderCell' | 'onChange'> {
+export interface OTPInputProps
+  extends PreviewProps,
+    Omit<CodeFieldProps, "renderCell" | "onChange"> {
   style?: StyleProp<ViewStyle>;
   value?: string;
   pinCount?: number;
@@ -35,10 +33,7 @@ export interface OTPInputProps extends PreviewProps, Omit<CodeFieldProps, 'rende
   errorStyle?: StyleProp<TextStyle>;
 }
 
-const OTPInput = React.forwardRef<
-  RNView,
-  OTPInputProps
->(
+const OTPInput = React.forwardRef<RNView, OTPInputProps>(
   (
     {
       style,
@@ -55,53 +50,52 @@ const OTPInput = React.forwardRef<
       focusCellStyle,
       focusCellTextStyle,
       autoFocus,
-      otpInputType = 'box',
+      otpInputType = "box",
       isSecure = false,
-      isPreview
+      isPreview,
     },
     ref
   ) => {
+    const renderSymbol = useCallback(
+      (symbol, isFocused) => {
+        let textChild = null;
+        if (symbol) {
+          textChild = isSecure ? "•" : symbol;
+        } else if (isFocused) {
+          textChild = <Cursor />;
+        }
+        return textChild;
+      },
+      [isSecure]
+    );
 
-    const renderSymbol = useCallback((symbol, isFocused) => {
-      let textChild = null
-      if (symbol) {
-        textChild = isSecure ? '•' : symbol;
-      } else if (isFocused) {
-        textChild = <Cursor />;
-      }
-      return textChild
-    }, [isSecure])
+    const renderOtpCell = useCallback(
+      (index, symbol, isFocused) => {
+        let wrapperStyle: ViewStyle = styles.cellRoot;
+        let cellFocusStyle: ViewStyle = styles.focusCell;
 
-    const renderOtpCell = useCallback((index, symbol, isFocused) => {
-      let wrapperStyle : ViewStyle = styles.cellRoot
-      let cellFocusStyle: ViewStyle = styles.focusCell
+        if (otpInputType === OTPInputType.Box) {
+          wrapperStyle = styles.boxCellRoot;
+          cellFocusStyle = styles.boxCellFocus;
+        }
 
-      if (otpInputType === OTPInputType.Box) {
-        wrapperStyle = styles.boxCellRoot
-        cellFocusStyle = styles.boxCellFocus
-      }
-  
-      return (
-        <View
-          key={index}
-          style={[
-            wrapperStyle,
-            cellStyle,
-            isFocused ? focusCellStyle || cellFocusStyle : undefined,
-          ]}
-        >
-          <Text
+        return (
+          <View
+            key={index}
             style={[
-              styles.cellText,
-              cellTextStyle,
-              isFocused && focusCellTextStyle,
+              wrapperStyle,
+              cellStyle,
+              isFocused ? focusCellStyle || cellFocusStyle : undefined,
             ]}
           >
-            {renderSymbol(symbol, isFocused)}
-          </Text>
-        </View>
-      )
-    }, [otpInputType, focusCellStyle, cellTextStyle, cellStyle])
+            <Text style={[styles.cellText, cellTextStyle, isFocused && focusCellTextStyle]}>
+              {renderSymbol(symbol, isFocused)}
+            </Text>
+          </View>
+        );
+      },
+      [otpInputType, focusCellStyle, cellTextStyle, cellStyle]
+    );
 
     return (
       <View ref={ref} style={[styles.wrapperStyle, style]}>
@@ -115,14 +109,11 @@ const OTPInput = React.forwardRef<
           keyboardType={keyboardType}
           renderCell={({ index, symbol, isFocused }) => renderOtpCell(index, symbol, isFocused)}
         />
-        {!!errorMessage && <Text
-          {...errorProps}
-          style={StyleSheet.flatten([
-            errorStyle && errorStyle,
-          ])}
-        >
-          {errorMessage}
-        </Text>}
+        {!!errorMessage && (
+          <Text {...errorProps} style={StyleSheet.flatten([errorStyle && errorStyle])}>
+            {errorMessage}
+          </Text>
+        )}
       </View>
     );
   }
@@ -135,33 +126,33 @@ const styles = StyleSheet.create({
   cellRoot: {
     width: 60,
     height: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderBottomColor: '#ccc',
+    justifyContent: "center",
+    alignItems: "center",
+    borderBottomColor: "#ccc",
     borderBottomWidth: 1,
   },
   boxCellRoot: {
     width: 60,
     height: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderColor: '#ccc',
+    justifyContent: "center",
+    alignItems: "center",
+    borderColor: "#ccc",
     borderWidth: 1,
     borderRadius: 4,
   },
   cellText: {
-    color: '#000',
+    color: "#000",
     fontSize: 36,
-    textAlign: 'center',
+    textAlign: "center",
   },
   focusCell: {
-    borderBottomColor: '#007AFF',
+    borderBottomColor: "#007AFF",
     borderBottomWidth: 2,
   },
   boxCellFocus: {
-    borderColor: '#007AFF',
+    borderColor: "#007AFF",
     borderWidth: 2,
-  }
+  },
 });
 
 export default OTPInput;

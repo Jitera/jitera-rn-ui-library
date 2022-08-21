@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import type { TouchableOpacity as RNTouchableOpacity } from 'react-native';
+import type { TouchableOpacity as RNTouchableOpacity } from "react-native";
 
-import TouchableOpacity, { TouchableOpacityProps } from './Component';
-import type { ThemeProps } from '../../../theme';
+import TouchableOpacity, { TouchableOpacityProps } from "./Component";
+import type { ThemeProps } from "../../../theme";
 
 const ThemedView = React.forwardRef<
   RNTouchableOpacity,

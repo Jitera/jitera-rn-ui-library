@@ -1,5 +1,5 @@
-import React from 'react';
-import type { TouchableOpacityProps } from 'react-native';
+import React from "react";
+import type { TouchableOpacityProps } from "react-native";
 import {
   Text,
   StyleSheet,
@@ -8,8 +8,8 @@ import {
   TextStyle,
   TouchableOpacity,
   GestureResponderEvent,
-} from 'react-native';
-import { Color } from '../../../theme/helpers';
+} from "react-native";
+import { Color } from "../../../theme/helpers";
 
 export interface ButtonProps extends TouchableOpacityProps {
   title?: string;
@@ -18,18 +18,7 @@ export interface ButtonProps extends TouchableOpacityProps {
 }
 
 const Button = React.forwardRef<TouchableOpacity, ButtonProps>(
-  (
-    {
-      style,
-      title,
-      titleStyle: titleStyleProps,
-      disabled,
-      loading,
-      onPress,
-      children,
-    },
-    ref
-  ) => {
+  ({ style, title, titleStyle: titleStyleProps, disabled, loading, onPress, children }, ref) => {
     const containerStyle = StyleSheet.flatten([styles.container, style]);
     const titleStyle = StyleSheet.flatten([
       styles.title,
@@ -68,18 +57,18 @@ const Button = React.forwardRef<TouchableOpacity, ButtonProps>(
 const styles = StyleSheet.create({
   container: {
     height: 50,
-    backgroundColor: '#40a9ff',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "#40a9ff",
+    justifyContent: "center",
+    alignItems: "center",
   },
   title: {
     fontSize: 20,
   },
   loading: {
-    position: 'absolute',
+    position: "absolute",
   },
 });
 
-Button.displayName = 'Button';
+Button.displayName = "Button";
 
 export default Button;
