@@ -21,7 +21,7 @@ const Image = React.forwardRef<RnImage, ImageProps>(
       if (typeof source === "string") {
         return {
           uri: source,
-        };s
+        };
       }
       return source;
     }, [uri, source, isSVGImage]);
