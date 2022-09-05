@@ -6,27 +6,34 @@ export type ImageProps = PropsWithRef<
   Partial<RnImageProps> & {
       ImageComponent?: React.ElementType<RnImageProps | any>;
       uri?: string;
-    } & {
-      source: RnImageProps["source"] | string;
+      source: RnImageProps["source"] | string | React.ElementType<RnImageProps | any>;
+      isSVGImage?: boolean;
     }
 >;
 
 const Image = React.forwardRef<RnImage, ImageProps>(
-  ({ resizeMode = "cover", source, ImageComponent = RnImage, uri, ...props }, ref) => {
+  ({ resizeMode = "cover", source, isSVGImage= false, ImageComponent = RnImage, uri, style, ...props }, ref) => {
     const newSource = useMemo(() => {
+      if (isSVGImage) return;
       if (uri) {
         return { uri }
       }
       if (typeof source === "string") {
         return {
           uri: source,
-        };
+        };s
       }
       return source;
-    }, [uri, source]);
+    }, [uri, source, isSVGImage]);
+
+    if (isSVGImage) {
+      const Source = source as React.ElementType<RnImageProps | any> ;
+
+      return <Source {...props} width={style?.width} height={style?.height} style={style} />;
+    }
 
     return (
-      <ImageComponent ref={ref} source={newSource} resizeMode={resizeMode} {...props} />
+      <ImageComponent {...props} ref={ref} source={newSource} resizeMode={resizeMode} />
     );
   }
 );
