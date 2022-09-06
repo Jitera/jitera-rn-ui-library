@@ -3,10 +3,9 @@ import { Image as RnImage, ImageProps as RnImageProps } from "react-native";
 import type { PropsWithRef } from "../../../type";
 
 export type ImageProps = PropsWithRef<
-  Partial<RnImageProps> & {
+  Omit<RnImageProps, 'source'> & {
       ImageComponent?: React.ElementType<RnImageProps | any>;
       uri?: string;
-    } & {
       source: RnImageProps["source"] | string;
     }
 >;
