@@ -26,7 +26,6 @@
     "typescript": "tsc --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "prepare": "rm -rf lib && bob build",
-    "release": "release-it",
     "example": "yarn --cwd example",
     "pods": "cd example && pod-install --quiet",
     "bootstrap": "yarn"
@@ -47,12 +46,11 @@
   },
   "homepage": "https://github.com/Jitera/jitera-rn-ui-library#readme",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org"
+    "access": "public"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "~16.2.1",
     "@react-native-community/eslint-config": "~3.0.1",
-    "@release-it/conventional-changelog": "~4.2.2",
     "@types/jest": "~27.4.1",
     "@types/react": "~17.0.40",
     "@types/react-native": "~0.67.3",
@@ -68,9 +66,9 @@
     "react": "~17.0.2",
     "react-native": "~0.67.4",
     "react-native-builder-bob": "~0.18.2",
-    "release-it": "~14.12.5",
     "typescript": "~4.6.2",
-    "yalc": "^1.0.0-pre.53"
+    "yalc": "^1.0.0-pre.53",
+    "semantic-release": "~19.0.2"
   },
   "peerDependencies": {
     "react": "*",
@@ -91,23 +89,6 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
-  },
-  "release-it": {
-    "git": {
-      "commitMessage": "chore: release ${version}",
-      "tagName": "v${version}"
-    },
-    "npm": {
-      "publish": true
-    },
-    "github": {
-      "release": true
-    },
-    "plugins": {
-      "@release-it/conventional-changelog": {
-        "preset": "react"
-      }
-    }
   },
   "eslintConfig": {
     "root": true,
