@@ -47,7 +47,7 @@
   },
   "homepage": "https://github.com/Jitera/jitera-rn-ui-library#readme",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/@jitera/jitera-rn-ui-library"
+    "registry": "https://registry.npmjs.org"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "~16.2.1",
