@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.tsx"],"names":["Page"],"mappings":";;;;;;;;;;;;;AAAA;;AACA;;;;eAMe,sBAAUA,wBAAV,EAAgB,MAAhB,C","sourcesContent":["import Page from \"./ThemedComponent\";\nimport { withTheme } from \"../../../theme\";\n\nimport type { PageProps } from \"./Component\";\n\nexport { Page };\nexport type { PageProps };\nexport default withTheme(Page, \"Page\");\n"]}

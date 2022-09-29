@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.ts"],"names":["Icon"],"mappings":";;;;;;;;;;;;;;;;;;;AAAA;;AACA;;;;;;eAKe,sBAAUA,kBAAV,EAAgB,MAAhB,C","sourcesContent":["import { withTheme } from \"../../../theme\";\nimport Icon, { IconProps, IconType } from \"./Component\";\n\nexport { Icon, IconType };\nexport type { IconProps };\n\nexport default withTheme(Icon, \"Icon\");\n"]}

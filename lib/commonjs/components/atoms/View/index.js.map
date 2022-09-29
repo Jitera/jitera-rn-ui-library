@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.tsx"],"names":["View"],"mappings":";;;;;;;;;;;;;AAAA;;AACA;;;;eAMe,sBAAUA,wBAAV,EAAgB,MAAhB,C","sourcesContent":["import View from \"./ThemedComponent\";\nimport { withTheme } from \"../../../theme\";\n\nimport type { ViewProps } from \"./Component\";\n\nexport { View };\nexport type { ViewProps };\nexport default withTheme(View, \"View\");\n"]}

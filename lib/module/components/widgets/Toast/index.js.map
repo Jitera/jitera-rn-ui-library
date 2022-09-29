@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.tsx"],"names":["Toast","ToastComponent"],"mappings":"AAAA,OAAOA,KAAP,IAAgBC,cAAhB,QAAkD,aAAlD;AAEA,SAASD,KAAT;AAEA,eAAeC,cAAf","sourcesContent":["import Toast, { ToastComponent, ToastProps } from './Component';\n\nexport { Toast };\nexport type { ToastProps };\nexport default ToastComponent;\n"]}

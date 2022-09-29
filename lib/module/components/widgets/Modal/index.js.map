@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.tsx"],"names":["Modal","ModalComponent"],"mappings":"AAAA,OAAOA,KAAP,IAAgBC,cAAhB,QAAkD,aAAlD;AAEA,SAASD,KAAT;AAEA,eAAeC,cAAf","sourcesContent":["import Modal, { ModalComponent, ModalProps } from './Component';\n\nexport { Modal };\nexport type { ModalProps };\nexport default ModalComponent;\n"]}

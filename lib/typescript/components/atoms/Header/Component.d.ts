@@ -1,0 +1,30 @@
+import React from "react";
+import { ViewStyle, StyleProp, TextStyle, View as RNView } from "react-native";
+import { IconType } from "../../../index";
+export interface HeaderProps {
+    title?: string;
+    renderLeft?: () => JSX.Element;
+    renderCenter?: () => JSX.Element;
+    renderRight?: () => JSX.Element;
+    backgroundColor?: string;
+    borderBottomWidth?: number;
+    borderBottomColor?: string;
+    height?: number;
+    useDefaultBackButton?: boolean;
+    onBackPress?: () => void;
+    style?: StyleProp<ViewStyle>;
+    leftIconName?: string;
+    leftIconType?: `${IconType}`;
+    leftIconSize?: number;
+    leftIconColor?: string;
+    onPressLeftIcon?: () => void;
+    rightIconName?: string;
+    rightIconType?: `${IconType}`;
+    rightIconSize?: number;
+    rightIconColor?: string;
+    onPressRightIcon?: () => void;
+    titleStyle?: TextStyle;
+    safeAreaTop?: boolean;
+}
+declare const Header: React.ForwardRefExoticComponent<HeaderProps & React.RefAttributes<RNView>>;
+export default Header;

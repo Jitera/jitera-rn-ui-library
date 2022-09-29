@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.tsx"],"names":["ModalComponent"],"mappings":";;;;;;;;;;;;;AAAA;;;;;;eAIeA,yB","sourcesContent":["import Modal, { ModalComponent, ModalProps } from './Component';\n\nexport { Modal };\nexport type { ModalProps };\nexport default ModalComponent;\n"]}

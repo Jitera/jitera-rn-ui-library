@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.tsx"],"names":["Text"],"mappings":";;;;;;;;;;;;;AAAA;;AACA;;;;eAMe,sBAAUA,wBAAV,EAAgB,MAAhB,C","sourcesContent":["import Text from \"./ThemedComponent\";\nimport { withTheme } from \"../../../theme\";\n\nimport type { TextProps } from \"./Component\";\n\nexport { Text };\nexport type { TextProps };\nexport default withTheme(Text, \"Text\");\n"]}

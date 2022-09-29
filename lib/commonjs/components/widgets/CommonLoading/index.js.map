@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.tsx"],"names":["CommonLoadingComponent"],"mappings":";;;;;;;;;;;;;AAAA;;;;;;eAOeA,iC","sourcesContent":["import CommonLoading, {\n  CommonLoadingComponent,\n  CommonLoadingProps,\n} from './Component';\n\nexport { CommonLoading };\nexport type { CommonLoadingProps };\nexport default CommonLoadingComponent;\n"]}

@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.ts"],"names":["Color"],"mappings":"AAAA,OAAOA,KAAP,MAAkB,OAAlB;AAEA,eAAeA,KAAf","sourcesContent":["import Color from 'color';\n\nexport default Color;\n"]}

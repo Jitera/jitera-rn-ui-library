@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.ts"],"names":["Color"],"mappings":";;;;;;;AAAA;;;;eAEeA,c","sourcesContent":["import Color from 'color';\n\nexport default Color;\n"]}

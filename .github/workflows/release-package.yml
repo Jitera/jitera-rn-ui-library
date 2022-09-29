@@ -16,6 +16,14 @@ jobs:
         run: npm install -g yarn
       - run: yarn install
       - run: yarn test
+      - name: Add & Commit
+        uses: EndBug/add-and-commit@v9.1.0
+        with:
+          add: 'lib'
+          author_name: Jitera
+          author_email: dev@jitera.com
+          commit: --signoff
+          message: '[GitHub Actions] Build release'
   publish-gpr:
     needs: build
     runs-on: ubuntu-latest
