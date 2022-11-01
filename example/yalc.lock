@@ -2,7 +2,7 @@
   "version": "v1",
   "packages": {
     "@jitera/jitera-rn-ui-library": {
-      "signature": "d1f42c72e0e52e1656f706869da43135",
+      "signature": "a019c1ce73f99d72311b8addbe8acafc",
       "file": true,
       "replaced": "../"
     }

@@ -1,4 +1,4 @@
-import { Input } from '@jitera/jitera-rn-ui-library';
+import { SimpleInput } from '@jitera/jitera-rn-ui-library';
 import React, { useEffect, useRef, useState } from 'react';
 import { TextInput } from 'react-native';
 import BaseLayout from '~/layouts/Base';
@@ -20,17 +20,11 @@ const InputViews: React.FC = () => {
 
   return (
     <BaseLayout>
-      <Input
+      <SimpleInput
         style={{ marginBottom: 30 }}
-        title="Password"
         inputRef={inputPasswordRef}
         isPreview={false}
         value={password}
-        errorMessage={
-          !(password?.length > 0)
-            ? 'Lorem ipsum dolor sit amet amet.'
-            : undefined
-        }
         onChange={setPassword}
         secureTextEntry={true}
         onBlur={() => {
@@ -38,16 +32,10 @@ const InputViews: React.FC = () => {
         }}
         onClear={() => setPassword('')}
       />
-      <Input
-        title="Address"
+      <SimpleInput
         inputRef={inputAddressRef}
         isPreview={false}
         value={address}
-        errorMessage={
-          !(address?.length > 0)
-            ? 'Lorem ipsum dolor sit amet amet.'
-            : undefined
-        }
         maxLength={100}
         numberOfLines={3}
         onChange={setAddress}

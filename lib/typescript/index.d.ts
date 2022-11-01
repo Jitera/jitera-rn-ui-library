@@ -1,6 +1,7 @@
 import Button, { ButtonProps } from './components/atoms/Button';
 import Image, { ImageProps } from './components/atoms/Image';
 import Input, { InputProps } from './components/atoms/Input';
+import SimpleInput, { SimpleInputProps } from './components/atoms/SimpleInput';
 import Text, { TextProps } from './components/atoms/Text';
 import Page, { PageProps } from './components/atoms/Page';
 import View, { ViewProps } from './components/atoms/View';
@@ -24,8 +25,8 @@ import type { RneFunctionComponent } from './theme/helpers';
 import components from './previewComponents';
 export { colors, normalize, colorsDark, defaultTheme, ThemeProvider, ThemeConsumer, ThemeContext, withTheme, useTheme, makeStyles, };
 export type { Theme, FullTheme, UpdateTheme, ReplaceTheme, ThemeProps, Colors, RneFunctionComponent, };
-export { Button, Image, Input, Text, Page, View, Header, Icon, OTPInput, Divider, CommonLoading, Toast, Modal, WebView, ImagePicker, Carousel, DatePicker, FlatList, ThirdPartyAuthButton, ScrollView, TouchableOpacity };
-export type { ButtonProps, ImageProps, InputProps, TextProps, PageProps, HeaderProps, ViewProps, IconProps, OTPInputProps, DividerProps, CommonLoadingProps, ToastProps, ModalProps, WebViewProps, ImagePickerProps, CarouselProps, DatePickerProps, FlatListProps, ThirdPartyAuthButtonProps, GoogleAuthResult, FacebookAuthResult, AppleAuthResult, ScrollViewProps, TouchableOpacityProps };
+export { Button, Image, Input, SimpleInput, Text, Page, View, Header, Icon, OTPInput, Divider, CommonLoading, Toast, Modal, WebView, ImagePicker, Carousel, DatePicker, FlatList, ThirdPartyAuthButton, ScrollView, TouchableOpacity, };
+export type { ButtonProps, ImageProps, InputProps, SimpleInputProps, TextProps, PageProps, HeaderProps, ViewProps, IconProps, OTPInputProps, DividerProps, CommonLoadingProps, ToastProps, ModalProps, WebViewProps, ImagePickerProps, CarouselProps, DatePickerProps, FlatListProps, ThirdPartyAuthButtonProps, GoogleAuthResult, FacebookAuthResult, AppleAuthResult, ScrollViewProps, TouchableOpacityProps, };
 export { IconType, LauncherTypeKind, ThirdPartyAuthProvider };
 export type { DateMode };
 export default components;
