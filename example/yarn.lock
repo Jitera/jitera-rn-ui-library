@@ -1483,10 +1483,11 @@
     chalk "^4.0.0"
 
 "@jitera/jitera-rn-ui-library@file:.yalc/@jitera/jitera-rn-ui-library":
-  version "0.0.54-alpha"
+  version "0.0.64-alpha"
   dependencies:
     "@expo/vector-icons" "~12.0.5"
     "@react-native-community/datetimepicker" "~5.1.0"
+    "@types/react-native-vector-icons" "~6.4.10"
     color "~4.2.0"
     deepmerge "~4.2.2"
     expo-apple-authentication "~4.1.0"
@@ -1910,6 +1911,21 @@
   version "15.7.4"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.4.tgz#fcf7205c25dff795ee79af1e30da2c9790808f11"
   integrity sha512-rZ5drC/jWjrArrS8BR6SIr4cWpW09RNTYt9AMZo3Jwwif+iacXAqgVjm0B0Bv/S1jhDXKHqRVNCbACkJ89RAnQ==
+
+"@types/react-native-vector-icons@~6.4.10":
+  version "6.4.12"
+  resolved "https://registry.yarnpkg.com/@types/react-native-vector-icons/-/react-native-vector-icons-6.4.12.tgz#4b9c63bf85eb42fca7c5b0a55ec317900e4fb427"
+  integrity sha512-gSXtv3NMOsRwSXJ/gvGebm7CNjHbkeFKCse9h/Pvi+x2yjCLOkJR1FBfec06DhaFJpsK7Y8WRQpwOS0eLqx5Rg==
+  dependencies:
+    "@types/react" "*"
+    "@types/react-native" "*"
+
+"@types/react-native@*":
+  version "0.70.6"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.70.6.tgz#0d1bc3014111f64f13e0df643aec2ab03f021fdb"
+  integrity sha512-ynQ2jj0km9d7dbnyKqVdQ6Nti7VQ8SLTA/KKkkS5+FnvGyvij2AOo1/xnkBR/jnSNXuzrvGVzw2n0VWfppmfKw==
+  dependencies:
+    "@types/react" "*"
 
 "@types/react-native@~0.67.3":
   version "0.67.3"

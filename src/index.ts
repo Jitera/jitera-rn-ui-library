@@ -1,6 +1,7 @@
 import Button, { ButtonProps } from './components/atoms/Button';
 import Image, { ImageProps } from './components/atoms/Image';
 import Input, { InputProps } from './components/atoms/Input';
+import SimpleInput, { SimpleInputProps } from './components/atoms/SimpleInput';
 import Text, { TextProps } from './components/atoms/Text';
 import Page, { PageProps } from './components/atoms/Page';
 import View, { ViewProps } from './components/atoms/View';
@@ -10,7 +11,9 @@ import Header, { HeaderProps } from './components/atoms/Header';
 import OTPInput, { OTPInputProps } from './components/atoms/OTPInput';
 import Divider, { DividerProps } from './components/atoms/Divider';
 import WebView, { WebViewProps } from './components/atoms/WebView';
-import TouchableOpacity, { TouchableOpacityProps } from './components/atoms/TouchableOpacity';
+import TouchableOpacity, {
+  TouchableOpacityProps,
+} from './components/atoms/TouchableOpacity';
 import ImagePicker, {
   ImagePickerProps,
   LauncherTypeKind,
@@ -20,7 +23,7 @@ import ThirdPartyAuthButton, {
   ThirdPartyAuthProvider,
   GoogleAuthResult,
   FacebookAuthResult,
-  AppleAuthResult
+  AppleAuthResult,
 } from './components/atoms/ThirdPartyAuthButton';
 import Carousel, { CarouselProps } from './components/molecules/Carousel';
 import FlatList, { FlatListProps } from './components/molecules/FlatList';
@@ -83,6 +86,7 @@ export {
   Button,
   Image,
   Input,
+  SimpleInput,
   Text,
   Page,
   View,
@@ -100,7 +104,7 @@ export {
   FlatList,
   ThirdPartyAuthButton,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
 };
 
 // Atoms Components Props exports
@@ -108,6 +112,7 @@ export type {
   ButtonProps,
   ImageProps,
   InputProps,
+  SimpleInputProps,
   TextProps,
   PageProps,
   HeaderProps,
@@ -128,7 +133,7 @@ export type {
   FacebookAuthResult,
   AppleAuthResult,
   ScrollViewProps,
-  TouchableOpacityProps
+  TouchableOpacityProps,
 };
 
 // Atoms Components Enum exports

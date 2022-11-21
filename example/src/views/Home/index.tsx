@@ -1,6 +1,6 @@
 import React from 'react';
-import {StyleSheet, Button, ButtonProps, View} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import { StyleSheet, Button, ButtonProps, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import BaseLayout from '~/layouts/Base';
 
@@ -31,13 +31,20 @@ const HomeView: React.FC = () => {
       <ButtonView title="Image" onPress={() => navigation.navigate('Image')} />
       <ButtonView title="Input" onPress={() => navigation.navigate('Input')} />
       <ButtonView
+        title="SimpleInput"
+        onPress={() => navigation.navigate('SimpleInput')}
+      />
+      <ButtonView
         title="OTPInput"
         onPress={() => navigation.navigate('OTPInput')}
       />
       <ButtonView title="Page" onPress={() => navigation.navigate('Page')} />
       <ButtonView title="Text" onPress={() => navigation.navigate('Text')} />
       <ButtonView title="View" onPress={() => navigation.navigate('View')} />
-      <ButtonView title="ScrollView" onPress={() => navigation.navigate('ScrollView')} />
+      <ButtonView
+        title="ScrollView"
+        onPress={() => navigation.navigate('ScrollView')}
+      />
       <ButtonView
         title="WebView"
         onPress={() => navigation.navigate('WebView')}
@@ -72,8 +79,8 @@ const HomeView: React.FC = () => {
 
 const style = StyleSheet.create({
   button: {
-    marginBottom: 12,
-  },
+    marginBottom: 12
+  }
 });
 
 export default HomeView;
